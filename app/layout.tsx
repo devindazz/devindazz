@@ -7,13 +7,11 @@ import { cn } from "@/styles/utils";
 import type { Metadata, Viewport } from "next";
 
 export const metadata: Metadata = {
-  title: "something",
-  description: "Made by a human on earth!",
+  title: "devinda",
+  description: "something about me",
 };
 
-export const viewport: Viewport = {
-  colorScheme: "only light",
-};
+
 
 export default function RootLayout({
   children,
