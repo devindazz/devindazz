@@ -1,7 +1,16 @@
-import { ParticlesDemo } from "@/components/demo"
+import { HeroSection } from "@/components/hero-section";
 
 export default function Page() {
-  return (
-    <ParticlesDemo/>
+  return ( 
+    
+    <main>
+
+      <div>
+        <HeroSection />
+      </div>
+
+    </main>
+
+    
   );
 }
