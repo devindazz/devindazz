@@ -64,16 +64,6 @@ export function HeroSection() {
             transition={{ delay: 0.7, duration: 0.9 }}
           />
 
-          <motion.p
-            className="mt-6 max-w-xl text-lg text-muted-foreground"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.6 }}
-          >
-            A passionate software engineer from the University of Westminster in collaboration with IIT Sri Lanka,
-            focused on building creative and intuitive web applications.
-          </motion.p>
-
           <motion.div
             className="mt-8 flex flex-wrap gap-4"
             initial={{ opacity: 0, y: 20 }}
