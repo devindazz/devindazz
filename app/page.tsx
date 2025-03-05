@@ -1,3 +1,5 @@
+import AboutMeSection from "@/components/about-me";
+import CreativeAboutMe from "@/components/about-me";
 import { HeroSection } from "@/components/hero-section";
 
 export default function Page() {
@@ -7,6 +9,10 @@ export default function Page() {
 
       <div>
         <HeroSection />
+      </div>
+
+      <div>
+        <AboutMeSection />
       </div>
 
     </main>
