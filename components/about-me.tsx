@@ -197,3 +197,52 @@ export default function AboutMe() {
                     </div>
                   </div>
                 </div>
+
+                 {/* Experience Item 3 */}
+                 <div className="relative border-l border-muted pl-6">
+                  <div className="absolute left-0 top-1 h-3 w-3 -translate-x-1.5 rounded-full bg-primary"></div>
+                  <div className="flex flex-col gap-1">
+                    <div className="flex items-center justify-between">
+                      <h3 className="text-xl font-medium">Junior Web Developer</h3>
+                      <Badge variant="outline">2016 - 2018</Badge>
+                    </div>
+                    <p className="text-muted-foreground flex items-center gap-1">
+                      Digital Solutions Agency <ExternalLink className="h-3.5 w-3.5" />
+                    </p>
+                    <div className="mt-2 text-muted-foreground">
+                      <p className="mb-2">
+                        Started as an intern and grew into a full-time role, working on various client websites and
+                        e-commerce platforms.
+                      </p>
+                      <ul className="list-disc pl-5">
+                        <li>Developed responsive websites using HTML, CSS, and JavaScript</li>
+                        <li>Created and maintained WordPress themes and plugins</li>
+                        <li>Assisted with UX research and wireframing</li>
+                        <li>Participated in client meetings and requirement gathering</li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </TabsContent>
+
+            <TabsContent value="education" className="space-y-6 pt-4">
+              <h2 className="text-2xl font-semibold mb-4">Education & Certifications</h2>
+              <div className="space-y-8">
+                {/* Education Item 1 */}
+                <div className="relative border-l border-muted pl-6 pb-2">
+                  <div className="absolute left-0 top-1 h-3 w-3 -translate-x-1.5 rounded-full bg-primary"></div>
+                  <div className="flex flex-col gap-1">
+                    <div className="flex items-center justify-between">
+                      <h3 className="text-xl font-medium">Master of Science in Computer Science</h3>
+                      <Badge variant="outline">2014 - 2016</Badge>
+                    </div>
+                    <p className="text-muted-foreground">Stanford University</p>
+                    <div className="mt-2 text-muted-foreground">
+                      <p>
+                        Specialized in Human-Computer Interaction and Software Engineering. Thesis on "Improving Web
+                        Accessibility Through Automated Testing."
+                      </p>
+                    </div>
+                  </div>
+                </div>
