@@ -1,5 +1,5 @@
 'use client'; 
-import AboutMeSection from "@/components/about-me";
+
 import { HeroSection } from "@/components/hero-section";
 import { ProfilePhoto } from "@/components/profile-photo";
 import { motion } from "framer-motion";
@@ -35,9 +35,7 @@ export default function Page() {
         <HeroSection />
       </div>
 
-      <div>
-        <AboutMeSection />
-      </div>
+      
 
     </main>
 
