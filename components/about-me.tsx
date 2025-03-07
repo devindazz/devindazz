@@ -246,3 +246,20 @@ export default function AboutMe() {
                     </div>
                   </div>
                 </div>
+                 {/* Education Item 2 */}
+                 <div className="relative border-l border-muted pl-6 pb-2">
+                  <div className="absolute left-0 top-1 h-3 w-3 -translate-x-1.5 rounded-full bg-primary"></div>
+                  <div className="flex flex-col gap-1">
+                    <div className="flex items-center justify-between">
+                      <h3 className="text-xl font-medium">Bachelor of Science in Computer Science</h3>
+                      <Badge variant="outline">2010 - 2014</Badge>
+                    </div>
+                    <p className="text-muted-foreground">University of California, Berkeley</p>
+                    <div className="mt-2 text-muted-foreground">
+                      <p>
+                        Graduated with honors. Active member of the Web Development Club and participated in multiple
+                        hackathons.
+                      </p>
+                    </div>
+                  </div>
+                </div>
