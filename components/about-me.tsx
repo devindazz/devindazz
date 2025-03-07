@@ -263,3 +263,64 @@ export default function AboutMe() {
                     </div>
                   </div>
                 </div>
+
+                {/* Certifications */}
+                <div>
+                  <h3 className="text-xl font-medium mb-4">Certifications</h3>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <Card>
+                      <CardContent className="p-4">
+                        <div className="flex justify-between items-start">
+                          <div>
+                            <h4 className="font-medium">AWS Certified Developer</h4>
+                            <p className="text-sm text-muted-foreground">Amazon Web Services</p>
+                          </div>
+                          <Badge variant="outline">2022</Badge>
+                        </div>
+                      </CardContent>
+                    </Card>
+                    <Card>
+                      <CardContent className="p-4">
+                        <div className="flex justify-between items-start">
+                          <div>
+                            <h4 className="font-medium">Professional Web Accessibility</h4>
+                            <p className="text-sm text-muted-foreground">
+                              International Association of Accessibility Professionals
+                            </p>
+                          </div>
+                          <Badge variant="outline">2021</Badge>
+                        </div>
+                      </CardContent>
+                    </Card>
+                    <Card>
+                      <CardContent className="p-4">
+                        <div className="flex justify-between items-start">
+                          <div>
+                            <h4 className="font-medium">React Advanced Concepts</h4>
+                            <p className="text-sm text-muted-foreground">Frontend Masters</p>
+                          </div>
+                          <Badge variant="outline">2020</Badge>
+                        </div>
+                      </CardContent>
+                    </Card>
+                    <Card>
+                      <CardContent className="p-4">
+                        <div className="flex justify-between items-start">
+                          <div>
+                            <h4 className="font-medium">UX Design Fundamentals</h4>
+                            <p className="text-sm text-muted-foreground">Interaction Design Foundation</p>
+                          </div>
+                          <Badge variant="outline">2019</Badge>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  </div>
+                </div>
+              </div>
+            </TabsContent>
+          </Tabs>
+        </div>
+      </div>
+    </div>
+  )
+}
