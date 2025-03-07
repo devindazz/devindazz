@@ -171,3 +171,29 @@ export default function AboutMe() {
                     </div>
                   </div>
                 </div>
+
+                  {/* Experience Item 2 */}
+                  <div className="relative border-l border-muted pl-6 pb-2">
+                  <div className="absolute left-0 top-1 h-3 w-3 -translate-x-1.5 rounded-full bg-primary"></div>
+                  <div className="flex flex-col gap-1">
+                    <div className="flex items-center justify-between">
+                      <h3 className="text-xl font-medium">Frontend Developer</h3>
+                      <Badge variant="outline">2018 - 2021</Badge>
+                    </div>
+                    <p className="text-muted-foreground flex items-center gap-1">
+                      InnovateSoft <ExternalLink className="h-3.5 w-3.5" />
+                    </p>
+                    <div className="mt-2 text-muted-foreground">
+                      <p className="mb-2">
+                        Developed and maintained multiple client-facing web applications with a focus on responsive
+                        design and accessibility.
+                      </p>
+                      <ul className="list-disc pl-5">
+                        <li>Built interactive dashboards using React and D3.js</li>
+                        <li>Implemented responsive designs for mobile and tablet devices</li>
+                        <li>Optimized application performance and loading times</li>
+                        <li>Integrated with RESTful APIs and third-party services</li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
