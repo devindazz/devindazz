@@ -1,321 +1,389 @@
-import { Button } from "@/components/ui/button"
+"use client"
+
 import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { Github, Linkedin, Mail, FileText, ExternalLink } from "lucide-react"
-import Image from "next/image"
+import { ExternalLink, ArrowRight, Star, Code, Briefcase, GraduationCap } from "lucide-react"
 import Link from "next/link"
+import { useState, useEffect } from "react"
 
 export default function AboutMe() {
+  const [activeTab, setActiveTab] = useState("about")
+  const [animateIn, setAnimateIn] = useState(false)
+
+  useEffect(() => {
+    setAnimateIn(true)
+  }, [])
+
+  const handleTabChange = (value: string) => {
+    setAnimateIn(false)
+    setTimeout(() => {
+      setActiveTab(value)
+      setAnimateIn(true)
+    }, 300)
+  }
+
   return (
-    <div className="container mx-auto px-4 py-12 max-w-5xl">
-      <div className="grid gap-8 md:grid-cols-[1fr_2fr] lg:gap-12">
-        {/* Profile Section */}
-        <div className="flex flex-col gap-6">
-          <div className="relative aspect-square overflow-hidden rounded-xl border bg-muted">
-            <Image
-              src="/placeholder.svg?height=400&width=400"
-              alt="Profile photo"
-              fill
-              className="object-cover"
-              priority
-            />
+    <div className="min-h-screen bg-gradient-to-b from-background to-background/50 py-12 px-4">
+      <div className="container mx-auto max-w-5xl">
+        {/* Animated header */}
+        <div className="mb-12 text-center">
+          <div className="inline-block rounded-full bg-primary/10 px-4 py-1.5 text-sm font-medium text-primary mb-4">
+            Portfolio
           </div>
-          <div className="space-y-4">
-            <h1 className="text-3xl font-bold">John Doe</h1>
-            <p className="text-xl text-muted-foreground">Senior Software Engineer</p>
-            <div className="flex flex-wrap gap-2">
-              <Badge variant="secondary" className="px-3 py-1">
-                React
-              </Badge>
-              <Badge variant="secondary" className="px-3 py-1">
-                Next.js
-              </Badge>
-              <Badge variant="secondary" className="px-3 py-1">
-                TypeScript
-              </Badge>
-              <Badge variant="secondary" className="px-3 py-1">
-                UI/UX
-              </Badge>
-            </div>
-            <div className="flex gap-3 pt-2">
-              <Link href="https://github.com" target="_blank" rel="noopener noreferrer">
-                <Button variant="outline" size="icon" aria-label="GitHub Profile">
-                  <Github className="h-5 w-5" />
-                </Button>
-              </Link>
-              <Link href="https://linkedin.com" target="_blank" rel="noopener noreferrer">
-                <Button variant="outline" size="icon" aria-label="LinkedIn Profile">
-                  <Linkedin className="h-5 w-5" />
-                </Button>
-              </Link>
-              <Link href="mailto:contact@example.com">
-                <Button variant="outline" size="icon" aria-label="Email Contact">
-                  <Mail className="h-5 w-5" />
-                </Button>
-              </Link>
-              <Link href="/resume.pdf" target="_blank">
-                <Button variant="outline" size="icon" aria-label="Download Resume">
-                  <FileText className="h-5 w-5" />
-                </Button>
-              </Link>
-            </div>
-          </div>
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-primary to-primary/60 mb-4">
+            My Journey & Work
+          </h1>
+          <p className="text-muted-foreground max-w-2xl mx-auto">
+            Explore my background, skills, and projects through this interactive portfolio
+          </p>
         </div>
 
-        {/* Content Section */}
-        <div className="space-y-8">
-          <Tabs defaultValue="about" className="w-full">
-            <TabsList className="grid w-full grid-cols-3">
-              <TabsTrigger value="about">About</TabsTrigger>
-              <TabsTrigger value="experience">Experience</TabsTrigger>
-              <TabsTrigger value="education">Education</TabsTrigger>
+        {/* Custom styled tabs */}
+        <div className="relative mb-8">
+          <div className="absolute inset-0 bg-gradient-to-r from-primary/20 via-primary/10 to-primary/20 blur-xl opacity-50 rounded-full"></div>
+          <Tabs defaultValue="about" value={activeTab} onValueChange={handleTabChange} className="relative">
+            <TabsList className="grid w-full grid-cols-3 rounded-full p-1 bg-background/80 backdrop-blur-sm border">
+              <TabsTrigger
+                value="about"
+                className="rounded-full data-[state=active]:bg-primary data-[state=active]:text-primary-foreground transition-all duration-300"
+              >
+                <Code className="mr-2 h-4 w-4" />
+                About
+              </TabsTrigger>
+              <TabsTrigger
+                value="education"
+                className="rounded-full data-[state=active]:bg-primary data-[state=active]:text-primary-foreground transition-all duration-300"
+              >
+                <GraduationCap className="mr-2 h-4 w-4" />
+                Education
+              </TabsTrigger>
+              <TabsTrigger
+                value="projects"
+                className="rounded-full data-[state=active]:bg-primary data-[state=active]:text-primary-foreground transition-all duration-300"
+              >
+                <Briefcase className="mr-2 h-4 w-4" />
+                Projects
+              </TabsTrigger>
             </TabsList>
-            <TabsContent value="about" className="space-y-6 pt-4">
-              <div>
-                <h2 className="text-2xl font-semibold mb-4">About Me</h2>
-                <div className="space-y-4 text-muted-foreground">
-                  <p>
-                    I'm a passionate software engineer with over 8 years of experience building web applications and
-                    digital experiences that delight users and solve complex problems.
-                  </p>
-                  <p>
-                    My journey in technology began with a curiosity about how things work, which led me to pursue
-                    computer science and eventually specialize in frontend development with a focus on creating
-                    intuitive, accessible, and performant user interfaces.
-                  </p>
-                  <p>
-                    When I'm not coding, you can find me hiking in the mountains, experimenting with new cooking
-                    recipes, or contributing to open-source projects that align with my values of making technology more
-                    inclusive and accessible.
-                  </p>
-                </div>
-              </div>
 
-              <div>
-                <h2 className="text-2xl font-semibold mb-4">Skills</h2>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <Card>
-                    <CardContent className="p-4">
-                      <h3 className="font-medium mb-2">Frontend Development</h3>
-                      <ul className="list-disc pl-5 text-muted-foreground">
-                        <li>React, Next.js, Vue.js</li>
-                        <li>TypeScript, JavaScript</li>
-                        <li>Tailwind CSS, Styled Components</li>
-                        <li>Responsive Design, Accessibility</li>
-                      </ul>
-                    </CardContent>
-                  </Card>
-                  <Card>
-                    <CardContent className="p-4">
-                      <h3 className="font-medium mb-2">Backend Development</h3>
-                      <ul className="list-disc pl-5 text-muted-foreground">
-                        <li>Node.js, Express</li>
-                        <li>PostgreSQL, MongoDB</li>
-                        <li>RESTful APIs, GraphQL</li>
-                        <li>Serverless Functions</li>
-                      </ul>
-                    </CardContent>
-                  </Card>
-                  <Card>
-                    <CardContent className="p-4">
-                      <h3 className="font-medium mb-2">Tools & Practices</h3>
-                      <ul className="list-disc pl-5 text-muted-foreground">
-                        <li>Git, GitHub, CI/CD</li>
-                        <li>Jest, Testing Library</li>
-                        <li>Agile Methodologies</li>
-                        <li>Performance Optimization</li>
-                      </ul>
-                    </CardContent>
-                  </Card>
-                  <Card>
-                    <CardContent className="p-4">
-                      <h3 className="font-medium mb-2">Design & Collaboration</h3>
-                      <ul className="list-disc pl-5 text-muted-foreground">
-                        <li>Figma, Adobe XD</li>
-                        <li>UI/UX Principles</li>
-                        <li>Cross-functional Teamwork</li>
-                        <li>Technical Documentation</li>
-                      </ul>
+            {/* About Tab */}
+            <TabsContent
+              value="about"
+              className={`mt-8 transition-all duration-500 ${animateIn ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"}`}
+            >
+              <div className="space-y-12">
+                <div className="relative">
+                  <div className="absolute -inset-1 bg-gradient-to-r from-primary/20 to-primary/20 rounded-2xl blur opacity-30"></div>
+                  <Card className="relative backdrop-blur-sm border border-primary/10 overflow-hidden rounded-2xl">
+                    <div className="absolute top-0 right-0 w-64 h-64 bg-primary/10 rounded-full -translate-y-1/2 translate-x-1/2 blur-2xl"></div>
+                    <CardContent className="p-8">
+                      <h2 className="text-3xl font-bold mb-6 flex items-center">
+                        <span className="bg-primary/10 text-primary p-2 rounded-lg mr-3">
+                          <Star className="h-6 w-6" />
+                        </span>
+                        About Me
+                      </h2>
+                      <div className="space-y-4 text-lg">
+                        <p>
+                          I'm a passionate software engineer with over 8 years of experience building web applications
+                          and digital experiences that delight users and solve complex problems.
+                        </p>
+                        <p>
+                          My journey in technology began with a curiosity about how things work, which led me to pursue
+                          computer science and eventually specialize in frontend development with a focus on creating
+                          intuitive, accessible, and performant user interfaces.
+                        </p>
+                        <p>
+                          When I'm not coding, you can find me hiking in the mountains, experimenting with new cooking
+                          recipes, or contributing to open-source projects that align with my values of making
+                          technology more inclusive and accessible.
+                        </p>
+                      </div>
                     </CardContent>
                   </Card>
                 </div>
-              </div>
-            </TabsContent>
 
-            <TabsContent value="experience" className="space-y-6 pt-4">
-              <h2 className="text-2xl font-semibold mb-4">Work Experience</h2>
-              <div className="space-y-8">
-                {/* Experience Item 1 */}
-                <div className="relative border-l border-muted pl-6 pb-2">
-                  <div className="absolute left-0 top-1 h-3 w-3 -translate-x-1.5 rounded-full bg-primary"></div>
-                  <div className="flex flex-col gap-1">
-                    <div className="flex items-center justify-between">
-                      <h3 className="text-xl font-medium">Senior Frontend Engineer</h3>
-                      <Badge variant="outline">2021 - Present</Badge>
-                    </div>
-                    <p className="text-muted-foreground flex items-center gap-1">
-                      TechCorp Inc. <ExternalLink className="h-3.5 w-3.5" />
-                    </p>
-                    <div className="mt-2 text-muted-foreground">
-                      <p className="mb-2">
-                        Led the frontend development of the company's flagship product, improving performance by 40% and
-                        implementing a new design system.
-                      </p>
-                      <ul className="list-disc pl-5">
-                        <li>Architected and implemented a component library used across multiple products</li>
-                        <li>Mentored junior developers and conducted code reviews</li>
-                        <li>Collaborated with design and product teams to create intuitive user experiences</li>
-                        <li>Introduced automated testing, achieving 85% code coverage</li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-
-                  {/* Experience Item 2 */}
-                  <div className="relative border-l border-muted pl-6 pb-2">
-                  <div className="absolute left-0 top-1 h-3 w-3 -translate-x-1.5 rounded-full bg-primary"></div>
-                  <div className="flex flex-col gap-1">
-                    <div className="flex items-center justify-between">
-                      <h3 className="text-xl font-medium">Frontend Developer</h3>
-                      <Badge variant="outline">2018 - 2021</Badge>
-                    </div>
-                    <p className="text-muted-foreground flex items-center gap-1">
-                      InnovateSoft <ExternalLink className="h-3.5 w-3.5" />
-                    </p>
-                    <div className="mt-2 text-muted-foreground">
-                      <p className="mb-2">
-                        Developed and maintained multiple client-facing web applications with a focus on responsive
-                        design and accessibility.
-                      </p>
-                      <ul className="list-disc pl-5">
-                        <li>Built interactive dashboards using React and D3.js</li>
-                        <li>Implemented responsive designs for mobile and tablet devices</li>
-                        <li>Optimized application performance and loading times</li>
-                        <li>Integrated with RESTful APIs and third-party services</li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-
-                 {/* Experience Item 3 */}
-                 <div className="relative border-l border-muted pl-6">
-                  <div className="absolute left-0 top-1 h-3 w-3 -translate-x-1.5 rounded-full bg-primary"></div>
-                  <div className="flex flex-col gap-1">
-                    <div className="flex items-center justify-between">
-                      <h3 className="text-xl font-medium">Junior Web Developer</h3>
-                      <Badge variant="outline">2016 - 2018</Badge>
-                    </div>
-                    <p className="text-muted-foreground flex items-center gap-1">
-                      Digital Solutions Agency <ExternalLink className="h-3.5 w-3.5" />
-                    </p>
-                    <div className="mt-2 text-muted-foreground">
-                      <p className="mb-2">
-                        Started as an intern and grew into a full-time role, working on various client websites and
-                        e-commerce platforms.
-                      </p>
-                      <ul className="list-disc pl-5">
-                        <li>Developed responsive websites using HTML, CSS, and JavaScript</li>
-                        <li>Created and maintained WordPress themes and plugins</li>
-                        <li>Assisted with UX research and wireframing</li>
-                        <li>Participated in client meetings and requirement gathering</li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </TabsContent>
-
-            <TabsContent value="education" className="space-y-6 pt-4">
-              <h2 className="text-2xl font-semibold mb-4">Education & Certifications</h2>
-              <div className="space-y-8">
-                {/* Education Item 1 */}
-                <div className="relative border-l border-muted pl-6 pb-2">
-                  <div className="absolute left-0 top-1 h-3 w-3 -translate-x-1.5 rounded-full bg-primary"></div>
-                  <div className="flex flex-col gap-1">
-                    <div className="flex items-center justify-between">
-                      <h3 className="text-xl font-medium">Master of Science in Computer Science</h3>
-                      <Badge variant="outline">2014 - 2016</Badge>
-                    </div>
-                    <p className="text-muted-foreground">Stanford University</p>
-                    <div className="mt-2 text-muted-foreground">
-                      <p>
-                        Specialized in Human-Computer Interaction and Software Engineering. Thesis on "Improving Web
-                        Accessibility Through Automated Testing."
-                      </p>
-                    </div>
-                  </div>
-                </div>
-                 {/* Education Item 2 */}
-                 <div className="relative border-l border-muted pl-6 pb-2">
-                  <div className="absolute left-0 top-1 h-3 w-3 -translate-x-1.5 rounded-full bg-primary"></div>
-                  <div className="flex flex-col gap-1">
-                    <div className="flex items-center justify-between">
-                      <h3 className="text-xl font-medium">Bachelor of Science in Computer Science</h3>
-                      <Badge variant="outline">2010 - 2014</Badge>
-                    </div>
-                    <p className="text-muted-foreground">University of California, Berkeley</p>
-                    <div className="mt-2 text-muted-foreground">
-                      <p>
-                        Graduated with honors. Active member of the Web Development Club and participated in multiple
-                        hackathons.
-                      </p>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Certifications */}
                 <div>
-                  <h3 className="text-xl font-medium mb-4">Certifications</h3>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <Card>
-                      <CardContent className="p-4">
-                        <div className="flex justify-between items-start">
-                          <div>
-                            <h4 className="font-medium">AWS Certified Developer</h4>
-                            <p className="text-sm text-muted-foreground">Amazon Web Services</p>
+                  <h2 className="text-3xl font-bold mb-6 flex items-center">
+                    <span className="bg-primary/10 text-primary p-2 rounded-lg mr-3">
+                      <Code className="h-6 w-6" />
+                    </span>
+                    Skills & Expertise
+                  </h2>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    {[
+                      {
+                        title: "Frontend Development",
+                        skills: [
+                          "React, Next.js, Vue.js",
+                          "TypeScript, JavaScript",
+                          "Tailwind CSS, Styled Components",
+                          "Responsive Design, Accessibility",
+                        ],
+                        color: "from-blue-500 to-cyan-400",
+                      },
+                      {
+                        title: "Backend Development",
+                        skills: [
+                          "Node.js, Express",
+                          "PostgreSQL, MongoDB",
+                          "RESTful APIs, GraphQL",
+                          "Serverless Functions",
+                        ],
+                        color: "from-purple-500 to-indigo-500",
+                      },
+                      {
+                        title: "Tools & Practices",
+                        skills: [
+                          "Git, GitHub, CI/CD",
+                          "Jest, Testing Library",
+                          "Agile Methodologies",
+                          "Performance Optimization",
+                        ],
+                        color: "from-amber-500 to-orange-400",
+                      },
+                      {
+                        title: "Design & Collaboration",
+                        skills: [
+                          "Figma, Adobe XD",
+                          "UI/UX Principles",
+                          "Cross-functional Teamwork",
+                          "Technical Documentation",
+                        ],
+                        color: "from-emerald-500 to-green-400",
+                      },
+                    ].map((category, index) => (
+                      <div key={index} className="group relative">
+                        <div
+                          className={`absolute inset-0 bg-gradient-to-br ${category.color} rounded-2xl opacity-70 group-hover:opacity-100 blur transition-all duration-300 -z-10`}
+                        ></div>
+                        <Card className="h-full backdrop-blur-sm bg-background/80 border-0 overflow-hidden rounded-2xl transition-all duration-300 group-hover:translate-y-[-5px] group-hover:shadow-lg">
+                          <CardContent className="p-6">
+                            <h3 className="font-bold text-xl mb-4">{category.title}</h3>
+                            <ul className="space-y-2">
+                              {category.skills.map((skill, idx) => (
+                                <li key={idx} className="flex items-center">
+                                  <span className="h-1.5 w-1.5 rounded-full bg-primary mr-2"></span>
+                                  {skill}
+                                </li>
+                              ))}
+                            </ul>
+                          </CardContent>
+                        </Card>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </TabsContent>
+
+            {/* Education Tab */}
+            <TabsContent
+              value="education"
+              className={`mt-8 transition-all duration-500 ${animateIn ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"}`}
+            >
+              <div className="relative">
+                <div className="absolute -inset-1 bg-gradient-to-r from-primary/20 to-primary/20 rounded-2xl blur opacity-30"></div>
+                <Card className="relative backdrop-blur-sm border border-primary/10 overflow-hidden rounded-2xl">
+                  <div className="absolute top-0 right-0 w-64 h-64 bg-primary/10 rounded-full -translate-y-1/2 translate-x-1/2 blur-2xl"></div>
+                  <CardContent className="p-8">
+                    <h2 className="text-3xl font-bold mb-8 flex items-center">
+                      <span className="bg-primary/10 text-primary p-2 rounded-lg mr-3">
+                        <GraduationCap className="h-6 w-6" />
+                      </span>
+                      Education & Certifications
+                    </h2>
+
+                    <div className="relative border-l-2 border-primary/30 pl-8 space-y-12 ml-4">
+                      {/* Education Item 1 */}
+                      <div className="relative">
+                        <div className="absolute left-0 top-0 h-5 w-5 rounded-full bg-primary -translate-x-[calc(0.625rem+1px)]"></div>
+                        <div className="absolute left-0 top-0 h-5 w-5 rounded-full bg-primary/30 -translate-x-[calc(0.625rem+1px)] animate-ping"></div>
+                        <div>
+                          <div className="flex items-center flex-wrap gap-3 mb-2">
+                            <h3 className="text-2xl font-bold">Master of Science in Computer Science</h3>
+                            <Badge className="bg-primary/20 text-primary hover:bg-primary/30 px-3 py-1 text-sm">
+                              2014 - 2016
+                            </Badge>
                           </div>
-                          <Badge variant="outline">2022</Badge>
-                        </div>
-                      </CardContent>
-                    </Card>
-                    <Card>
-                      <CardContent className="p-4">
-                        <div className="flex justify-between items-start">
-                          <div>
-                            <h4 className="font-medium">Professional Web Accessibility</h4>
-                            <p className="text-sm text-muted-foreground">
-                              International Association of Accessibility Professionals
+                          <p className="text-xl text-primary/80 mb-3">Stanford University</p>
+                          <div className="text-muted-foreground">
+                            <p>
+                              Specialized in Human-Computer Interaction and Software Engineering. Thesis on "Improving
+                              Web Accessibility Through Automated Testing."
                             </p>
                           </div>
-                          <Badge variant="outline">2021</Badge>
                         </div>
-                      </CardContent>
-                    </Card>
-                    <Card>
-                      <CardContent className="p-4">
-                        <div className="flex justify-between items-start">
-                          <div>
-                            <h4 className="font-medium">React Advanced Concepts</h4>
-                            <p className="text-sm text-muted-foreground">Frontend Masters</p>
+                      </div>
+
+                      {/* Education Item 2 */}
+                      <div className="relative">
+                        <div className="absolute left-0 top-0 h-5 w-5 rounded-full bg-primary -translate-x-[calc(0.625rem+1px)]"></div>
+                        <div>
+                          <div className="flex items-center flex-wrap gap-3 mb-2">
+                            <h3 className="text-2xl font-bold">Bachelor of Science in Computer Science</h3>
+                            <Badge className="bg-primary/20 text-primary hover:bg-primary/30 px-3 py-1 text-sm">
+                              2010 - 2014
+                            </Badge>
                           </div>
-                          <Badge variant="outline">2020</Badge>
+                          <p className="text-xl text-primary/80 mb-3">University of California, Berkeley</p>
+                          <div className="text-muted-foreground">
+                            <p>
+                              Graduated with honors. Active member of the Web Development Club and participated in
+                              multiple hackathons.
+                            </p>
+                          </div>
                         </div>
-                      </CardContent>
-                    </Card>
-                    <Card>
-                      <CardContent className="p-4">
-                        <div className="flex justify-between items-start">
-                          <div>
-                            <h4 className="font-medium">UX Design Fundamentals</h4>
-                            <p className="text-sm text-muted-foreground">Interaction Design Foundation</p>
+                      </div>
+                    </div>
+
+                    {/* Certifications */}
+                    <div className="mt-16">
+                      <h3 className="text-2xl font-bold mb-6">Certifications</h3>
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        {[
+                          {
+                            title: "AWS Certified Developer",
+                            org: "Amazon Web Services",
+                            year: "2022",
+                            color: "from-amber-500 to-yellow-400",
+                          },
+                          {
+                            title: "Professional Web Accessibility",
+                            org: "International Association of Accessibility Professionals",
+                            year: "2021",
+                            color: "from-blue-500 to-sky-400",
+                          },
+                          {
+                            title: "React Advanced Concepts",
+                            org: "Frontend Masters",
+                            year: "2020",
+                            color: "from-cyan-500 to-teal-400",
+                          },
+                          {
+                            title: "UX Design Fundamentals",
+                            org: "Interaction Design Foundation",
+                            year: "2019",
+                            color: "from-rose-500 to-pink-400",
+                          },
+                        ].map((cert, index) => (
+                          <div key={index} className="group relative">
+                            <div
+                              className={`absolute inset-0 bg-gradient-to-br ${cert.color} rounded-xl opacity-70 group-hover:opacity-100 blur transition-all duration-300 -z-10`}
+                            ></div>
+                            <Card className="h-full backdrop-blur-sm bg-background/80 border-0 overflow-hidden rounded-xl transition-all duration-300 group-hover:translate-y-[-5px] group-hover:shadow-lg">
+                              <CardContent className="p-5">
+                                <div className="flex justify-between items-start flex-wrap gap-2">
+                                  <div>
+                                    <h4 className="font-bold text-lg">{cert.title}</h4>
+                                    <p className="text-sm text-muted-foreground">{cert.org}</p>
+                                  </div>
+                                  <Badge variant="outline" className="border-primary/30 text-primary">
+                                    {cert.year}
+                                  </Badge>
+                                </div>
+                              </CardContent>
+                            </Card>
                           </div>
-                          <Badge variant="outline">2019</Badge>
+                        ))}
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+              </div>
+            </TabsContent>
+
+            {/* Projects Tab */}
+            <TabsContent
+              value="projects"
+              className={`mt-8 transition-all duration-500 ${animateIn ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"}`}
+            >
+              <h2 className="text-3xl font-bold mb-8 flex items-center">
+                <span className="bg-primary/10 text-primary p-2 rounded-lg mr-3">
+                  <Briefcase className="h-6 w-6" />
+                </span>
+                Featured Projects
+              </h2>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                {[
+                  {
+                    title: "E-commerce Platform",
+                    description: "A full-stack e-commerce solution built with Next.js, Stripe, and a headless CMS.",
+                    year: "2023",
+                    tags: ["Next.js", "Stripe", "Tailwind"],
+                    color: "from-violet-600 to-indigo-600",
+                  },
+                  {
+                    title: "Health Tracking App",
+                    description: "A mobile-first web application for tracking health metrics with data visualization.",
+                    year: "2022",
+                    tags: ["React", "D3.js", "Firebase"],
+                    color: "from-emerald-600 to-teal-600",
+                  },
+                  {
+                    title: "AI Content Generator",
+                    description: "A tool that leverages AI to generate marketing content for small businesses.",
+                    year: "2022",
+                    tags: ["OpenAI", "Node.js", "Express"],
+                    color: "from-rose-600 to-pink-600",
+                  },
+                  {
+                    title: "Accessibility Checker",
+                    description:
+                      "A browser extension that analyzes web pages for accessibility issues and suggests fixes.",
+                    year: "2021",
+                    tags: ["JavaScript", "Chrome API", "WCAG"],
+                    color: "from-amber-600 to-yellow-600",
+                  },
+                ].map((project, index) => (
+                  <div key={index} className="group relative h-full">
+                    <div
+                      className={`absolute inset-0 bg-gradient-to-br ${project.color} rounded-2xl opacity-80 group-hover:opacity-100 blur-sm transition-all duration-300 -z-10`}
+                    ></div>
+                    <Card className="h-full backdrop-blur-sm bg-background/90 border-0 overflow-hidden rounded-2xl transition-all duration-500 group-hover:translate-y-[-8px] group-hover:shadow-xl">
+                      <CardContent className="p-6 h-full flex flex-col">
+                        <div className="flex justify-between items-start mb-3">
+                          <h3 className="text-2xl font-bold">{project.title}</h3>
+                          <Badge className={`bg-background/50 backdrop-blur-sm border-0`}>{project.year}</Badge>
+                        </div>
+
+                        <p className="text-muted-foreground mb-4 flex-grow">{project.description}</p>
+
+                        <div className="space-y-4">
+                          <div className="flex flex-wrap gap-2">
+                            {project.tags.map((tag, idx) => (
+                              <Badge
+                                key={idx}
+                                variant="secondary"
+                                className="px-3 py-1 bg-background/50 backdrop-blur-sm border-0"
+                              >
+                                {tag}
+                              </Badge>
+                            ))}
+                          </div>
+
+                          <Link
+                            href="#"
+                            className="inline-flex items-center text-sm font-medium text-primary hover:text-primary/80 transition-colors"
+                          >
+                            View Project <ArrowRight className="ml-1 h-4 w-4" />
+                          </Link>
                         </div>
                       </CardContent>
                     </Card>
                   </div>
-                </div>
+                ))}
+              </div>
+
+              <div className="mt-12 text-center">
+                <Link
+                  href="#"
+                  className="inline-flex items-center justify-center rounded-full bg-primary px-6 py-3 text-primary-foreground hover:bg-primary/90 transition-colors"
+                >
+                  View All Projects <ExternalLink className="ml-2 h-4 w-4" />
+                </Link>
               </div>
             </TabsContent>
           </Tabs>
@@ -324,3 +392,4 @@ export default function AboutMe() {
     </div>
   )
 }
+
