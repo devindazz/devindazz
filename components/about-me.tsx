@@ -68,8 +68,8 @@ export default function AboutMe() {
           <Tabs defaultValue="about" className="w-full">
             <TabsList className="grid w-full grid-cols-3">
               <TabsTrigger value="about">About</TabsTrigger>
-              <TabsTrigger value="experience">Experience</TabsTrigger>
               <TabsTrigger value="education">Education</TabsTrigger>
+              <TabsTrigger value="projects">Projects</TabsTrigger>
             </TabsList>
             <TabsContent value="about" className="space-y-6 pt-4">
               <div>
@@ -139,89 +139,6 @@ export default function AboutMe() {
                       </ul>
                     </CardContent>
                   </Card>
-                </div>
-              </div>
-            </TabsContent>
-
-            <TabsContent value="experience" className="space-y-6 pt-4">
-              <h2 className="text-2xl font-semibold mb-4">Work Experience</h2>
-              <div className="space-y-8">
-                {/* Experience Item 1 */}
-                <div className="relative border-l border-muted pl-6 pb-2">
-                  <div className="absolute left-0 top-1 h-3 w-3 -translate-x-1.5 rounded-full bg-primary"></div>
-                  <div className="flex flex-col gap-1">
-                    <div className="flex items-center justify-between">
-                      <h3 className="text-xl font-medium">Senior Frontend Engineer</h3>
-                      <Badge variant="outline">2021 - Present</Badge>
-                    </div>
-                    <p className="text-muted-foreground flex items-center gap-1">
-                      TechCorp Inc. <ExternalLink className="h-3.5 w-3.5" />
-                    </p>
-                    <div className="mt-2 text-muted-foreground">
-                      <p className="mb-2">
-                        Led the frontend development of the company's flagship product, improving performance by 40% and
-                        implementing a new design system.
-                      </p>
-                      <ul className="list-disc pl-5">
-                        <li>Architected and implemented a component library used across multiple products</li>
-                        <li>Mentored junior developers and conducted code reviews</li>
-                        <li>Collaborated with design and product teams to create intuitive user experiences</li>
-                        <li>Introduced automated testing, achieving 85% code coverage</li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-
-                  {/* Experience Item 2 */}
-                  <div className="relative border-l border-muted pl-6 pb-2">
-                  <div className="absolute left-0 top-1 h-3 w-3 -translate-x-1.5 rounded-full bg-primary"></div>
-                  <div className="flex flex-col gap-1">
-                    <div className="flex items-center justify-between">
-                      <h3 className="text-xl font-medium">Frontend Developer</h3>
-                      <Badge variant="outline">2018 - 2021</Badge>
-                    </div>
-                    <p className="text-muted-foreground flex items-center gap-1">
-                      InnovateSoft <ExternalLink className="h-3.5 w-3.5" />
-                    </p>
-                    <div className="mt-2 text-muted-foreground">
-                      <p className="mb-2">
-                        Developed and maintained multiple client-facing web applications with a focus on responsive
-                        design and accessibility.
-                      </p>
-                      <ul className="list-disc pl-5">
-                        <li>Built interactive dashboards using React and D3.js</li>
-                        <li>Implemented responsive designs for mobile and tablet devices</li>
-                        <li>Optimized application performance and loading times</li>
-                        <li>Integrated with RESTful APIs and third-party services</li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-
-                 {/* Experience Item 3 */}
-                 <div className="relative border-l border-muted pl-6">
-                  <div className="absolute left-0 top-1 h-3 w-3 -translate-x-1.5 rounded-full bg-primary"></div>
-                  <div className="flex flex-col gap-1">
-                    <div className="flex items-center justify-between">
-                      <h3 className="text-xl font-medium">Junior Web Developer</h3>
-                      <Badge variant="outline">2016 - 2018</Badge>
-                    </div>
-                    <p className="text-muted-foreground flex items-center gap-1">
-                      Digital Solutions Agency <ExternalLink className="h-3.5 w-3.5" />
-                    </p>
-                    <div className="mt-2 text-muted-foreground">
-                      <p className="mb-2">
-                        Started as an intern and grew into a full-time role, working on various client websites and
-                        e-commerce platforms.
-                      </p>
-                      <ul className="list-disc pl-5">
-                        <li>Developed responsive websites using HTML, CSS, and JavaScript</li>
-                        <li>Created and maintained WordPress themes and plugins</li>
-                        <li>Assisted with UX research and wireframing</li>
-                        <li>Participated in client meetings and requirement gathering</li>
-                      </ul>
-                    </div>
-                  </div>
                 </div>
               </div>
             </TabsContent>

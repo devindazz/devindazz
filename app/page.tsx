@@ -1,5 +1,6 @@
 'use client'; 
 
+import AboutMe from "@/components/about-me";
 import { HeroSection } from "@/components/hero-section";
 import { ProfilePhoto } from "@/components/profile-photo";
 import { motion } from "framer-motion";
@@ -33,6 +34,10 @@ export default function Page() {
 
       <div className="mx-auto">
         <HeroSection />
+      </div>
+
+      <div className ="mx-auto">
+        <AboutMe />
       </div>
 
       
