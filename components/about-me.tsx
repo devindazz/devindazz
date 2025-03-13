@@ -121,7 +121,7 @@ export default function AboutMe() {
                           "Tailwind CSS, Styled Components",
                           "Responsive Design, Accessibility",
                         ],
-                        color: "from-blue-500 to-cyan-400",
+                        color: "from-gray-500 to-zinc-400",
                       },
                       {
                         title: "Backend Development",
@@ -131,7 +131,7 @@ export default function AboutMe() {
                           "RESTful APIs, GraphQL",
                           "Serverless Functions",
                         ],
-                        color: "from-purple-500 to-indigo-500",
+                        color: "from-gray-500 to-zinc-500",
                       },
                       {
                         title: "Tools & Practices",
@@ -141,7 +141,7 @@ export default function AboutMe() {
                           "Agile Methodologies",
                           "Performance Optimization",
                         ],
-                        color: "from-amber-500 to-orange-400",
+                        color: "from-gray-500 to-zinc-400",
                       },
                       {
                         title: "Design & Collaboration",
@@ -151,7 +151,7 @@ export default function AboutMe() {
                           "Cross-functional Teamwork",
                           "Technical Documentation",
                         ],
-                        color: "from-emerald-500 to-green-400",
+                        color: "from-gray-500 to-zinc-400",
                       },
                     ].map((category, index) => (
                       <div key={index} className="group relative">
@@ -313,21 +313,21 @@ export default function AboutMe() {
                     description: "A full-stack e-commerce solution built with Next.js, Stripe, and a headless CMS.",
                     year: "2023",
                     tags: ["Next.js", "Stripe", "Tailwind"],
-                    color: "from-violet-600 to-indigo-600",
+                    color: "from-slate-600 to-stone-600",
                   },
                   {
                     title: "Health Tracking App",
                     description: "A mobile-first web application for tracking health metrics with data visualization.",
                     year: "2022",
                     tags: ["React", "D3.js", "Firebase"],
-                    color: "from-emerald-600 to-teal-600",
+                    color: "from-slate-600 to-stone-600",
                   },
                   {
                     title: "AI Content Generator",
                     description: "A tool that leverages AI to generate marketing content for small businesses.",
                     year: "2022",
                     tags: ["OpenAI", "Node.js", "Express"],
-                    color: "from-rose-600 to-pink-600",
+                    color: "from-slate-600 to-stone-600",
                   },
                   {
                     title: "Accessibility Checker",
@@ -335,7 +335,7 @@ export default function AboutMe() {
                       "A browser extension that analyzes web pages for accessibility issues and suggests fixes.",
                     year: "2021",
                     tags: ["JavaScript", "Chrome API", "WCAG"],
-                    color: "from-amber-600 to-yellow-600",
+                    color: "from-slate-600 to-stone-600",
                   },
                 ].map((project, index) => (
                   <div key={index} className="group relative h-full">
