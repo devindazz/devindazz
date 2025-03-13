@@ -121,7 +121,7 @@ export default function AboutMe() {
                           "Tailwind CSS, Styled Components",
                           "Responsive Design, Accessibility",
                         ],
-                        color: "from-blue-500 to-cyan-400",
+                        color: "from-gray-500 to-sinc-400",
                       },
                       {
                         title: "Backend Development",
@@ -131,7 +131,7 @@ export default function AboutMe() {
                           "RESTful APIs, GraphQL",
                           "Serverless Functions",
                         ],
-                        color: "from-purple-500 to-indigo-500",
+                        color: "from-gray-500 to-sinc-500",
                       },
                       {
                         title: "Tools & Practices",
@@ -141,7 +141,7 @@ export default function AboutMe() {
                           "Agile Methodologies",
                           "Performance Optimization",
                         ],
-                        color: "from-amber-500 to-orange-400",
+                        color: "from-gray-500 to-sinc-400",
                       },
                       {
                         title: "Design & Collaboration",
@@ -151,7 +151,7 @@ export default function AboutMe() {
                           "Cross-functional Teamwork",
                           "Technical Documentation",
                         ],
-                        color: "from-emerald-500 to-green-400",
+                        color: "from-gray-500 to-sinc-400",
                       },
                     ].map((category, index) => (
                       <div key={index} className="group relative">
