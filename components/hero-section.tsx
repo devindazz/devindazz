@@ -1,47 +1,66 @@
-"use client"
+"use client";
 
-import type React from "react"
+import type React from "react";
 
-import { useRef } from "react"
-import { useTheme } from "next-themes"
-import { Button } from "@/components/ui/button"
-import { ArrowRight, Github, Linkedin } from "lucide-react"
-import Link from "next/link"
-import { motion, useScroll, useTransform, useMotionValue, useSpring } from "framer-motion"
+import { useRef } from "react";
+import { useTheme } from "next-themes";
+import { Button } from "@/components/ui/button";
+import { ArrowRight, Github, Linkedin } from "lucide-react";
+import Link from "next/link";
+import {
+  motion,
+  useScroll,
+  useTransform,
+  useMotionValue,
+  useSpring,
+} from "framer-motion";
 
 export function HeroSection() {
-  const { theme } = useTheme()
-  const containerRef = useRef<HTMLDivElement>(null)
-  const mouseX = useMotionValue(0)
-  const mouseY = useMotionValue(0)
+  const { theme } = useTheme();
+  const containerRef = useRef<HTMLDivElement>(null);
+  const mouseX = useMotionValue(0);
+  const mouseY = useMotionValue(0);
 
   // Parallax effect for mouse movement
   const handleMouseMove = (e: React.MouseEvent) => {
-    const { clientX, clientY } = e
-    const { left, top, width, height } = containerRef.current?.getBoundingClientRect() || {
-      left: 0,
-      top: 0,
-      width: 0,
-      height: 0,
-    }
-    const x = (clientX - left) / width - 0.5
-    const y = (clientY - top) / height - 0.5
+    const { clientX, clientY } = e;
+    const { left, top, width, height } =
+      containerRef.current?.getBoundingClientRect() || {
+        left: 0,
+        top: 0,
+        width: 0,
+        height: 0,
+      };
+    const x = (clientX - left) / width - 0.5;
+    const y = (clientY - top) / height - 0.5;
 
-    mouseX.set(x)
-    mouseY.set(y)
-  }
+    mouseX.set(x);
+    mouseY.set(y);
+  };
 
   // Smooth spring physics for mouse movement
-  const springConfig = { damping: 25, stiffness: 150 }
-  const rotateX = useSpring(useTransform(mouseY, [-0.5, 0.5], [10, -10]), springConfig)
-  const rotateY = useSpring(useTransform(mouseX, [-0.5, 0.5], [-10, 10]), springConfig)
-  const translateX = useSpring(useTransform(mouseX, [-0.5, 0.5], [-20, 20]), springConfig)
-  const translateY = useSpring(useTransform(mouseY, [-0.5, 0.5], [-20, 20]), springConfig)
+  const springConfig = { damping: 25, stiffness: 150 };
+  const rotateX = useSpring(
+    useTransform(mouseY, [-0.5, 0.5], [10, -10]),
+    springConfig,
+  );
+  const rotateY = useSpring(
+    useTransform(mouseX, [-0.5, 0.5], [-10, 10]),
+    springConfig,
+  );
+  const translateX = useSpring(
+    useTransform(mouseX, [-0.5, 0.5], [-20, 20]),
+    springConfig,
+  );
+  const translateY = useSpring(
+    useTransform(mouseY, [-0.5, 0.5], [-20, 20]),
+    springConfig,
+  );
 
   // Scroll-based animations
-  const { scrollYProgress } = useScroll()
-  const opacity = useTransform(scrollYProgress, [0, 0.2], [1, 0])
-  const scale = useTransform(scrollYProgress, [0, 0.2], [1, 0.9])
+  const { scrollYProgress } = useScroll();
+  const opacity = useTransform(scrollYProgress, [0, 0.2], [1, 0]);
+  const scale = useTransform(scrollYProgress, [0, 0.2], [1, 0.9]);
 
   return (
     <motion.div
@@ -86,16 +105,16 @@ export function HeroSection() {
             }}
           >
             <motion.h1
-              className="bg-gradient-to-r from-primary via-purple-500 to-primary/60 bg-clip-text text-6xl font-extrabold tracking-tight text-transparent drop-shadow-[0_5px_15px_rgba(124,58,237,0.4)] sm:text-7xl md:text-8xl"
+              className="bg-gradient-to-r from-gray-300 via-gray-500 to-white bg-clip-text text-6xl font-extrabold tracking-tight text-transparent drop-shadow-[0_5px_15px_rgba(0,0,0,0.4)] sm:text-7xl md:text-8xl"
               style={{
-                textShadow: "0 10px 30px rgba(0,0,0,0.1)",
+                textShadow: "0 5px 15px rgba(0, 0, 0, 0.5)",
               }}
             >
               Devinda
             </motion.h1>
 
             {/* Text shadow/glow effect */}
-            <div className="absolute left-0 top-0 -z-10 select-none bg-gradient-to-r from-primary via-purple-500 to-primary/60 bg-clip-text text-6xl font-extrabold tracking-tight text-transparent opacity-30 blur-xl sm:text-7xl md:text-8xl">
+            <div className="absolute left-0 top-0 -z-10 select-none bg-gradient-to-r from-primary via-gray-300 to-primary/60 bg-clip-text text-6xl font-extrabold tracking-tight text-transparent opacity-30 blur-xl sm:text-7xl md:text-8xl">
               Devinda
             </div>
           </motion.div>
@@ -115,7 +134,7 @@ export function HeroSection() {
 
           {/* Animated divider */}
           <motion.div
-            className="mt-6 h-1 w-20 rounded-full bg-gradient-to-r from-primary to-purple-500"
+            className="mt-6 h-1 w-20 rounded-full bg-gradient-to-r from-primary to-gray-300"
             initial={{ width: 0 }}
             animate={{ width: 80 }}
             transition={{ delay: 0.7, duration: 0.9 }}
@@ -144,7 +163,7 @@ export function HeroSection() {
                 <motion.span className="relative z-10 ml-2 transition-transform duration-300 group-hover:translate-x-1">
                   <ArrowRight className="h-4 w-4" />
                 </motion.span>
-                <span className="absolute inset-0 -z-10 bg-gradient-to-r from-primary to-purple-500 opacity-100 transition-all duration-300 group-hover:opacity-90"></span>
+                <span className="absolute inset-0 -z-10 bg-gradient-to-r from-primary to-white opacity-100 transition-all duration-300 group-hover:opacity-90"></span>
               </Link>
             </Button>
 
@@ -155,7 +174,7 @@ export function HeroSection() {
             >
               <Link href="#contact">
                 <span className="relative z-10">Contact Me</span>
-                <span className="absolute inset-0 -z-10 bg-gradient-to-r from-primary/10 to-purple-500/10 opacity-0 transition-all duration-300 group-hover:opacity-100"></span>
+                <span className="absolute inset-0 -z-10 bg-gradient-to-r from-primary/10 to-gray-500/80 opacity-0 transition-all duration-300 group-hover:opacity-100"></span>
               </Link>
             </Button>
           </motion.div>
@@ -176,7 +195,11 @@ export function HeroSection() {
               className="group rounded-full transition-all duration-300 hover:bg-primary/10 hover:shadow-lg hover:shadow-primary/20"
               asChild
             >
-              <Link href="https://github.com/devindazz" target="_blank" rel="noopener noreferrer">
+              <Link
+                href="https://github.com/devindazz"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 <Github className="h-5 w-5 transition-transform duration-300 group-hover:scale-110" />
                 <span className="sr-only">GitHub</span>
               </Link>
@@ -212,10 +235,11 @@ export function HeroSection() {
           repeatType: "reverse",
         }}
       >
-        <p className="mb-2 text-sm text-white/70 dark:text-white/70">Scroll Down</p>
+        <p className="mb-2 text-sm text-white/70 dark:text-white/70">
+          Scroll Down
+        </p>
         <div className="h-6 w-[1px] bg-gradient-to-b from-primary to-transparent" />
       </motion.div>
     </motion.div>
-  )
+  );
 }
-
