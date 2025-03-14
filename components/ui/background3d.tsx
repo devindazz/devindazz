@@ -1,26 +1,32 @@
 "use client"
 
-import { useRef, useState } from "react"
-import { Canvas, useFrame, useThree } from "@react-three/fiber"
+import { useRef, useState, useEffect } from "react"
+import { Canvas, useFrame } from "@react-three/fiber"
 import { Points, PointMaterial, Environment } from "@react-three/drei"
 import * as THREE from "three"
-import { useMousePosition } from "@/hooks/use-mouse-position"
 
-// Custom hook to get mouse position in normalized coordinates (-1 to 1)
-export function useMousePosition3D() {
-  const mousePosition = useMousePosition()
-  const { viewport } = useThree()
+// Custom hook to get mouse position
+function useMousePosition() {
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 })
 
-  // Convert screen coordinates to normalized 3D space
-  const x = (mousePosition.x / window.innerWidth) * 2 - 1
-  const y = -(mousePosition.y / window.innerHeight) * 2 + 1
+  useEffect(() => {
+    const handleMouseMove = (event: MouseEvent) => {
+      setMousePosition({
+        x: (event.clientX / window.innerWidth) * 2 - 1,
+        y: -(event.clientY / window.innerHeight) * 2 + 1,
+      })
+    }
 
-  return { x, y }
+    window.addEventListener("mousemove", handleMouseMove)
+    return () => window.removeEventListener("mousemove", handleMouseMove)
+  }, [])
+
+  return mousePosition
 }
 
 function ParticleField({ count = 5000, color = "#ffffff", size = 0.015, depth = 50 }) {
-  const points = useRef()
-  const mousePosition = useMousePosition3D()
+  const points = useRef<THREE.Points>(null)
+  const mousePosition = useMousePosition()
 
   // Generate random points in a 3D space
   const [positions] = useState(() => {
@@ -43,11 +49,16 @@ function ParticleField({ count = 5000, color = "#ffffff", size = 0.015, depth = 
 
     // Pulse the particles
     const time = state.clock.getElapsedTime()
-    points.current.material.size = size * (1 + 0.1 * Math.sin(time * 0.5))
+    if (points.current.material instanceof THREE.PointsMaterial) {
+      points.current.material.size = size * (1 + 0.1 * Math.sin(time * 0.5))
+    }
   })
 
   return (
-    <Points ref={points} positions={positions} stride={3}>
+    <Points ref={points}>
+      <bufferGeometry>
+        <bufferAttribute attach="attributes-position" args={[positions, 3]} />
+      </bufferGeometry>
       <PointMaterial
         transparent
         color={color}
@@ -61,8 +72,8 @@ function ParticleField({ count = 5000, color = "#ffffff", size = 0.015, depth = 
 }
 
 function MovingLights() {
-  const light1 = useRef()
-  const light2 = useRef()
+  const light1 = useRef<THREE.PointLight>(null)
+  const light2 = useRef<THREE.PointLight>(null)
 
   useFrame(({ clock }) => {
     const time = clock.getElapsedTime()
@@ -100,3 +111,5 @@ export function Background3D({ className = "" }) {
   )
 }
 
+export default Background3D
+// Compare this snippet from components/ui/background3d.tsx:
