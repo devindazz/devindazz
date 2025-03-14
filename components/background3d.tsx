@@ -1,32 +1,26 @@
 "use client"
 
-import { useRef, useState, useEffect } from "react"
-import { Canvas, useFrame } from "@react-three/fiber"
+import { useRef, useState } from "react"
+import { Canvas, useFrame, useThree } from "@react-three/fiber"
 import { Points, PointMaterial, Environment } from "@react-three/drei"
 import * as THREE from "three"
+import { useMousePosition } from "@/hooks/use-mouse-position"
 
-// Custom hook to get mouse position
-function useMousePosition() {
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 })
+// Custom hook to get mouse position in normalized coordinates (-1 to 1)
+export function useMousePosition3D() {
+  const mousePosition = useMousePosition()
+  const { size } = useThree()
 
-  useEffect(() => {
-    const handleMouseMove = (event: MouseEvent) => {
-      setMousePosition({
-        x: (event.clientX / window.innerWidth) * 2 - 1,
-        y: -(event.clientY / window.innerHeight) * 2 + 1,
-      })
-    }
+  // Convert screen coordinates to normalized 3D space
+  const x = (mousePosition.x / size.width) * 2 - 1
+  const y = -(mousePosition.y / size.height) * 2 + 1
 
-    window.addEventListener("mousemove", handleMouseMove)
-    return () => window.removeEventListener("mousemove", handleMouseMove)
-  }, [])
-
-  return mousePosition
+  return { x, y }
 }
 
 function ParticleField({ count = 5000, color = "#ffffff", size = 0.015, depth = 50 }) {
   const points = useRef<THREE.Points>(null)
-  const mousePosition = useMousePosition()
+  const mousePosition = useMousePosition3D()
 
   // Generate random points in a 3D space
   const [positions] = useState(() => {
@@ -49,16 +43,14 @@ function ParticleField({ count = 5000, color = "#ffffff", size = 0.015, depth = 
 
     // Pulse the particles
     const time = state.clock.getElapsedTime()
-    if (points.current.material instanceof THREE.PointsMaterial) {
-      points.current.material.size = size * (1 + 0.1 * Math.sin(time * 0.5))
+    const material = points.current.material as THREE.PointsMaterial
+    if (material) {
+      material.size = size * (1 + 0.1 * Math.sin(time * 0.5))
     }
   })
 
   return (
-    <Points ref={points}>
-      <bufferGeometry>
-        <bufferAttribute attach="attributes-position" args={[positions, 3]} />
-      </bufferGeometry>
+    <Points ref={points} positions={positions} stride={3}>
       <PointMaterial
         transparent
         color={color}
@@ -110,6 +102,3 @@ export function Background3D({ className = "" }) {
     </div>
   )
 }
-
-export default Background3D
-// Compare this snippet from components/ui/background3d.tsx:

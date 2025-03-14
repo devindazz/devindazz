@@ -1,15 +1,21 @@
 'use client'; 
 
 import AboutMe from "@/components/about-me";
+import { Background3D } from "@/components/background3d";
 import { HeroSection } from "@/components/hero-section";
 import { ProfilePhoto } from "@/components/profile-photo";
+
 import { motion } from "framer-motion";
 import Link from "next/link";
 
 export default function Page() {
   return ( 
     
-    <main>
+    <main className="relative min-h-screen">
+      <div>
+        <Background3D />
+      </div>
+      
 
       <div className="fixed top-0 left-0 right-0 flex items-center justify-between p-4 bg-background/80 backdrop-blur-sm z-10"> 
         <motion.div
