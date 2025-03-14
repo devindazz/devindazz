@@ -47,42 +47,12 @@ export function HeroSection() {
     <motion.div
       ref={containerRef}
       onMouseMove={handleMouseMove}
-      className="relative flex h-screen w-full flex-col items-center justify-center overflow-hidden bg-background"
+      className="relative flex h-screen w-full flex-col items-center justify-center overflow-hidden"
       style={{ opacity, scale }}
     >
-      {/* 3D Animated Background Elements */}
-      <div className="absolute inset-0 overflow-hidden">
-        {/* Gradient Orbs */}
-        <motion.div
-          className="absolute -left-20 -top-20 h-96 w-96 rounded-full bg-gradient-to-r from-primary/20 to-purple-500/20 blur-3xl"
-          animate={{
-            x: [0, 30, 0],
-            y: [0, 20, 0],
-          }}
-          transition={{
-            duration: 8,
-            repeat: Number.POSITIVE_INFINITY,
-            repeatType: "reverse",
-          }}
-        />
-
-        <motion.div
-          className="absolute -bottom-32 -right-32 h-96 w-96 rounded-full bg-gradient-to-r from-blue-500/20 to-primary/20 blur-3xl"
-          animate={{
-            x: [0, -30, 0],
-            y: [0, -20, 0],
-          }}
-          transition={{
-            duration: 10,
-            repeat: Number.POSITIVE_INFINITY,
-            repeatType: "reverse",
-          }}
-        />
-      </div>
-
       {/* Glassmorphism Card */}
       <motion.div
-        className="z-10 flex flex-col items-center justify-center rounded-3xl border border-white/10 bg-white/5 px-8 py-12 backdrop-blur-xl dark:bg-black/5 md:px-12"
+        className="z-10 flex flex-col items-center justify-center rounded-3xl border border-white/10 bg-black/10 px-8 py-12 backdrop-blur-xl dark:bg-white/5 md:px-12"
         style={{
           rotateX,
           rotateY,
@@ -230,43 +200,6 @@ export function HeroSection() {
         </motion.div>
       </motion.div>
 
-      {/* Floating 3D elements */}
-      <motion.div
-        className="absolute -bottom-10 -left-10 z-0 h-40 w-40 rounded-full border border-primary/20 bg-gradient-to-r from-primary/5 to-transparent backdrop-blur-md"
-        style={{
-          x: translateX,
-          y: translateY,
-          rotate: rotateY,
-          transformStyle: "preserve-3d",
-        }}
-        animate={{
-          y: [0, -10, 0],
-        }}
-        transition={{
-          duration: 4,
-          repeat: Number.POSITIVE_INFINITY,
-          repeatType: "reverse",
-        }}
-      />
-
-      <motion.div
-        className="absolute -right-5 top-1/4 z-0 h-24 w-24 rounded-full border border-primary/20 bg-gradient-to-l from-primary/5 to-transparent backdrop-blur-md"
-        style={{
-          x: translateX,
-          y: translateY,
-          rotate: rotateX,
-          transformStyle: "preserve-3d",
-        }}
-        animate={{
-          y: [0, 10, 0],
-        }}
-        transition={{
-          duration: 5,
-          repeat: Number.POSITIVE_INFINITY,
-          repeatType: "reverse",
-        }}
-      />
-
       {/* Scroll indicator */}
       <motion.div
         className="absolute bottom-8 left-1/2 z-20 flex -translate-x-1/2 flex-col items-center"
@@ -279,7 +212,7 @@ export function HeroSection() {
           repeatType: "reverse",
         }}
       >
-        <p className="mb-2 text-sm text-muted-foreground">Scroll Down</p>
+        <p className="mb-2 text-sm text-white/70 dark:text-white/70">Scroll Down</p>
         <div className="h-6 w-[1px] bg-gradient-to-b from-primary to-transparent" />
       </motion.div>
     </motion.div>
