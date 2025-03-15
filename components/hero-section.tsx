@@ -21,7 +21,6 @@ export function HeroSection() {
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
 
-  // Parallax effect for mouse movement
   const handleMouseMove = (e: React.MouseEvent) => {
     const { clientX, clientY } = e;
     const { left, top, width, height } =
@@ -38,7 +37,6 @@ export function HeroSection() {
     mouseY.set(y);
   };
 
-  // Smooth spring physics for mouse movement
   const springConfig = { damping: 25, stiffness: 150 };
   const rotateX = useSpring(
     useTransform(mouseY, [-0.5, 0.5], [10, -10]),
@@ -57,9 +55,8 @@ export function HeroSection() {
     springConfig,
   );
 
-  // Scroll-based animations
   const { scrollYProgress } = useScroll();
-  const opacity = useTransform(scrollYProgress, [0, 0.2], [1, 0]);
+  const opacity = useTransform(scrollYProgress, [0, 0.2], [1, 0.3]);
   const scale = useTransform(scrollYProgress, [0, 0.2], [1, 0.9]);
 
   return (
@@ -69,7 +66,6 @@ export function HeroSection() {
       className="relative flex h-screen w-full flex-col items-center justify-center overflow-hidden"
       style={{ opacity, scale }}
     >
-      {/* Glassmorphism Card */}
       <motion.div
         className="z-10 flex flex-col items-center justify-center rounded-3xl border border-white/10 bg-slate-950 px-8 py-12 backdrop-blur-xl dark:bg-white/5 md:px-12"
         style={{
@@ -79,7 +75,6 @@ export function HeroSection() {
           transformStyle: "preserve-3d",
         }}
       >
-        {/* 3D Layered Content */}
         <motion.div className="flex flex-col items-center justify-center text-center">
           {/* Greeting with 3D transform */}
           <motion.p
@@ -94,7 +89,6 @@ export function HeroSection() {
             Hello, I'm
           </motion.p>
 
-          {/* Name with 3D effect and enhanced gradient */}
           <motion.div
             className="relative"
             initial={{ opacity: 0, x: -20 }}
@@ -113,13 +107,11 @@ export function HeroSection() {
               Devinda
             </motion.h1>
 
-            {/* Text shadow/glow effect */}
             <div className="absolute left-0 top-0 -z-10 select-none bg-gradient-to-r from-primary via-gray-300 to-primary/60 bg-clip-text text-6xl font-extrabold tracking-tight text-transparent opacity-30 blur-xl sm:text-7xl md:text-8xl">
               Devinda
             </div>
           </motion.div>
 
-          {/* Title with 3D transform */}
           <motion.h2
             className="mt-4 text-2xl text-slate-500 font-semibold text-foreground md:text-3xl"
             initial={{ opacity: 0 }}
@@ -132,7 +124,6 @@ export function HeroSection() {
             Software Engineering Student
           </motion.h2>
 
-          {/* Animated divider */}
           <motion.div
             className="mt-6 h-1 w-20 rounded-full bg-gradient-to-r from-primary to-gray-300"
             initial={{ width: 0 }}
@@ -144,7 +135,6 @@ export function HeroSection() {
             }}
           />
 
-          {/* Buttons with 3D hover effect */}
           <motion.div
             className="mt-8 flex flex-wrap gap-4"
             initial={{ opacity: 0, y: 40 }}
@@ -179,7 +169,6 @@ export function HeroSection() {
             </Button>
           </motion.div>
 
-          {/* Social icons with 3D hover effect */}
           <motion.div
             className="mt-8 flex gap-4"
             initial={{ opacity: 0 }}
@@ -223,7 +212,6 @@ export function HeroSection() {
         </motion.div>
       </motion.div>
 
-      {/* Scroll indicator */}
       <motion.div
         className="absolute bottom-8 left-1/2 z-20 flex -translate-x-1/2 flex-col items-center"
         animate={{
@@ -238,7 +226,7 @@ export function HeroSection() {
         <p className="mb-2 text-sm text-white/70 dark:text-white/70">
           Scroll Down
         </p>
-        <div className="h-6 w-[1px] bg-gradient-to-b from-primary to-transparent" />
+        <div className="h-6 w-[1px] bg-gradient-to-b bg-gray-500 from-primary to-transparent" />
       </motion.div>
     </motion.div>
   );

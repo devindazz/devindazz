@@ -8,7 +8,7 @@ import AboutMe from "@/components/about-me"
 export default function Home() {
   const [mounted, setMounted] = useState(false)
 
-  // Prevent hydration mismatch by only rendering after mount
+  
   useEffect(() => {
     setMounted(true)
   }, [])
@@ -27,7 +27,7 @@ export default function Home() {
         <AboutMe />
       </div>
 
-      {/* Rest of your page content goes here */}
+      
     </main>
   )
 }

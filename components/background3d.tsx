@@ -6,12 +6,10 @@ import { Points, PointMaterial, Environment } from "@react-three/drei"
 import * as THREE from "three"
 import { useMousePosition } from "@/hooks/use-mouse-position"
 
-// Custom hook to get mouse position in normalized coordinates (-1 to 1)
 export function useMousePosition3D() {
   const mousePosition = useMousePosition()
   const { size } = useThree()
 
-  // Convert screen coordinates to normalized 3D space
   const x = (mousePosition.x / size.width) * 2 - 1
   const y = -(mousePosition.y / size.height) * 2 + 1
 
@@ -22,7 +20,6 @@ function ParticleField({ count = 5000, color = "#ffffff", size = 0.015, depth = 
   const points = useRef<THREE.Points>(null)
   const mousePosition = useMousePosition3D()
 
-  // Generate random points in a 3D space
   const [positions] = useState(() => {
     const positions = new Float32Array(count * 3)
     for (let i = 0; i < count; i++) {
@@ -37,11 +34,9 @@ function ParticleField({ count = 5000, color = "#ffffff", size = 0.015, depth = 
   useFrame((state) => {
     if (!points.current) return
 
-    // Rotate the entire particle field slowly
     points.current.rotation.x = THREE.MathUtils.lerp(points.current.rotation.x, mousePosition.y * 0.2, 0.01)
     points.current.rotation.y = THREE.MathUtils.lerp(points.current.rotation.y, mousePosition.x * 0.2, 0.01)
 
-    // Pulse the particles
     const time = state.clock.getElapsedTime()
     const material = points.current.material as THREE.PointsMaterial
     if (material) {
