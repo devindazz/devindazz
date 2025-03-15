@@ -1,30 +1,29 @@
-import type React from "react"
-import type { Metadata } from "next"
-import { Inter } from "next/font/google"
-import "./globals.css"
-import { ThemeProvider } from "@/components/theme-provider"
-import { ColorProvider } from "./color-context"
+import "@/styles/globals.css";
 
-const inter = Inter({ subsets: ["latin"] })
+import { geistMono, geistSans } from "@/styles/fonts";
+
+import { cn } from "@/styles/utils";
+
+import type { Metadata, Viewport } from "next";
 
 export const metadata: Metadata = {
-  title: "Devinda's Portfolio",
-  description: "Software Engineering Student Portfolio",
-}
+  title: "devinda",
+  description: "something about me",
+};
+
+
 
 export default function RootLayout({
   children,
 }: Readonly<{
-  children: React.ReactNode
+  children: React.ReactNode;
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={inter.className}>
-        <ThemeProvider attribute="class" defaultTheme="dark" enableSystem disableTransitionOnChange>
-          <ColorProvider>{children}</ColorProvider>
-        </ThemeProvider>
+      <body className={cn(geistSans.variable, geistMono.variable)}>
+        {children}
       </body>
     </html>
-  )
+    
+  );
 }
-
