@@ -23,9 +23,6 @@ export default function Home() {
         <HeroSection />
       </div>
 
-      <div>
-        <AboutMe />
-      </div>
 
       
     </main>
