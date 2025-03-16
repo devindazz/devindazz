@@ -1,29 +1,24 @@
-import "@/styles/globals.css";
+import type React from "react"
+import "../styles/globals.css";
 
-import { geistMono, geistSans } from "@/styles/fonts";
+import { Inter } from "next/font/google"
 
-import { cn } from "@/styles/utils";
+const inter = Inter({ subsets: ["latin"] })
 
-import type { Metadata, Viewport } from "next";
-
-export const metadata: Metadata = {
-  title: "devinda",
-  description: "something about me",
-};
-
-
+export const metadata = {
+  title: "Devinda - Software Engineer Student",
+  description: "Personal portfolio of Devinda, a software engineer student",
+}
 
 export default function RootLayout({
   children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+}: {
+  children: React.ReactNode
+}) {
   return (
-    <html lang="en" suppressHydrationWarning>
-      <body className={cn(geistSans.variable, geistMono.variable)}>
-        {children}
-      </body>
+    <html lang="en">
+      <body className={inter.className}>{children}</body>
     </html>
-    
-  );
+  )
 }
+
