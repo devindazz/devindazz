@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react"
 import Image from "next/image"
 import { motion } from "framer-motion"
+import DaytimeParticleBackground from "@/components/ui/daytime-particles"
 
 export default function AboutPage() {
   const [mounted, setMounted] = useState(false)
@@ -23,6 +24,11 @@ export default function AboutPage() {
         backgroundRepeat: "no-repeat",
       }}
     >
+      {/* Daytime Particle Animation */}
+      <div className="absolute inset-0 z-0 opacity-40">
+        <DaytimeParticleBackground />
+      </div>
+
       {/* Content Container */}
       <div className="relative z-10 min-h-screen w-full px-8 py-16 md:px-16 lg:px-24 flex flex-col">
         {/* Back to Home Link */}
@@ -74,7 +80,6 @@ export default function AboutPage() {
                 width={224}
                 height={224}
                 className="object-cover"
-           
               />
             </div>
           </motion.div>
