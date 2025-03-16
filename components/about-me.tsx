@@ -1,148 +1,91 @@
 "use client"
 
-import { useRef } from "react"
-import Image from "next/image"
-import { motion, useScroll, useTransform } from "framer-motion"
-import { useTheme } from "next-themes"
+import { useState, useEffect } from "react"
+import { motion } from "framer-motion"
+import Link from "next/link"
 
-export default function AboutMe() {
-  const { theme } = useTheme()
-  const containerRef = useRef<HTMLDivElement>(null)
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ["start end", "end start"],
-  })
+export default function AboutPage() {
+  const [mounted, setMounted] = useState(false)
 
-  // Parallax effect for the background image
-  const backgroundY = useTransform(scrollYProgress, [0, 1], ["0%", "30%"])
+  useEffect(() => {
+    setMounted(true)
+  }, [])
 
-  // Fade in and slide up animations for content
-  const contentOpacity = useTransform(scrollYProgress, [0, 0.2, 0.3], [0, 0.8, 1])
-  const contentY = useTransform(scrollYProgress, [0, 0.3], ["50px", "0px"])
-
-  // Subtle rotation for 3D effect
-  const rotation = useTransform(scrollYProgress, [0, 0.5], [2, 0])
+  if (!mounted) return null
 
   return (
-    <section ref={containerRef} className="relative min-h-screen w-full overflow-hidden py-20" id="about">
-      {/* Background image with parallax effect */}
-      <motion.div className="absolute inset-0 z-0" style={{ y: backgroundY }}>
-        <Image
-          src="/background.jpg"
-          alt="Night sky with stars"
-          fill
-          className="object-cover object-center"
-          priority
-        />
+    <div
+      className="relative min-h-screen w-full overflow-hidden"
+      style={{
+        backgroundImage:
+          "url('https://hebbkx1anhila5yf.public.blob.vercel-storage.com/wallpaperflare.com_wallpaper%20%281%29.jpg-np5pm99ksVXAjhoYXm6jIwYxxxWdFI.jpeg')",
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        backgroundRepeat: "no-repeat",
+      }}
+    >
+      {/* Content Container */}
+      <div className="relative z-10 min-h-screen w-full px-8 py-16 md:px-16 lg:px-24 flex flex-col">
+        {/* Back to Home Link */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.5 }}
+          className="mb-auto"
+        >
+        </motion.div>
 
-        {/* Silhouette overlay */}
-        <div className="absolute bottom-0 left-0 right-0 h-[30%] bg-gradient-to-t from-black/80 to-transparent" />
-      </motion.div>
-
-      {/* Content container */}
-      <div className="container relative z-10 mx-auto px-4 md:px-6">
-        <div className="grid gap-12 md:grid-cols-[2fr_1fr] lg:gap-20">
-          {/* Text content */}
+        {/* Main Content - Positioned Lower */}
+        <div className="flex flex-col md:flex-row justify-between items-start mb-24 md:mb-32">
+          {/* Left Side - About Me Text */}
           <motion.div
-            className="space-y-8"
-            style={{
-              opacity: contentOpacity,
-              y: contentY,
-              rotateX: rotation,
-            }}
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="max-w-xl"
           >
-            <div className="space-y-4">
-              <motion.h2
-                className="text-4xl font-bold tracking-tight text-white md:text-5xl"
-                initial={{ opacity: 0, x: -20 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.8 }}
-                viewport={{ once: true }}
-              >
-                Something About Me !
-              </motion.h2>
+            <h2 className="text-xl text-black top-40 mb-6">something about me</h2>
 
-              <motion.div
-                className="h-1 w-20 rounded-full bg-gradient-to-r from-primary to-gray-300"
-                initial={{ width: 0 }}
-                whileInView={{ width: 80 }}
-                transition={{ delay: 0.3, duration: 0.8 }}
-                viewport={{ once: true }}
-                style={{
-                  boxShadow: "0 0 10px rgba(124,58,237,0.5)",
-                }}
-              />
-            </div>
+            <p className="text-white text-xl mb-8 top-10 leading-relaxed">
+              I'm Devinda Wijesinghe, a second-year Software Engineering student passionate about exploring different
+              technologies and building impactful software, transforming ideas into reality through code while
+              constantly learning and improving.
+            </p>
 
-            <motion.div
-              className="space-y-6 text-lg text-gray-200"
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              transition={{ delay: 0.4, duration: 0.8 }}
-              viewport={{ once: true }}
-            >
-              <p>
-                I'm Devinda Wijesinghe, a second-year Software Engineering student passionate about exploring different
-                technologies and building impactful software. I love turning ideas into reality through code while
-                constantly learning and improving.
-              </p>
-
-              <p>
-                Outside of tech, I stay active with weightlifting and enjoy unwinding at night with video games, whether
-                competing or exploring new worlds. I'm always pushing my limits—whether in development, fitness, or
-                gaming—to grow every day.
-              </p>
-            </motion.div>
+            <p className="text-white text-xl leading-relaxed">
+              Outside of tech, I stay active with weightlifting and enjoy unwinding at night with video games, whether
+              competing or exploring new worlds. I'm always pushing my limits—whether in development, fitness, or
+              gaming—to become better.
+            </p>
           </motion.div>
 
-          {/* Profile photo */}
+          {/* Right Side - Profile Photo */}
           <motion.div
-            className="flex items-center justify-center"
-            initial={{ opacity: 0, scale: 0.8 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            transition={{ delay: 0.6, duration: 0.8 }}
-            viewport={{ once: true }}
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.6, delay: 0.4 }}
+            className="mt-8 md:mt-0"
           >
-            <motion.div
-              className="relative h-60 w-60 overflow-hidden rounded-full border-4 border-white/10 bg-gray-200 shadow-xl md:h-72 md:w-72"
-              whileHover={{ scale: 1.05, boxShadow: "0 0 30px rgba(124,58,237,0.5)" }}
-              transition={{ duration: 0.3 }}
-            >
-              <div className="flex h-full w-full items-center justify-center text-center text-gray-600">
-                My Profile Photo
-              </div>
-            </motion.div>
+            <div className="w-40 h-40 md:w-48 md:h-48 lg:w-56 lg:h-56 bg-gray-200/90 rounded-full overflow-hidden flex items-center justify-center">
+              <p className="text-gray-600 text-center">
+                profile
+                <br />
+                photo
+              </p>
+              {/* Uncomment and use the Image component when you have a profile photo
+              <Image 
+                src="/your-profile-photo.jpg" 
+                alt="Devinda Wijesinghe" 
+                width={224} 
+                height={224} 
+                className="object-cover"
+              />
+              */}
+            </div>
           </motion.div>
         </div>
       </div>
-
-      {/* Decorative elements */}
-      <motion.div
-        className="absolute bottom-[20%] left-[10%] h-32 w-32 rounded-full bg-primary/20 blur-3xl"
-        animate={{
-          scale: [1, 1.2, 1],
-          opacity: [0.4, 0.6, 0.4],
-        }}
-        transition={{
-          duration: 8,
-          repeat: Number.POSITIVE_INFINITY,
-          repeatType: "reverse",
-        }}
-      />
-
-      <motion.div
-        className="absolute right-[15%] top-[30%] h-40 w-40 rounded-full bg-blue-500/20 blur-3xl"
-        animate={{
-          scale: [1, 1.3, 1],
-          opacity: [0.3, 0.5, 0.3],
-        }}
-        transition={{
-          duration: 10,
-          repeat: Number.POSITIVE_INFINITY,
-          repeatType: "reverse",
-        }}
-      />
-    </section>
+    </div>
   )
 }
 
