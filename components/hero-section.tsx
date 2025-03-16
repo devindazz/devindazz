@@ -1,233 +1,98 @@
-"use client";
+"use client"
 
-import type React from "react";
+import { useState, useEffect } from "react"
+import { Github, Linkedin, ChevronDown } from "lucide-react"
+import Link from "next/link"
 
-import { useRef } from "react";
-import { useTheme } from "next-themes";
-import { Button } from "@/components/ui/button";
-import { ArrowRight, Github, Linkedin } from "lucide-react";
-import Link from "next/link";
-import {
-  motion,
-  useScroll,
-  useTransform,
-  useMotionValue,
-  useSpring,
-} from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion"
+import LoadingAnimation from "./ui/loading-animation"
+import ParticleBackground from "./ui/particle-background"
 
-export function HeroSection() {
-  const { theme } = useTheme();
-  const containerRef = useRef<HTMLDivElement>(null);
-  const mouseX = useMotionValue(0);
-  const mouseY = useMotionValue(0);
+export default function Home() {
+  const [loading, setLoading] = useState(true)
+  const [mounted, setMounted] = useState(false)
 
-  const handleMouseMove = (e: React.MouseEvent) => {
-    const { clientX, clientY } = e;
-    const { left, top, width, height } =
-      containerRef.current?.getBoundingClientRect() || {
-        left: 0,
-        top: 0,
-        width: 0,
-        height: 0,
-      };
-    const x = (clientX - left) / width - 0.5;
-    const y = (clientY - top) / height - 0.5;
+  useEffect(() => {
+    setMounted(true)
 
-    mouseX.set(x);
-    mouseY.set(y);
-  };
+    // Simulate loading time and resources
+    const timer = setTimeout(() => {
+      setLoading(false)
+    }, 3000) // 3 seconds loading time for a more professional feel
 
-  const springConfig = { damping: 25, stiffness: 150 };
-  const rotateX = useSpring(
-    useTransform(mouseY, [-0.5, 0.5], [10, -10]),
-    springConfig,
-  );
-  const rotateY = useSpring(
-    useTransform(mouseX, [-0.5, 0.5], [-10, 10]),
-    springConfig,
-  );
-  const translateX = useSpring(
-    useTransform(mouseX, [-0.5, 0.5], [-20, 20]),
-    springConfig,
-  );
-  const translateY = useSpring(
-    useTransform(mouseY, [-0.5, 0.5], [-20, 20]),
-    springConfig,
-  );
+    return () => clearTimeout(timer)
+  }, [])
 
-  const { scrollYProgress } = useScroll();
-  const opacity = useTransform(scrollYProgress, [0, 0.2], [1, 0.3]);
-  const scale = useTransform(scrollYProgress, [0, 0.2], [1, 0.9]);
+  if (!mounted) return null
 
   return (
-    <motion.div
-      ref={containerRef}
-      onMouseMove={handleMouseMove}
-      className="relative flex h-screen w-full flex-col items-center justify-center overflow-hidden"
-      style={{ opacity, scale }}
-    >
-      <motion.div
-        className="z-10 flex flex-col items-center justify-center rounded-3xl border border-white/10 bg-slate-950 px-8 py-12 backdrop-blur-xl dark:bg-white/5 md:px-12"
-        style={{
-          rotateX,
-          rotateY,
-          transformPerspective: 1000,
-          transformStyle: "preserve-3d",
-        }}
-      >
-        <motion.div className="flex flex-col items-center justify-center text-center">
-          {/* Greeting with 3D transform */}
-          <motion.p
-            className="mb-2 font-mono text-white text-lg text-primary"
+    <>
+      <AnimatePresence mode="wait">
+        {loading ? (
+          <motion.div
+            key="loading"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ delay: 0.5 }}
-            style={{
-              transform: "translateZ(20px)",
-            }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.4 }}
           >
-            Hello, I'm
-          </motion.p>
-
+            <LoadingAnimation />
+          </motion.div>
+        ) : (
           <motion.div
-            className="relative"
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 0.9, duration: 2.1 }}
+            key="content"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.8 }}
+            className="relative min-h-screen w-full"
             style={{
-              transform: "translateZ(50px)",
+              backgroundImage:
+              "url('/night-background.jpg')",
+              backgroundSize: "cover",
+              backgroundPosition: "center",
+              backgroundRepeat: "no-repeat",
             }}
           >
-            <motion.h1
-              className="bg-gradient-to-r from-gray-300 via-gray-500 to-white bg-clip-text text-6xl font-extrabold tracking-tight text-transparent drop-shadow-[0_5px_15px_rgba(0,0,0,0.4)] sm:text-7xl md:text-8xl"
-              style={{
-                textShadow: "0 5px 15px rgba(0, 0, 0, 0.5)",
-              }}
-            >
-              Devinda
-            </motion.h1>
+            {/* Particle Animation */}
+            <div className="absolute inset-0 z-0">
+              <ParticleBackground />
+            </div>
 
-            <div className="absolute left-0 top-0 -z-10 select-none bg-gradient-to-r from-primary via-gray-300 to-primary/60 bg-clip-text text-6xl font-extrabold tracking-tight text-transparent opacity-30 blur-xl sm:text-7xl md:text-8xl">
-              Devinda
+            {/* Main Content */}
+            <div className="absolute mx-auto top-20 left-0 right-0 flex flex-col items-center justify-center text-center z-10 px-4">
+              <h2 className="text-xl font-light text-white md:text-2xl">Hello i am</h2>
+              <h1 className="text-5xl font-bold text-white md:text-7xl">Devinda</h1>
+            </div>
+
+            {/* Software Engineer */}
+            <div className="absolute top-1/2 left-0 right-0 flex flex-col items-center justify-center text-white z-10 mt-44 md:mt-20">
+              <p className="text-xl md:text-3xl">Software Engineer Student</p>
+
+              {/* Social icons - moved below the text */}
+              <div className="mt-8 flex gap-6">
+                <Link href="https://github.com/devindazz" className="transition-transform hover:scale-110">
+                  <Github size={28} className="text-white" />
+                  <span className="sr-only">GitHub</span>
+                </Link>
+                <Link
+                  href="https://www.linkedin.com/in/devinda-wijesingha-aba63b2b7/"
+                  className="transition-transform hover:scale-110"
+                >
+                  <Linkedin size={28} className="text-white" />
+                  <span className="sr-only">LinkedIn</span>
+                </Link>
+              </div>
+            </div>
+
+            {/* Scroll Indicator */}
+            <div className="absolute bottom-8 left-0 right-0 flex flex-col items-center text-white animate-bounce">
+              <p className="mb-2 text-sm">scroll down</p>
+              <ChevronDown size={24} />
             </div>
           </motion.div>
-
-          <motion.h2
-            className="mt-4 text-2xl text-slate-500 font-semibold text-foreground md:text-3xl"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.4, duration: 5.5 }}
-            style={{
-              transform: "translateZ(30px)",
-            }}
-          >
-            Software Engineering Student
-          </motion.h2>
-
-          <motion.div
-            className="mt-6 h-1 w-20 rounded-full bg-gradient-to-r from-primary to-gray-300"
-            initial={{ width: 0 }}
-            animate={{ width: 80 }}
-            transition={{ delay: 0.7, duration: 0.9 }}
-            style={{
-              transform: "translateZ(25px)",
-              boxShadow: "0 0 10px rgba(124,58,237,0.5)",
-            }}
-          />
-
-          <motion.div
-            className="mt-8 flex flex-wrap gap-4"
-            initial={{ opacity: 0, y: 40 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 1.2, duration: 1.5 }}
-            style={{
-              transform: "translateZ(40px)",
-            }}
-          >
-            <Button
-              size="lg"
-              className="group relative overflow-hidden rounded-full px-8 transition-all duration-300 hover:shadow-lg hover:shadow-primary/50"
-            >
-              <Link href="#projects" className="flex items-center">
-                <span className="relative z-10">View My Work</span>
-                <motion.span className="relative z-10 ml-2 transition-transform duration-300 group-hover:translate-x-1">
-                  <ArrowRight className="h-4 w-4" />
-                </motion.span>
-                <span className="absolute inset-0 -z-10 bg-gradient-to-r from-primary to-white opacity-100 transition-all duration-300 group-hover:opacity-90"></span>
-              </Link>
-            </Button>
-
-            <Button
-              size="lg"
-              variant="outline"
-              className="group relative overflow-hidden rounded-full border-primary/50 px-8 transition-all duration-300 hover:border-primary hover:shadow-lg hover:shadow-primary/20"
-            >
-              <Link href="#contact">
-                <span className="relative z-10">Contact Me</span>
-                <span className="absolute inset-0 -z-10 bg-gradient-to-r from-primary/10 to-gray-500/80 opacity-0 transition-all duration-300 group-hover:opacity-100"></span>
-              </Link>
-            </Button>
-          </motion.div>
-
-          <motion.div
-            className="mt-8 flex gap-4"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.8 }}
-            style={{
-              transform: "translateZ(35px)",
-            }}
-          >
-            <Button
-              variant="ghost"
-              size="icon"
-              className="group rounded-full transition-all duration-300 hover:bg-primary/10 hover:shadow-lg hover:shadow-primary/20"
-              asChild
-            >
-              <Link
-                href="https://github.com/devindazz"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <Github className="h-5 w-5 transition-transform duration-300 group-hover:scale-110" />
-                <span className="sr-only">GitHub</span>
-              </Link>
-            </Button>
-            <Button
-              variant="ghost"
-              size="icon"
-              className="group rounded-full transition-all duration-300 hover:bg-primary/10 hover:shadow-lg hover:shadow-primary/20"
-              asChild
-            >
-              <Link
-                href="https://www.linkedin.com/in/devinda-wijesingha-aba63b2b7/"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <Linkedin className="h-5 w-5 transition-transform duration-300 group-hover:scale-110" />
-                <span className="sr-only">LinkedIn</span>
-              </Link>
-            </Button>
-          </motion.div>
-        </motion.div>
-      </motion.div>
-
-      <motion.div
-        className="absolute bottom-8 left-1/2 z-20 flex -translate-x-1/2 flex-col items-center"
-        animate={{
-          y: [0, 10, 0],
-        }}
-        transition={{
-          duration: 2,
-          repeat: Number.POSITIVE_INFINITY,
-          repeatType: "reverse",
-        }}
-      >
-        <p className="mb-2 text-sm text-white/70 dark:text-white/70">
-          Scroll Down
-        </p>
-        <div className="h-6 w-[1px] bg-gradient-to-b bg-gray-500 from-primary to-transparent" />
-      </motion.div>
-    </motion.div>
-  );
+        )}
+      </AnimatePresence>
+    </>
+  )
 }
+
