@@ -1,6 +1,7 @@
 "use client"
 
 import { useState, useEffect } from "react"
+import Image from "next/image"
 import { motion } from "framer-motion"
 
 export default function AboutPage() {
@@ -42,8 +43,8 @@ export default function AboutPage() {
             className="max-w-xl"
           >
             {/* Background container for better visibility */}
-            <div className="bg-black/30 backdrop-blur-sm p-6 rounded-lg border border-white/20 shadow-lg">
-              <h2 className="text-xl text-white mb-6 font-medium">something about me</h2>
+            <div className="bg-black/30 backdrop-blur-sm p-6 rounded-lg border border-white/20 shadow-lg md:mt-0">
+              <h2 className="text-xl text-black mb-6 font-medium">Something About Me !</h2>
 
               <p className="text-white text-xl mb-8 leading-relaxed">
                 I'm Devinda Wijesinghe, a second-year Software Engineering student passionate about exploring different
@@ -53,8 +54,8 @@ export default function AboutPage() {
 
               <p className="text-white text-lg leading-relaxed">
                 Outside of tech, I stay active with weightlifting and enjoy unwinding at night with video games, whether
-                competing or exploring new worlds. I'm always pushing my limits—whether in development, fitness, or
-                gaming—to become better.
+                competing or exploring new worlds. I'm always pushing my limits whether in development, fitness, or
+                gaming to become better.
               </p>
             </div>
           </motion.div>
@@ -66,21 +67,15 @@ export default function AboutPage() {
             transition={{ duration: 0.6, delay: 0.4 }}
             className="mt-8 md:mt-0"
           >
-            <div className="w-40 h-40 md:w-48 md:h-48 top lg:w-56 lg:h-56 bg-gray-200/90 rounded-full overflow-hidden flex items-center justify-center">
-              <p className="text-gray-600 text-center">
-                profile
-                <br />
-                photo
-              </p>
-              {/* Uncomment and use the Image component when you have a profile photo
-              <Image 
-                src="/your-profile-photo.jpg" 
-                alt="Devinda Wijesinghe" 
-                width={224} 
-                height={224} 
+            <div className="w-40 h-40 -mt-20 md:w-48 md:h-48 top lg:w-56 lg:h-56 bg-gray-200/90 rounded-full overflow-hidden flex items-center justify-center">
+              <Image
+                src="/my-profile-photo.jpg"
+                alt="Devinda Wijesinghe"
+                width={224}
+                height={224}
                 className="object-cover"
+           
               />
-              */}
             </div>
           </motion.div>
         </div>
