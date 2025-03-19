@@ -23,7 +23,7 @@ const projects = [
     description:
       "A full-featured e-commerce platform with product listings, cart functionality, and payment processing.",
     techStacks: ["React", "Node.js", "MongoDB", "Stripe"],
-    imageUrl: "/placeholder.svg?height=300&width=400",
+    imageUrl: "/ecommercee.png?height=300&width=400",
     githubUrl: "https://github.com/username/ecommerce",
     liveUrl: "https://ecommerce.example.com",
   },
@@ -32,7 +32,7 @@ const projects = [
     description:
       "A weather application that displays current and forecasted weather data for any location using the OpenWeather API.",
     techStacks: ["JavaScript", "API", "CSS", "HTML"],
-    imageUrl: "/placeholder.svg?height=300&width=400",
+    imageUrl: "/weather.jpg?height=300&width=400",
     githubUrl: "https://github.com/username/weather",
     liveUrl: "https://weather.example.com",
   },
@@ -98,14 +98,14 @@ export default function ProjectsPage() {
 
             {/* Header text with letter animation */}
             <motion.h1
-              className="text-4xl md:text-4xl lg:text-3xl font-bold text-white px-8 py-4 rounded-xl 
-                        bg-black/40 backdrop-blur-md border border-white/20 shadow-lg"
+              className="text-4xl md:text-4xl lg:text-3xl font-semibold text-black px-8 py-4 rounded-xl 
+                        bg-black/10 backdrop-blur-md border border-white/20 shadow-lg"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 0.3 }}
             >
               {/* Animate each letter separately */}
-              {"My Projects".split("").map((letter, index) => (
+              {"Projects".split("").map((letter, index) => (
                 <motion.span
                   key={index}
                   initial={{ opacity: 0, y: 20 }}
