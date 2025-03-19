@@ -5,7 +5,7 @@ import { motion } from "framer-motion"
 import Image from "next/image"
 import Link from "next/link"
 import { Github, ExternalLink } from "lucide-react"
-import ParticleBackground from "@/components/ui/snow-particles"
+import ParticleBackground from "@/components/ui/snowfall-effect"
 
 // Project data - you can replace with your actual projects
 const projects = [
@@ -71,7 +71,7 @@ export default function ProjectsPage() {
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="text-white text-3xl md:text-4xl font-light mb-12 text-center"
+          className="text-gray-800 text-3xl font-semibold md:text-4xl mb-12 text-center"
         >
           My Projects
         </motion.h1>

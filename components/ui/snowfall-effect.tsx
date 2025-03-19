@@ -74,8 +74,8 @@ export default function SnowfallEffect({ density = 30 }) {
       icon: snowflakeIcons[Math.floor(Math.random() * snowflakeIcons.length)],
       x: Math.random() * width,
       size: Math.random() * 1.5 + 0.8, // Slightly larger: Size between 0.8 and 2.3
-      opacity: Math.random() * 0.5 + 0.5, // Higher opacity: between 0.5 and 1
-      delay: Math.random() * 10, // Random start delay
+      opacity: Math.random() * 1 + 1, // Higher opacity: between 0.5 and 1
+      delay: Math.random() * 1, // Random start delay
       duration: Math.random() * 10 + 10, // Fall duration between 10-20s
       blur: Math.random() > 0.8 ? Math.random() * 2 : 0, // Occasional blur for depth
       color: colors[colorIndex],
@@ -84,7 +84,7 @@ export default function SnowfallEffect({ density = 30 }) {
   }
 
   return (
-    <div className="fixed inset-0 pointer-events-none overflow-hidden">
+    <div className="absolute inset-0 pointer-events-none overflow-hidden">
       {snowflakes.map((flake) => (
         <motion.div
           key={flake.id}
