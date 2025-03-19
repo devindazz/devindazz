@@ -5,7 +5,7 @@ import { motion } from "framer-motion"
 import Image from "next/image"
 import Link from "next/link"
 import { Github, ExternalLink } from "lucide-react"
-import ParticleBackground from "@/components/ui/blue-particles"
+import ParticleBackground from "@/components/ui/snow-particles"
 
 // Project data - you can replace with your actual projects
 const projects = [
