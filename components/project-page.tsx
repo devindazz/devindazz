@@ -5,7 +5,7 @@ import { motion } from "framer-motion"
 import Image from "next/image"
 import Link from "next/link"
 import { Github, ExternalLink } from "lucide-react"
-import ParticleBackground from "@/components/ui/snowfall-effect"
+import ParticleBackground from "@/components/ui/particle-background"
 
 // Project data - you can replace with your actual projects
 const projects = [
@@ -15,8 +15,8 @@ const projects = [
       "A responsive portfolio website built with Next.js and Tailwind CSS featuring 3D animations and smooth transitions.",
     techStacks: ["Next.js", "React", "Tailwind CSS", "Three.js"],
     imageUrl: "/mediconnect.png?height=300&width=400",
-    githubUrl: "https://github.com/username/portfolio",
-    liveUrl: "https://portfolio.example.com",
+    githubUrl: "https://github.com/devindazz/mediconnect",
+    liveUrl: "https://mediconnect.lk",
   },
   {
     name: "E-commerce Platform",
@@ -52,8 +52,7 @@ export default function ProjectsPage() {
     <div
       className="relative min-h-screen w-full overflow-hidden"
       style={{
-        backgroundImage:
-          "url('https://hebbkx1anhila5yf.public.blob.vercel-storage.com/wallpaperflare.com_wallpaper%20%284%29.jpg-GIq4NaupEWLU4RGuef0h32Otee68hd.jpeg')",
+        backgroundImage: "url('/night-background.jpg')",
         backgroundSize: "cover",
         backgroundPosition: "center",
         backgroundRepeat: "no-repeat",
@@ -66,15 +65,64 @@ export default function ProjectsPage() {
 
       {/* Content Container */}
       <div className="relative z-10 min-h-screen w-full px-4 py-12 md:px-8 lg:px-16 flex flex-col">
-        {/* Page Title */}
-        <motion.h1
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          className="text-gray-800 text-3xl font-semibold md:text-4xl mb-12 text-center"
-        >
-          My Projects
-        </motion.h1>
+        {/* Page Title - Improved Header */}
+        <div className="relative flex justify-center items-center py-8 mb-6">
+          {/* Background decorative elements */}
+          <motion.div
+            className="absolute -z-10 w-64 h-64 rounded-full bg-blue-500/10 blur-3xl"
+            initial={{ opacity: 0, x: -100 }}
+            animate={{ opacity: 0.6, x: 0 }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
+          />
+          <motion.div
+            className="absolute -z-10 w-48 h-48 rounded-full bg-indigo-500/10 blur-3xl right-1/4 top-0"
+            initial={{ opacity: 0, y: -50 }}
+            animate={{ opacity: 0.5, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
+          />
+
+          {/* Main header container */}
+          <motion.div
+            className="relative"
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.5 }}
+          >
+            {/* Animated underline/accent */}
+            <motion.div
+              className="absolute -bottom-2 left-1/2 h-1 bg-blue-400 rounded-full"
+              initial={{ width: 0, x: "-50%" }}
+              animate={{ width: "40%", x: "-50%" }}
+              transition={{ delay: 0.6, duration: 0.8, ease: "easeOut" }}
+            />
+
+            {/* Header text with letter animation */}
+            <motion.h1
+              className="text-4xl md:text-4xl lg:text-3xl font-bold text-white px-8 py-4 rounded-xl 
+                        bg-black/40 backdrop-blur-md border border-white/20 shadow-lg"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.3 }}
+            >
+              {/* Animate each letter separately */}
+              {"My Projects".split("").map((letter, index) => (
+                <motion.span
+                  key={index}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{
+                    duration: 0.4,
+                    delay: 0.3 + index * 0.05,
+                    ease: "easeOut",
+                  }}
+                  className={letter === " " ? "mr-3" : ""}
+                >
+                  {letter}
+                </motion.span>
+              ))}
+            </motion.h1>
+          </motion.div>
+        </div>
 
         {/* Projects Showcase - Horizontal Layout */}
         <div className="flex-1 flex items-center justify-center mb-12">

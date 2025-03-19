@@ -1,120 +1,120 @@
 "use client"
 
-import { useEffect, useState } from "react"
-import { motion } from "framer-motion"
+import { useRef, useEffect } from "react"
+import * as THREE from "three"
 
-// Snowflake icons using Unicode snowflake characters
-const snowflakeIcons = ["❄", "❅", "❆", "✻", "✼", "✽", "❉", "❊", "❋"]
-
-interface Snowflake {
-  id: number
-  icon: string
-  x: number
-  size: number
-  opacity: number
-  delay: number
-  duration: number
-  blur: number
-  color: string
-  glow: string
-}
-
-export default function SnowfallEffect({ density = 30 }) {
-  const [snowflakes, setSnowflakes] = useState<Snowflake[]>([])
-  const [dimensions, setDimensions] = useState({ width: 0, height: 0 })
+export default function ParticleBackground() {
+  const canvasRef = useRef<HTMLCanvasElement>(null)
 
   useEffect(() => {
-    // Set initial dimensions
-    setDimensions({
-      width: window.innerWidth,
-      height: window.innerHeight,
+    if (!canvasRef.current) return
+
+    const canvas = canvasRef.current
+    const renderer = new THREE.WebGLRenderer({
+      canvas,
+      alpha: true,
+      antialias: true,
     })
 
-    // Generate snowflakes
-    const flakes: Snowflake[] = []
-    for (let i = 0; i < density; i++) {
-      flakes.push(createSnowflake(i, window.innerWidth))
-    }
-    setSnowflakes(flakes)
+    renderer.setSize(window.innerWidth, window.innerHeight)
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
 
-    // Update dimensions on resize
+    const scene = new THREE.Scene()
+    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000)
+    camera.position.z = 5
+
+    // Create particles
+    const particlesGeometry = new THREE.BufferGeometry()
+    const count = 2000
+
+    const positions = new Float32Array(count * 3)
+    const colors = new Float32Array(count * 3)
+
+    for (let i = 0; i < count * 3; i++) {
+      positions[i] = (Math.random() - 0.5) * 10
+      colors[i] = Math.random()
+    }
+
+    particlesGeometry.setAttribute("position", new THREE.BufferAttribute(positions, 3))
+    particlesGeometry.setAttribute("color", new THREE.BufferAttribute(colors, 3))
+
+    // Material
+    const particlesMaterial = new THREE.PointsMaterial({
+      size: 0.05,
+      sizeAttenuation: true,
+      transparent: true,
+      alphaMap: createCircleTexture(),
+      depthWrite: false,
+      blending: THREE.AdditiveBlending,
+      vertexColors: true,
+    })
+
+    // Points
+    const particles = new THREE.Points(particlesGeometry, particlesMaterial)
+    scene.add(particles)
+
+    // Handle resize
     const handleResize = () => {
-      setDimensions({
-        width: window.innerWidth,
-        height: window.innerHeight,
-      })
+      camera.aspect = window.innerWidth / window.innerHeight
+      camera.updateProjectionMatrix()
+      renderer.setSize(window.innerWidth, window.innerHeight)
     }
 
     window.addEventListener("resize", handleResize)
-    return () => window.removeEventListener("resize", handleResize)
-  }, [density])
 
-  // Update the createSnowflake function to include color variations and higher opacity
-  const createSnowflake = (id: number, width: number): Snowflake => {
-    // Add subtle colors to some snowflakes
-    const colors = [
-      "text-white", // Default white
-      "text-blue-100", // Very light blue
-      "text-cyan-100", // Light cyan
-      "text-indigo-100", // Light indigo
-    ]
+    // Animation
+    const animate = () => {
+      requestAnimationFrame(animate)
 
-    // Add subtle glow effects
-    const glowEffects = [
-      "", // No glow for some
-      "drop-shadow(0 0 2px rgba(255, 255, 255, 0.7))",
-      "drop-shadow(0 0 3px rgba(191, 219, 254, 0.8))", // blue-100 glow
-      "drop-shadow(0 0 3px rgba(207, 250, 254, 0.8))", // cyan-100 glow
-    ]
+      particles.rotation.y += 0.0005
+      particles.rotation.x += 0.0002
 
-    const colorIndex = Math.floor(Math.random() * colors.length)
+      // Update particle positions for snowfall effect
+      const positions = particlesGeometry.attributes.position.array as Float32Array
+      for (let i = 0; i < count; i++) {
+        const i3 = i * 3
+        positions[i3 + 1] -= 0.01 // Move down (y-axis)
 
-    return {
-      id,
-      icon: snowflakeIcons[Math.floor(Math.random() * snowflakeIcons.length)],
-      x: Math.random() * width,
-      size: Math.random() * 1.5 + 0.8, // Slightly larger: Size between 0.8 and 2.3
-      opacity: Math.random() * 1 + 1, // Higher opacity: between 0.5 and 1
-      delay: Math.random() * 1, // Random start delay
-      duration: Math.random() * 10 + 10, // Fall duration between 10-20s
-      blur: Math.random() > 0.8 ? Math.random() * 2 : 0, // Occasional blur for depth
-      color: colors[colorIndex],
-      glow: glowEffects[Math.floor(Math.random() * glowEffects.length)],
+        // Reset position when particle goes below the scene
+        if (positions[i3 + 1] < -5) {
+          positions[i3 + 1] = 5
+        }
+      }
+      particlesGeometry.attributes.position.needsUpdate = true
+
+      renderer.render(scene, camera)
     }
+
+    animate()
+
+    return () => {
+      window.removeEventListener("resize", handleResize)
+      renderer.dispose()
+      particlesGeometry.dispose()
+      particlesMaterial.dispose()
+    }
+  }, [])
+
+  // Create a circular texture for particles
+  function createCircleTexture() {
+    const canvas = document.createElement("canvas")
+    canvas.width = 64
+    canvas.height = 64
+
+    const context = canvas.getContext("2d")
+    if (!context) return new THREE.Texture()
+
+    context.beginPath()
+    context.arc(32, 32, 28, 0, Math.PI * 2)
+    context.closePath()
+    context.fillStyle = "white"
+    context.fill()
+
+    const texture = new THREE.Texture(canvas)
+    texture.needsUpdate = true
+    return texture
   }
 
-  return (
-    <div className="absolute inset-0 pointer-events-none overflow-hidden">
-      {snowflakes.map((flake) => (
-        <motion.div
-          key={flake.id}
-          className={`absolute ${flake.color}`}
-          initial={{
-            x: flake.x,
-            y: -50,
-            opacity: 0,
-          }}
-          animate={{
-            x: [flake.x - 20, flake.x + 20, flake.x - 10, flake.x + 10, flake.x],
-            y: dimensions.height + 50,
-            opacity: [0, flake.opacity, flake.opacity, flake.opacity, 0],
-          }}
-          transition={{
-            duration: flake.duration,
-            delay: flake.delay,
-            repeat: Number.POSITIVE_INFINITY,
-            ease: "linear",
-            times: [0, 0.2, 0.5, 0.8, 1],
-          }}
-          style={{
-            fontSize: `${flake.size}rem`,
-            filter: `${flake.blur ? `blur(${flake.blur}px)` : "none"} ${flake.glow}`,
-          }}
-        >
-          {flake.icon}
-        </motion.div>
-      ))}
-    </div>
-  )
+  return <canvas ref={canvasRef} className="w-full h-full" />
 }
 
