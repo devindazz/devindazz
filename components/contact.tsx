@@ -1,5 +1,6 @@
 import ContactForm from "@/components/ui/contact-form"
 import SocialLinks from "@/components/ui/social-links"
+import DaytimeParticleBackground from "./ui/daytime-particles"
 
 export default function ContactPage() {
   return (
@@ -8,11 +9,15 @@ export default function ContactPage() {
       <div
         className="absolute inset-0 z-0 bg-cover bg-center"
         style={{
-          backgroundImage: 'url("/images/mountain-background.png")',
+          backgroundImage: "url('/day-background.jpg')",
           backgroundPosition: "center",
           backgroundSize: "cover",
         }}
       />
+
+      <div className="absolute inset-0 z-0 opacity-40">
+              <DaytimeParticleBackground />
+            </div>
 
       {/* Content Container */}
       <div className="container max-w-6xl mx-auto z-10 grid md:grid-cols-2 gap-8 items-center">
