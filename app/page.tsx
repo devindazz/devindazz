@@ -1,6 +1,8 @@
 import HeroSection from "@/components/hero-section"
 import Aboutme from "@/components/about-me"
 import ProjectsPage from "@/components/project-page"
+import { Contact } from "lucide-react"
+import ContactPage from "@/components/contact"
 
 export default function Home() {
   return (
@@ -8,7 +10,7 @@ export default function Home() {
       <HeroSection />
       <Aboutme/>
       <ProjectsPage/>
-      {/* Add other sections of your portfolio below */}
+      <ContactPage/>
     </main>
   )
 }
