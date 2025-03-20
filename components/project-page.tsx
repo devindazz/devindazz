@@ -4,9 +4,9 @@ import { useState, useEffect } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import Image from "next/image"
 import Link from "next/link"
-import { Github, ExternalLink, ChevronLeft, ChevronRight } from "lucide-react"
+import { Github, ExternalLink, ChevronLeft, ChevronRight, Clock } from "lucide-react"
 
-// Project data - you can replace with your actual projects
+// Project data - currently only showing MediConnect
 const projects = [
   {
     name: "MediConnect",
@@ -16,24 +16,25 @@ const projects = [
     imageUrl: "/mediconnect.png?height=300&width=400",
     githubUrl: "https://github.com/devindazz/mediconnect",
     liveUrl: "https://mediconnect.lk",
+    status: "ongoing",
   },
   {
-    name: "E-commerce Platform",
-    description:
-      "A full-featured e-commerce platform with product listings, cart functionality, and payment processing.",
-    techStacks: ["React", "Node.js", "MongoDB", "Stripe"],
-    imageUrl: "/ecommercee.png?height=300&width=400",
-    githubUrl: "https://github.com/username/ecommerce",
-    liveUrl: "https://ecommerce.example.com",
+    name: "Coming Soon",
+    description: "New exciting project in development. Check back soon for updates!",
+    techStacks: ["Future", "Project"],
+    imageUrl: "/placeholder.svg?height=300&width=400",
+    githubUrl: "#",
+    liveUrl: "#",
+    status: "upcoming",
   },
   {
-    name: "Weather Dashboard",
-    description:
-      "A weather application that displays current and forecasted weather data for any location using the OpenWeather API.",
-    techStacks: ["JavaScript", "API", "CSS", "HTML"],
-    imageUrl: "/weather.jpg?height=300&width=400",
-    githubUrl: "https://github.com/username/weather",
-    liveUrl: "https://weather.example.com",
+    name: "Coming Soon",
+    description: "Another innovative project on the horizon. Stay tuned!",
+    techStacks: ["Future", "Project"],
+    imageUrl: "/placeholder.svg?height=300&width=400",
+    githubUrl: "#",
+    liveUrl: "#",
+    status: "upcoming",
   },
 ]
 
@@ -159,18 +160,53 @@ interface ProjectCardProps {
     imageUrl: string
     githubUrl: string
     liveUrl: string
+    status?: string
   }
 }
 
 function ProjectCard({ project }: ProjectCardProps) {
+  const isUpcoming = project.status === "upcoming"
+
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-6 h-full">
       {/* Project Image */}
       <div className="relative h-full rounded-2xl overflow-hidden border border-white/10">
-        <Image src={project.imageUrl || "/placeholder.svg"} alt={project.name} fill className="object-cover" />
+        <Image
+          src={project.imageUrl || "/placeholder.svg"}
+          alt={project.name}
+          fill
+          className={`object-cover ${isUpcoming ? "opacity-60" : ""}`}
+        />
 
         {/* Gradient Overlay */}
         <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />
+
+        {/* Status Badge - Only for ongoing project */}
+        {project.status === "ongoing" && (
+          <div className="absolute top-4 right-4 bg-green-500/20 backdrop-blur-md rounded-full px-3 py-1.5 flex items-center gap-2 border border-green-500/30">
+            <motion.div
+              animate={{
+                scale: [1, 1.2, 1],
+                opacity: [1, 0.8, 1],
+              }}
+              transition={{
+                duration: 2,
+                repeat: Number.POSITIVE_INFINITY,
+                repeatType: "loop",
+              }}
+              className="w-2 h-2 rounded-full bg-green-400"
+            />
+            <span className="text-green-100 text-xs font-medium">Ongoing</span>
+          </div>
+        )}
+
+        {/* Coming Soon Badge - Only for upcoming projects */}
+        {isUpcoming && (
+          <div className="absolute top-4 right-4 bg-purple-500/20 backdrop-blur-md rounded-full px-3 py-1.5 flex items-center gap-2 border border-purple-500/30">
+            <Clock className="h-3 w-3 text-purple-300" />
+            <span className="text-purple-100 text-xs font-medium">Coming Soon</span>
+          </div>
+        )}
 
         {/* Project Name - Mobile Only */}
         <div className="absolute bottom-0 left-0 right-0 p-4 md:hidden">
@@ -191,34 +227,63 @@ function ProjectCard({ project }: ProjectCardProps) {
           <h3 className="text-white/60 text-xs uppercase tracking-wider mb-2">Technologies</h3>
           <div className="flex flex-wrap gap-2">
             {project.techStacks.map((tech, i) => (
-              <span key={i} className="text-xs bg-white/10 text-white/90 px-3 py-1 rounded-full border border-white/10">
+              <span
+                key={i}
+                className={`text-xs px-3 py-1 rounded-full border ${
+                  isUpcoming
+                    ? "bg-purple-900/10 text-purple-100 border-purple-500/20"
+                    : "bg-white/10 text-white/90 border-white/10"
+                }`}
+              >
                 {tech}
               </span>
             ))}
           </div>
         </div>
 
-        {/* Links */}
+        {/* Links - Only show real links for actual projects */}
         <div className="mt-auto flex gap-4">
-          <Link
-            href={project.githubUrl}
-            className="flex items-center gap-2 bg-white/10 hover:bg-white/20 text-white px-4 py-2 rounded-lg border border-white/10 transition-colors duration-300"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Github className="h-4 w-4" />
-            <span>GitHub</span>
-          </Link>
+          {!isUpcoming ? (
+            <>
+              <Link
+                href={project.githubUrl}
+                className="flex items-center gap-2 bg-white/10 hover:bg-white/20 text-white px-4 py-2 rounded-lg border border-white/10 transition-colors duration-300"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <Github className="h-4 w-4" />
+                <span>GitHub</span>
+              </Link>
 
-          <Link
-            href={project.liveUrl}
-            className="flex items-center gap-2 bg-cyan-500/20 hover:bg-cyan-500/30 text-cyan-100 px-4 py-2 rounded-lg border border-cyan-500/30 transition-colors duration-300"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <ExternalLink className="h-4 w-4" />
-            <span>Live Demo</span>
-          </Link>
+              <Link
+                href={project.liveUrl}
+                className="flex items-center gap-2 bg-cyan-500/20 hover:bg-cyan-500/30 text-cyan-100 px-4 py-2 rounded-lg border border-cyan-500/30 transition-colors duration-300"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <ExternalLink className="h-4 w-4" />
+                <span>Live Demo</span>
+              </Link>
+            </>
+          ) : (
+            <div className="flex items-center gap-2 text-white/60">
+              <motion.div
+                animate={{
+                  y: [0, -5, 0],
+                  opacity: [0.5, 1, 0.5],
+                }}
+                transition={{
+                  duration: 2,
+                  repeat: Number.POSITIVE_INFINITY,
+                  repeatType: "loop",
+                }}
+                className="flex items-center gap-2"
+              >
+                <Clock className="h-4 w-4" />
+                <span>In Development</span>
+              </motion.div>
+            </div>
+          )}
         </div>
       </div>
     </div>
