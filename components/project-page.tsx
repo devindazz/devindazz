@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from "framer-motion"
 import Image from "next/image"
 import Link from "next/link"
 import { Github, ExternalLink, ChevronLeft, ChevronRight, Clock } from "lucide-react"
+import DaytimeParticleBackground from "./ui/daytime-particles"
 
 // Project data - currently only showing MediConnect
 const projects = [
@@ -66,6 +67,10 @@ export default function ProjectsPage() {
         backgroundRepeat: "no-repeat",
       }}
     >
+
+      <div className="absolute inset-0 z-0 opacity-40">
+                    <DaytimeParticleBackground />
+                  </div>
       {/* Content Container - Centered in the page */}
       <div className="relative z-10 w-full flex flex-col items-center justify-center min-h-dvh px-4 md:px-8 lg:px-16">
         {/* Title Section - Positioned at top */}
@@ -178,12 +183,13 @@ function ProjectCard({ project }: ProjectCardProps) {
           className={`object-cover ${isUpcoming ? "opacity-60" : ""}`}
         />
 
+       
         {/* Gradient Overlay */}
         <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />
 
         {/* Status Badge - Only for ongoing project */}
         {project.status === "ongoing" && (
-          <div className="absolute top-4 right-4 bg-green-500/20 backdrop-blur-md rounded-full px-3 py-1.5 flex items-center gap-2 border border-green-500/30">
+          <div className="absolute top-4 right-4 bg-black/50 backdrop-blur-md rounded-full px-3 py-1.5 flex items-center gap-2 border border-green-500/30">
             <motion.div
               animate={{
                 scale: [1, 1.2, 1],

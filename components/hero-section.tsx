@@ -3,8 +3,8 @@
 import { useState, useEffect } from "react"
 import { Github, Linkedin, ChevronDown } from "lucide-react"
 import Link from "next/link"
-import ParticleBackground from "@/components/ui/particle-background"
 import { motion } from "framer-motion"
+import DaytimeParticleBackground from "./ui/daytime-particles"
 
 export default function Home() {
   const [mounted, setMounted] = useState(false)
@@ -29,10 +29,9 @@ export default function Home() {
         backgroundRepeat: "no-repeat",
       }}
     >
-      {/* Particle Animation */}
-      <div className="absolute inset-0 z-0">
-        <ParticleBackground />
-      </div>
+      <div className="absolute inset-0 z-0 opacity-40">
+                    <DaytimeParticleBackground />
+                  </div>
 
       {/* Main Content */}
       <div className="absolute mx-auto top-20 left-0 right-0 flex flex-col items-center justify-center text-center z-10 px-4">
