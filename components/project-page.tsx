@@ -5,8 +5,6 @@ import { motion, AnimatePresence } from "framer-motion"
 import Image from "next/image"
 import Link from "next/link"
 import { Github, ExternalLink, ChevronLeft, ChevronRight } from "lucide-react"
-import ParticleBackground from "./ui/particle-background"
-import DaytimeParticleBackground from "./ui/daytime-particles"
 
 // Project data - you can replace with your actual projects
 const projects = [
@@ -59,22 +57,16 @@ export default function ProjectsPage() {
 
   return (
     <div
-      className="relative min-h-dvh w-full overflow-hidden flex flex-col justify-end"
+      className="relative min-h-dvh w-full overflow-hidden flex flex-col"
       style={{
         backgroundImage: "url('/night-background.jpg')",
         backgroundSize: "cover",
         backgroundPosition: "center",
         backgroundRepeat: "no-repeat",
       }}
-
-      
     >
-      <div className="absolute inset-0 z-0 opacity-40">
-              <DaytimeParticleBackground />
-            </div>
-      
-      {/* Content Container - Positioned at bottom to avoid covering the lookout tower */}
-      <div className="relative z-10 w-full px-4 pb-8 pt-16 md:px-8 lg:px-16">
+      {/* Content Container - Centered in the page */}
+      <div className="relative z-10 w-full flex flex-col items-center justify-center min-h-dvh px-4 md:px-8 lg:px-16">
         {/* Title Section - Positioned at top */}
         <motion.div
           className="absolute top-8 left-0 right-0 flex justify-center"
@@ -99,11 +91,8 @@ export default function ProjectsPage() {
           </motion.h1>
         </motion.div>
 
-        <div>
-          <ParticleBackground/>
-        </div>
-        {/* Projects Carousel - Positioned at bottom */}
-        <div className="mt-auto">
+        {/* Projects Carousel - Centered in the page */}
+        <div className="w-full max-w-6xl -mt-16">
           {/* Navigation Controls */}
           <div className="flex justify-between items-center mb-4">
             <button
@@ -137,7 +126,7 @@ export default function ProjectsPage() {
           </div>
 
           {/* Project Cards */}
-          <div className="relative h-[380px] overflow-hidden">
+          <div className="relative h-[350px] overflow-hidden">
             <AnimatePresence mode="wait">
               {projects.map(
                 (project, index) =>
@@ -178,7 +167,7 @@ function ProjectCard({ project }: ProjectCardProps) {
     <div className="grid grid-cols-1 md:grid-cols-2 gap-6 h-full">
       {/* Project Image */}
       <div className="relative h-full rounded-2xl overflow-hidden border border-white/10">
-        <Image src={project.imageUrl || "/mediconnect.png"} alt={project.name} fill className="object-cover" />
+        <Image src={project.imageUrl || "/placeholder.svg"} alt={project.name} fill className="object-cover" />
 
         {/* Gradient Overlay */}
         <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />
