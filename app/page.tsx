@@ -9,8 +9,7 @@ export default function Home() {
     <main>
       <HeroSection />
       <Aboutme/>
-      <ProjectsPage/>
-      <ContactPage/>
+      
     </main>
   )
 }
