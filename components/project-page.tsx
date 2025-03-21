@@ -5,7 +5,7 @@ import { motion, AnimatePresence } from "framer-motion"
 import Image from "next/image"
 import Link from "next/link"
 import { Github, ExternalLink, ChevronLeft, ChevronRight, Clock } from "lucide-react"
-import DaytimeParticleBackground from "./ui/daytime-particles"
+
 
 // Project data - currently only showing MediConnect
 const projects = [
@@ -68,9 +68,6 @@ export default function ProjectsPage() {
       }}
     >
 
-      <div className="absolute inset-0 z-0 opacity-40">
-                    <DaytimeParticleBackground />
-                  </div>
       {/* Content Container - Centered in the page */}
       <div className="relative z-10 w-full flex flex-col items-center justify-center min-h-dvh px-4 md:px-8 lg:px-16">
         {/* Title Section - Positioned at top */}
