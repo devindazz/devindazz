@@ -3,7 +3,6 @@
 import { useState, useEffect } from "react"
 import Image from "next/image"
 import { motion } from "framer-motion"
-import DaytimeParticleBackground from "@/components/ui/daytime-particles"
 
 export default function AboutPage() {
   const [mounted, setMounted] = useState(false)
@@ -16,21 +15,12 @@ export default function AboutPage() {
 
   return (
     <div
-      className="relative min-h-screen w-full overflow-hidden"
-      style={{
-        backgroundImage: "url('/day-background.jpg')",
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-        backgroundRepeat: "no-repeat",
-      }}
+      className="relative bg-black min-h-screen w-full overflow-hidden"
+      
     >
-      {/* Daytime Particle Animation */}
-      <div className="absolute inset-0 z-0 opacity-40">
-        <DaytimeParticleBackground />
-      </div>
 
       {/* Content Container */}
-      <div className="relative z-10 min-h-screen w-full px-8 py-16 md:px-16 lg:px-24 flex flex-col">
+      <div className="relative z-10 min-h-dvh w-full px-8 py-16 md:px-16 lg:px-24 flex flex-col">
         {/* Back to Home Link */}
         <motion.div
           initial={{ opacity: 0 }}
@@ -49,8 +39,8 @@ export default function AboutPage() {
             className="max-w-xl"
           >
             {/* Background container for better visibility */}
-            <div className="bg-black/30 backdrop-blur-sm p-6 rounded-lg border border-white/20 shadow-lg md:mt-0">
-              <h2 className="text-xl text-black mb-6 font-medium">Something About Me !</h2>
+            <div className="bg-zinc-950 backdrop-blur-sm p-6 rounded-lg border border-white/20 shadow-lg md:mt-0">
+              <h2 className="text-xl text-white mb-6 font-medium">Something About Me !</h2>
 
               <p className="text-white text-xl mb-8 leading-relaxed">
                 I'm Devinda Wijesinghe, a second-year Software Engineering student passionate about exploring different
