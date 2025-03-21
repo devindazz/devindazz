@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react"
 import Image from "next/image"
 import { motion } from "framer-motion"
+import { BeamsBackground } from "@/components/ui/beams-background"
 
 export default function AboutPage() {
   const [mounted, setMounted] = useState(false)
@@ -14,11 +15,7 @@ export default function AboutPage() {
   if (!mounted) return null
 
   return (
-    <div
-      className="relative bg-black min-h-screen w-full overflow-hidden"
-      
-    >
-
+    <BeamsBackground intensity="strong">
       {/* Content Container */}
       <div className="relative z-10 min-h-dvh w-full px-8 py-16 md:px-16 lg:px-24 flex flex-col">
         {/* Back to Home Link */}
@@ -75,7 +72,7 @@ export default function AboutPage() {
           </motion.div>
         </div>
       </div>
-    </div>
+    </BeamsBackground>
   )
 }
 
