@@ -4,7 +4,7 @@ import { useState, useEffect } from "react"
 import { Github, Linkedin, ChevronDown } from "lucide-react"
 import Link from "next/link"
 import { motion } from "framer-motion"
-import DaytimeParticleBackground from "./ui/daytime-particles"
+import SynthwaveParticles from "./ui/synthwave-particles"
 
 export default function Home() {
   const [mounted, setMounted] = useState(false)
@@ -23,16 +23,19 @@ export default function Home() {
       className="relative min-h-screen w-full"
       style={{
         backgroundImage:
-          "url('/night-background.jpg')",
+          "url('/sssss.jpg')",
         backgroundSize: "cover",
         backgroundPosition: "center",
         backgroundRepeat: "no-repeat",
       }}
     >
-      <div className="absolute inset-0 z-0 opacity-40">
-                    <DaytimeParticleBackground />
-                  </div>
 
+      <SynthwaveParticles 
+      particleCount={500}
+      particleSize={0.07}
+      autoRotate={true}
+      speed={0.3}
+      />
       {/* Main Content */}
       <div className="absolute mx-auto top-20 left-0 right-0 flex flex-col items-center justify-center text-center z-10 px-4">
         <motion.h2
