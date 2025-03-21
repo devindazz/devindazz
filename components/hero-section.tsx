@@ -37,12 +37,12 @@ export default function Home() {
       speed={0.3}
       />
       {/* Main Content */}
-      <div className="absolute mx-auto top-20 left-0 right-0 flex flex-col items-center justify-center text-center z-10 px-4">
+      <div className="absolute mx-auto top-32 left-0 right-0 flex flex-col items-center justify-center text-center z-10 px-4">
         <motion.h2
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.2 }}
-          className="text-xl font-light text-white md:text-2xl"
+          className="text-xl font-mono text-white md:text-2xl"
         >
           Hello i am
         </motion.h2>
@@ -50,14 +50,14 @@ export default function Home() {
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.4 }}
-          className="text-5xl font-bold text-white md:text-7xl"
+          className="text-5xl font-extrabold text-white md:text-7xl"
         >
           Devinda
         </motion.h1>
       </div>
 
       {/* Software Engineer */}
-      <div className="absolute top-1/2 left-0 right-0 flex flex-col items-center justify-center text-white z-10 mt-44 md:mt-20">
+      <div className="absolute mx-auto top-1/2 left-0 right-0 flex flex-col items-center justify-center text-white z-10 mt-44 md:mt-20">
         <motion.p
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
