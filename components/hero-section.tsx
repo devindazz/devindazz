@@ -4,9 +4,12 @@ import { useState, useEffect } from "react"
 import { Github, Linkedin, ChevronDown } from "lucide-react"
 import Link from "next/link"
 import { motion } from "framer-motion"
+import { useRouter } from "next/navigation"
+import { ElegantShape } from "@/components/ui/elegant-shape"
 
 export default function Home() {
   const [mounted, setMounted] = useState(false)
+  const router = useRouter()
 
   useEffect(() => {
     setMounted(true)
@@ -19,7 +22,53 @@ export default function Home() {
       {/* Background gradient */}
       <div className="absolute inset-0 bg-gradient-to-br from-indigo-500/[0.05] via-transparent to-rose-500/[0.05] blur-3xl" />
 
-     
+      {/* Elegant shapes background */}
+      <div className="absolute inset-0 overflow-hidden">
+        <ElegantShape
+          delay={0.3}
+          width={600}
+          height={140}
+          rotate={12}
+          gradient="from-indigo-500/[0.15]"
+          className="left-[-10%] md:left-[-5%] top-[15%] md:top-[20%]"
+        />
+
+        <ElegantShape
+          delay={0.5}
+          width={500}
+          height={120}
+          rotate={-15}
+          gradient="from-rose-500/[0.15]"
+          className="right-[-5%] md:right-[0%] top-[70%] md:top-[75%]"
+        />
+
+        <ElegantShape
+          delay={0.4}
+          width={300}
+          height={80}
+          rotate={-8}
+          gradient="from-violet-500/[0.15]"
+          className="left-[5%] md:left-[10%] bottom-[5%] md:bottom-[10%]"
+        />
+
+        <ElegantShape
+          delay={0.6}
+          width={200}
+          height={60}
+          rotate={20}
+          gradient="from-amber-500/[0.15]"
+          className="right-[15%] md:right-[20%] top-[10%] md:top-[15%]"
+        />
+
+        <ElegantShape
+          delay={0.7}
+          width={150}
+          height={40}
+          rotate={-25}
+          gradient="from-cyan-500/[0.15]"
+          className="left-[20%] md:left-[25%] top-[5%] md:top-[10%]"
+        />
+      </div>
 
       {/* Main Content */}
       <div className="relative z-10 flex flex-col items-center justify-center min-h-screen text-center">
@@ -70,16 +119,91 @@ export default function Home() {
         </motion.div>
       </div>
 
-      {/* Scroll Indicator */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.6, delay: 1 }}
-        className="absolute bottom-8 left-0 right-0 flex flex-col items-center text-white z-20"
-      >
-        <p className="mb-2 text-sm">scroll down</p>
-        <ChevronDown size={24} />
-      </motion.div>
+      {/* Overlay gradient for better text readability */}
+      <div className="absolute inset-0 bg-gradient-to-t from-[#030303] via-transparent to-[#030303]/80 pointer-events-none" />
+
+      {/* Modern Animated Scroll Button */}
+      <div className="absolute bottom-10 left-0 right-0 flex justify-center z-20">
+        <motion.button
+          onClick={() => router.push("/Aboutme")} // Change to your desired page
+          className="relative group flex flex-col items-center"
+          whileHover="hover"
+        >
+          {/* Animated glow effect */}
+          <motion.div
+            className="absolute -inset-4 rounded-full opacity-0 bg-gradient-to-r from-indigo-500/20 to-rose-500/20 blur-md group-hover:opacity-100 transition-opacity duration-500"
+            animate={{
+              scale: [1, 1.1, 1],
+            }}
+            transition={{
+              duration: 2,
+              repeat: Number.POSITIVE_INFINITY,
+              ease: "easeInOut",
+            }}
+          />
+
+          {/* Text with gradient animation */}
+          <motion.span
+            className="text-sm font-light tracking-wider mb-2 bg-clip-text text-transparent bg-gradient-to-r from-white to-white/80"
+            animate={{
+              backgroundPosition: ["0% center", "100% center", "0% center"],
+            }}
+            transition={{
+              duration: 3,
+              repeat: Number.POSITIVE_INFINITY,
+              ease: "easeInOut",
+            }}
+            style={{
+              backgroundSize: "200% 100%",
+            }}
+          >
+            scroll down
+          </motion.span>
+
+          {/* Animated chevron */}
+          <motion.div
+            className="relative"
+            variants={{
+              hover: {
+                y: 5,
+                transition: {
+                  duration: 0.3,
+                  ease: "easeOut",
+                },
+              },
+            }}
+          >
+            <motion.div
+              className="absolute inset-0 flex items-center justify-center"
+              animate={{
+                opacity: [0, 1, 0],
+                y: [0, 10, 20],
+              }}
+              transition={{
+                duration: 1.5,
+                repeat: Number.POSITIVE_INFINITY,
+                ease: "easeOut",
+                times: [0, 0.5, 1],
+              }}
+            >
+              <ChevronDown size={24} className="text-white/30" />
+            </motion.div>
+
+            <motion.div
+              animate={{
+                y: [0, 5, 0],
+              }}
+              transition={{
+                duration: 1.5,
+                repeat: Number.POSITIVE_INFINITY,
+                ease: "easeInOut",
+              }}
+            >
+              <ChevronDown size={24} className="text-white" />
+            </motion.div>
+          </motion.div>
+        </motion.button>
+      </div>
     </div>
   )
 }
