@@ -31,7 +31,7 @@ const projects = [
     name: "Coming Soon",
     description: "Another innovative project on the horizon. Stay tuned!",
     techStacks: ["Future", "Project"],
-    imageUrl: "/placeholder.svg?height=300&width=400",
+    imageUrl: "/comming.jpg?height=300&width=400",
     githubUrl: "#",
     liveUrl: "#",
     status: "upcoming",
