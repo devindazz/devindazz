@@ -11,21 +11,21 @@ const projects = [
   {
     name: "MediConnect",
     description:
-      "A responsive portfolio website built with Next.js and Tailwind CSS featuring 3D animations and smooth transitions.",
-    techStacks: ["Next.js", "React", "Tailwind CSS", "Three.js"],
+      `Built an AI-powered prescription scanner with real-time pharmacy search, role-based access, and map-based pharmacy locator.`,
+    techStacks: ["Next.js", "React","TypeScript", "Tailwind CSS", "Three.js","Supabase", "Google Generative AI"],
     imageUrl: "/mediconnect.png?height=300&width=400",
     githubUrl: "https://github.com/devindazz/mediconnect",
     liveUrl: "https://mediconnect.lk",
     status: "ongoing",
   },
   {
-    name: "Coming Soon",
-    description: "New exciting project in development. Check back soon for updates!",
-    techStacks: ["Future", "Project"],
-    imageUrl: "/placeholder.svg?height=300&width=400",
+    name: "Zenith higher Education",
+    description: "A marketing website for a Sri Lankan education center offering O/L and A/L classes, designed to promote programs, highlight achievements, and attract students and parents.",
+    techStacks: ["Next.js", "TypeScript", "Tailwind CSS", "Framer Motion","MongoDB"],
+    imageUrl: "/zenith.png?height=300&width=400",
     githubUrl: "#",
-    liveUrl: "#",
-    status: "upcoming",
+    liveUrl: "https://zenith-higher-education.vercel.app/",
+    status: "ongoing",
   },
   {
     name: "Coming Soon",
@@ -77,7 +77,7 @@ export default function ProjectsPage() {
       <div className="relative z-10 w-full flex flex-col items-center justify-center min-h-dvh px-4 md:px-8 lg:px-16 py-20 md:py-0">
         {/* Title Section - Positioned at top */}
         <motion.div
-          className="absolute top-8 sm:top-12 md:top-16 left-0 right-0 flex justify-center"
+          className="absolute top-6 sm:top-8 md:top-12 left-0 right-0 flex justify-center"
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
@@ -100,9 +100,9 @@ export default function ProjectsPage() {
         </motion.div>
 
         {/* Projects Carousel - Centered in the page */}
-        <div className="w-full max-w-6xl mt-12 sm:mt-0 md:-mt-16">
+        <div className="w-full max-w-6xl mt-16 sm:mt-20 md:mt-12">
           {/* Navigation Controls */}
-          <div className="flex justify-between items-center mb-4">
+          <div className="flex justify-between items-center mb-6 sm:mb-8">
             <button
               onClick={prevProject}
               className="bg-black/30 hover:bg-black/50 backdrop-blur-sm text-white p-1.5 sm:p-2 rounded-full border border-white/10 shadow-lg transition-all duration-300"
