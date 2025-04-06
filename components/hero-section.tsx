@@ -81,50 +81,145 @@ export default function Home() {
 
         {/* Main Content */}
         <div className="relative z-10 flex flex-col items-center justify-center min-h-screen text-center">
-          <motion.h2
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className="text-xl font-mono text-white md:text-2xl"
-          >
-            Hello i am
-          </motion.h2>
-          <motion.h1
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.4 }}
-            className="text-5xl font-extrabold text-white md:text-7xl bg-clip-text text-transparent bg-gradient-to-r from-indigo-300 via-white/90 to-rose-300"
-          >
-            Devinda
-          </motion.h1>
+          {/* Enhanced Greeting Animation */}
+          <div className="overflow-hidden mb-2">
+            <motion.h2
+              initial={{ y: 40, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{
+                duration: 0.7,
+                ease: [0.22, 1, 0.36, 1],
+              }}
+              className="text-xl font-mono text-white/80 md:text-2xl tracking-wider"
+            >
+              <motion.span
+                animate={{
+                  backgroundPosition: ["0% center", "200% center"],
+                }}
+                transition={{
+                  duration: 6,
+                  repeat: Number.POSITIVE_INFINITY,
+                  ease: "linear",
+                }}
+                style={{
+                  backgroundSize: "200% 100%",
+                  backgroundImage:
+                    "linear-gradient(90deg, rgba(255,255,255,0.5) 0%, rgba(255,255,255,0.9) 50%, rgba(255,255,255,0.5) 100%)",
+                  WebkitBackgroundClip: "text",
+                  WebkitTextFillColor: "transparent",
+                  display: "inline-block",
+                }}
+              >
+                Hello I am
+              </motion.span>
+            </motion.h2>
+          </div>
 
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.6 }}
-            className="text-xl md:text-3xl text-white/60 mt-4"
-          >
-            Software Engineer Student
-          </motion.p>
+          {/* Enhanced Name Animation */}
+          <div className="relative overflow-hidden">
+            
 
-          {/* Social icons */}
+            <motion.h1
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{
+                duration: 0.8,
+                delay: 0.4,
+                ease: [0.22, 1, 0.36, 1],
+              }}
+              className="text-5xl font-extrabold text-white md:text-7xl bg-clip-text text-transparent py-2 px-4"
+            >
+              <motion.span
+                initial={{ display: "inline-block" }}
+                animate={{
+                  y: [0, -10, 0],
+                  rotate: [0, -2, 0, 2, 0],
+                  scale: [1, 1.05, 1],
+                }}
+                transition={{
+                  duration: 5,
+                  repeat: Number.POSITIVE_INFINITY,
+                  repeatType: "reverse",
+                  ease: "easeInOut",
+                  times: [0, 0.2, 0.4, 0.6, 1],
+                }}
+                className="inline-block"
+              >
+                Devinda
+              </motion.span>
+            </motion.h1>
+          </div>
+
+          {/* Enhanced Role Animation */}
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{
+              duration: 0.7,
+              delay: 0.6,
+              ease: [0.22, 1, 0.36, 1],
+            }}
+            className="mt-4 relative"
+          >
+            <motion.div
+              animate={{
+                opacity: [0.5, 0.8, 0.5],
+              }}
+              transition={{
+                duration: 3,
+                repeat: Number.POSITIVE_INFINITY,
+                ease: "easeInOut",
+              }}
+              className="absolute -inset-2 rounded-full blur-md bg-gradient-to-r from-indigo-500/10 to-rose-500/10 -z-10"
+            />
+            <p className="text-xl md:text-3xl text-white/60 relative">
+              <motion.span
+                animate={{
+                  textShadow: [
+                    "0 0 8px rgba(255,255,255,0)",
+                    "0 0 16px rgba(255,255,255,0.3)",
+                    "0 0 8px rgba(255,255,255,0)",
+                  ],
+                }}
+                transition={{
+                  duration: 3,
+                  repeat: Number.POSITIVE_INFINITY,
+                  ease: "easeInOut",
+                }}
+              >
+                Software Engineer Student
+              </motion.span>
+            </p>
+          </motion.div>
+
+          {/* Social icons with enhanced animation */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.8 }}
             className="mt-8 flex gap-6"
           >
-            <Link href="https://github.com/devindazz" className="transition-transform hover:scale-110">
-              <Github size={28} className="text-white" />
-              <span className="sr-only">GitHub</span>
-            </Link>
-            <Link
-              href="https://www.linkedin.com/in/devinda-wijesingha-aba63b2b7/"
-              className="transition-transform hover:scale-110"
+            <motion.div
+              whileHover={{ scale: 1.2, rotate: 5 }}
+              transition={{ type: "spring", stiffness: 400, damping: 10 }}
             >
-              <Linkedin size={28} className="text-white" />
-              <span className="sr-only">LinkedIn</span>
-            </Link>
+              <Link href="https://github.com/devindazz" className="relative group">
+                <motion.div className="absolute -inset-2 rounded-full opacity-0 group-hover:opacity-100 bg-white/10 blur-md transition-opacity duration-300" />
+                <Github size={28} className="text-white relative z-10" />
+                <span className="sr-only">GitHub</span>
+              </Link>
+            </motion.div>
+
+            <motion.div
+              whileHover={{ scale: 1.2, rotate: -5 }}
+              transition={{ type: "spring", stiffness: 400, damping: 10 }}
+            >
+              <Link href="https://www.linkedin.com/in/devinda-wijesingha-aba63b2b7/" className="relative group">
+                <motion.div className="absolute -inset-2 rounded-full opacity-0 group-hover:opacity-100 bg-white/10 blur-md transition-opacity duration-300" />
+                <Linkedin size={28} className="text-white relative z-10" />
+                <span className="sr-only">LinkedIn</span>
+              </Link>
+            </motion.div>
           </motion.div>
         </div>
 
@@ -140,7 +235,7 @@ export default function Home() {
           >
             {/* Animated glow effect */}
             <motion.div
-              className="absolute -inset-4 rounded-full opacity-0 bg-gradient-to-r from-indigo-500/10 to-rose-500/10 blur-md group-hover:opacity-100 transition-opacity duration-500"
+              className="absolute -inset-4 rounded-full opacity-0 bg-gradient-to-r from-indigo-500/20 to-rose-500/20 blur-md group-hover:opacity-100 transition-opacity duration-500"
               animate={{
                 scale: [1, 1.1, 1],
               }}
@@ -216,12 +311,12 @@ export default function Home() {
       </div>
 
       {/* About Section - Using the provided AboutPage content */}
-      <div ref={aboutSectionRef} className="relative mx-auto min-h-dvh w-full bg-neutral-950 overflow-hidden">
+      <div ref={aboutSectionRef} className="relative min-h-dvh w-full bg-neutral-950 overflow-hidden">
         {/* Simple static background */}
         <div className="absolute inset-0 bg-gradient-to-br from-indigo-500/[0.03] via-transparent to-rose-500/[0.03] blur-3xl" />
 
         {/* Content Container */}
-        <div className="relative mx-auto z-10 min-h-dvh w-full px-4 sm:px-8 py-12 sm:py-16 md:px-16 lg:px-24 flex flex-col">
+        <div className="relative z-10 min-h-dvh w-full px-4 sm:px-8 py-12 sm:py-16 md:px-16 lg:px-24 flex flex-col">
           {/* Back to Top Link */}
           <motion.div
             initial={{ opacity: 0 }}
