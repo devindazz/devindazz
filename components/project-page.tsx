@@ -10,9 +10,8 @@ import { Github, ExternalLink, ChevronLeft, ChevronRight, Clock } from "lucide-r
 const projects = [
   {
     name: "MediConnect",
-    description:
-      `Built an AI-powered prescription scanner with real-time pharmacy search, role-based access, and map-based pharmacy locator.`,
-    techStacks: ["Next.js", "React","TypeScript", "Tailwind CSS", "Three.js","Supabase", "Google Generative AI"],
+    description: `Built an AI-powered prescription scanner with real-time pharmacy search, role-based access, and map-based pharmacy locator.`,
+    techStacks: ["Next.js", "React", "TypeScript", "Tailwind CSS", "Three.js", "Supabase", "Google Generative AI"],
     imageUrl: "/mediconnect.png?height=300&width=400",
     githubUrl: "https://github.com/devindazz/mediconnect",
     liveUrl: "https://mediconnect.lk",
@@ -20,8 +19,9 @@ const projects = [
   },
   {
     name: "Zenith Higher Education",
-    description: "A marketing website for a Sri Lankan education center offering O/L and A/L classes, designed to promote programs, highlight achievements, and attract students and parents.",
-    techStacks: ["Next.js", "TypeScript", "Tailwind CSS", "Framer Motion","MongoDB"],
+    description:
+      "A marketing website for a Sri Lankan education center offering O/L and A/L classes, designed to promote programs, highlight achievements, and attract students and parents.",
+    techStacks: ["Next.js", "TypeScript", "Tailwind CSS", "Framer Motion", "MongoDB"],
     imageUrl: "/zenith.png?height=300&width=400",
     githubUrl: "https://github.com/devindazz/zenith-higher-education",
     liveUrl: "https://zenith-higher-education.vercel.app/",
@@ -134,7 +134,7 @@ export default function ProjectsPage() {
           </div>
 
           {/* Project Cards */}
-          <div className="relative h-[350px] sm:h-[400px] md:h-[350px] overflow-hidden">
+          <div className="relative h-[550px] sm:h-[520px] md:h-[350px] overflow-hidden">
             <AnimatePresence mode="wait">
               {projects.map(
                 (project, index) =>
@@ -176,14 +176,17 @@ function ProjectCard({ project, isMobile }: ProjectCardProps) {
   const isUpcoming = project.status === "upcoming"
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 h-full">
-      {/* Project Image */}
-      <div className="relative h-[180px] sm:h-[220px] md:h-full rounded-xl sm:rounded-2xl overflow-hidden border border-white/10">
+    <div className={`flex flex-col md:grid md:grid-cols-2 gap-4 sm:gap-6 h-full`}>
+      {/* Project Image - Adjusted height */}
+      <div className="relative h-[240px] sm:h-[260px] md:h-full rounded-xl sm:rounded-2xl overflow-hidden border border-white/10 shadow-lg">
         <Image
           src={project.imageUrl || "/placeholder.svg"}
           alt={project.name}
           fill
+          sizes="(max-width: 768px) 100vw, 50vw"
+          priority
           className={`object-cover ${isUpcoming ? "opacity-60" : ""}`}
+          style={{ objectPosition: "center" }}
         />
 
         {/* Gradient Overlay */}
@@ -222,37 +225,41 @@ function ProjectCard({ project, isMobile }: ProjectCardProps) {
         </div>
       </div>
 
-      {/* Project Details */}
-      <div className="flex flex-col h-full bg-black/30 backdrop-blur-md rounded-xl sm:rounded-2xl border border-white/10 p-3 sm:p-4 md:p-6 overflow-hidden">
+      {/* Project Details - Improved spacing */}
+      <div className="flex flex-col justify-between h-[260px] sm:h-[220px] md:h-full bg-black/30 backdrop-blur-md rounded-xl sm:rounded-2xl border border-white/10 p-3 sm:p-4 md:p-6 overflow-hidden">
         {/* Project Name - Desktop Only */}
-        <h2 className="hidden md:block text-white font-bold text-2xl mb-3 md:mb-4">{project.name}</h2>
+        <div>
+          <h2 className="hidden md:block text-white font-bold text-2xl mb-3 md:mb-4">{project.name}</h2>
 
-        {/* Description */}
-        <p className="text-white/80 text-xs sm:text-sm mb-3 sm:mb-4 md:mb-6 line-clamp-3 sm:line-clamp-none">
-          {project.description}
-        </p>
+          {/* Description - Reduced line clamp for mobile */}
+          <p className="text-white/80 text-xs sm:text-sm mb-3 sm:mb-4 md:mb-auto line-clamp-2 sm:line-clamp-3 md:line-clamp-none">
+            {project.description}
+          </p>
 
-        {/* Tech Stack */}
-        <div className="mb-3 sm:mb-4 md:mb-6">
-          <h3 className="text-white/60 text-[10px] sm:text-xs uppercase tracking-wider mb-1.5 sm:mb-2">Technologies</h3>
-          <div className="flex flex-wrap gap-1.5 sm:gap-2">
-            {project.techStacks.map((tech, i) => (
-              <span
-                key={i}
-                className={`text-[10px] sm:text-xs px-2 sm:px-3 py-0.5 sm:py-1 rounded-full border ${
-                  isUpcoming
-                    ? "bg-purple-900/10 text-purple-100 border-purple-500/20"
-                    : "bg-white/10 text-white/90 border-white/10"
-                }`}
-              >
-                {tech}
-              </span>
-            ))}
+          {/* Tech Stack - Adjusted spacing */}
+          <div className="mb-3 sm:mb-4">
+            <h3 className="text-white/60 text-[10px] sm:text-xs uppercase tracking-wider mb-1.5 sm:mb-2">
+              Technologies
+            </h3>
+            <div className="flex flex-wrap gap-1.5 sm:gap-2">
+              {project.techStacks.map((tech, i) => (
+                <span
+                  key={i}
+                  className={`text-[10px] sm:text-xs px-2 sm:px-3 py-0.5 sm:py-1 rounded-full border ${
+                    isUpcoming
+                      ? "bg-purple-900/10 text-purple-100 border-purple-500/20"
+                      : "bg-white/10 text-white/90 border-white/10"
+                  }`}
+                >
+                  {tech}
+                </span>
+              ))}
+            </div>
           </div>
         </div>
 
-        {/* Links - Only show real links for actual projects */}
-        <div className="mt-auto flex gap-2 sm:gap-4">
+        {/* Links - Fixed positioning */}
+        <div className="flex gap-2 sm:gap-4">
           {!isUpcoming ? (
             <>
               <Link

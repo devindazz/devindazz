@@ -140,7 +140,7 @@ export default function Home() {
           >
             {/* Animated glow effect */}
             <motion.div
-              className="absolute -inset-4 rounded-full opacity-0 bg-gradient-to-r from-indigo-500/20 to-rose-500/20 blur-md group-hover:opacity-100 transition-opacity duration-500"
+              className="absolute -inset-4 rounded-full opacity-0 bg-gradient-to-r from-indigo-500/10 to-rose-500/10 blur-md group-hover:opacity-100 transition-opacity duration-500"
               animate={{
                 scale: [1, 1.1, 1],
               }}
@@ -216,12 +216,12 @@ export default function Home() {
       </div>
 
       {/* About Section - Using the provided AboutPage content */}
-      <div ref={aboutSectionRef} className="relative min-h-dvh w-full bg-neutral-950 overflow-hidden">
+      <div ref={aboutSectionRef} className="relative mx-auto min-h-dvh w-full bg-neutral-950 overflow-hidden">
         {/* Simple static background */}
         <div className="absolute inset-0 bg-gradient-to-br from-indigo-500/[0.03] via-transparent to-rose-500/[0.03] blur-3xl" />
 
         {/* Content Container */}
-        <div className="relative z-10 min-h-dvh w-full px-4 sm:px-8 py-12 sm:py-16 md:px-16 lg:px-24 flex flex-col">
+        <div className="relative mx-auto z-10 min-h-dvh w-full px-4 sm:px-8 py-12 sm:py-16 md:px-16 lg:px-24 flex flex-col">
           {/* Back to Top Link */}
           <motion.div
             initial={{ opacity: 0 }}
