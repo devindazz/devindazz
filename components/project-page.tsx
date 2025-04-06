@@ -23,7 +23,7 @@ const projects = [
     description: "A marketing website for a Sri Lankan education center offering O/L and A/L classes, designed to promote programs, highlight achievements, and attract students and parents.",
     techStacks: ["Next.js", "TypeScript", "Tailwind CSS", "Framer Motion","MongoDB"],
     imageUrl: "/zenith.png?height=300&width=400",
-    githubUrl: "#",
+    githubUrl: "https://github.com/devindazz/zenith-higher-education",
     liveUrl: "https://zenith-higher-education.vercel.app/",
     status: "ongoing",
   },
