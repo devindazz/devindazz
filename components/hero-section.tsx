@@ -1,8 +1,9 @@
 "use client"
 
 import { useState, useEffect, useRef } from "react"
-import { Github, Linkedin, ChevronDown, Code, Briefcase, User } from "lucide-react"
+import { Github, Linkedin, ChevronDown } from "lucide-react"
 import Link from "next/link"
+import Image from "next/image"
 import { motion } from "framer-motion"
 import { ElegantShape } from "@/components/ui/elegant-shape"
 
@@ -214,63 +215,65 @@ export default function Home() {
         </div>
       </div>
 
-      {/* About Section - This gives us something to scroll to */}
-      <div ref={aboutSectionRef} className="min-h-screen w-full py-20 relative">
-        <div className="absolute inset-0 bg-gradient-to-br from-indigo-500/[0.02] via-transparent to-rose-500/[0.02]" />
+      {/* About Section - Using the provided AboutPage content */}
+      <div ref={aboutSectionRef} className="relative min-h-dvh w-full bg-neutral-950 overflow-hidden">
+        {/* Simple static background */}
+        <div className="absolute inset-0 bg-gradient-to-br from-indigo-500/[0.03] via-transparent to-rose-500/[0.03] blur-3xl" />
 
-        <div className="container mx-auto px-4">
-          <div className="max-w-3xl mx-auto">
+        {/* Content Container */}
+        <div className="relative z-10 min-h-dvh w-full px-4 sm:px-8 py-12 sm:py-16 md:px-16 lg:px-24 flex flex-col">
+          {/* Back to Top Link */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.5 }}
+            className="mb-auto"
+          ></motion.div>
+
+          {/* Main Content - Positioned Lower */}
+          <div className="flex flex-col md:flex-row justify-between items-center md:items-start mb-16 md:mb-32">
+            {/* Left Side - About Me Text */}
             <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
-              viewport={{ once: true, margin: "-100px" }}
-              className="text-center mb-16"
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              className="order-2 md:order-1 w-full md:max-w-xl mt-6 md:mt-0"
             >
-              <h2 className="text-3xl md:text-5xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-indigo-300 via-white/90 to-rose-300">
-                About Me
-              </h2>
-              <p className="text-white/70 text-lg leading-relaxed">
-                I'm a passionate Software Engineering student with a focus on creating elegant, user-friendly
-                applications. My journey in technology is driven by curiosity and a desire to build solutions that make
-                a difference.
-              </p>
+              {/* Background container for better visibility */}
+              <div className="bg-zinc-950/80 backdrop-blur-sm p-5 sm:p-6 rounded-lg border border-white/20 shadow-lg">
+                <h2 className="text-xl text-white mb-4 sm:mb-6 font-medium">Something About Me !</h2>
+
+                <p className="text-white text-base sm:text-lg md:text-xl mb-4 sm:mb-6 leading-relaxed">
+                  I'm Devinda Wijesinghe, a second-year Software Engineering student passionate about exploring
+                  different technologies and building impactful software, transforming ideas into reality through code
+                  while constantly learning and improving.
+                </p>
+
+                <p className="text-white text-sm sm:text-base md:text-lg leading-relaxed">
+                  Outside of tech, I stay active with weightlifting and enjoy unwinding at night with video games,
+                  whether competing or exploring new worlds. I'm always pushing my limits whether in development,
+                  fitness, or gaming to become better.
+                </p>
+              </div>
             </motion.div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              {[
-                {
-                  icon: Code,
-                  title: "Development",
-                  description: "Building responsive web applications with modern frameworks and technologies.",
-                },
-                {
-                  icon: User,
-                  title: "UI/UX Design",
-                  description: "Creating intuitive user experiences with a focus on aesthetics and usability.",
-                },
-                {
-                  icon: Briefcase,
-                  title: "Projects",
-                  description: "Working on innovative projects that solve real-world problems.",
-                },
-              ].map((item, i) => (
-                <motion.div
-                  key={item.title}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5, delay: i * 0.1 }}
-                  viewport={{ once: true }}
-                  className="bg-white/[0.03] backdrop-blur-sm border border-white/10 rounded-xl p-6"
-                >
-                  <div className="bg-gradient-to-br from-indigo-500/20 to-rose-500/20 w-12 h-12 rounded-lg flex items-center justify-center mb-4">
-                    <item.icon className="text-white" size={20} />
-                  </div>
-                  <h3 className="text-xl font-semibold text-white mb-2">{item.title}</h3>
-                  <p className="text-white/60">{item.description}</p>
-                </motion.div>
-              ))}
-            </div>
+            {/* Right Side - Profile Photo */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.6, delay: 0.4 }}
+              className="order-1 md:order-2"
+            >
+              <div className="w-32 h-32 sm:w-40 sm:h-40 md:w-48 md:h-48 lg:w-56 lg:h-56 bg-gray-200/90 rounded-full overflow-hidden flex items-center justify-center shadow-lg border-2 border-white/20">
+                <Image
+                  src="/profile.jpg"
+                  alt="Devinda Wijesinghe"
+                  width={224}
+                  height={224}
+                  className="object-cover w-full h-full"
+                />
+              </div>
+            </motion.div>
           </div>
         </div>
       </div>
