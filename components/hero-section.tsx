@@ -4,7 +4,6 @@ import { useState, useEffect } from "react"
 import { Github, Linkedin, ChevronDown } from "lucide-react"
 import Link from "next/link"
 import { motion } from "framer-motion"
-import SynthwaveParticles from "./ui/synthwave-particles"
 
 export default function Home() {
   const [mounted, setMounted] = useState(false)
@@ -16,28 +15,23 @@ export default function Home() {
   if (!mounted) return null
 
   return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 0.8 }}
-      className="relative min-h-screen w-full"
-      style={{
-        backgroundImage:
-          "url('/sssss.jpg')",
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-        backgroundRepeat: "no-repeat",
-      }}
-    >
+    <div className="relative min-h-screen w-full bg-[#030303] overflow-hidden">
+      {/* Background gradient */}
+      <div className="absolute inset-0 bg-gradient-to-br from-indigo-500/[0.05] via-transparent to-rose-500/[0.05] blur-3xl" />
 
-      <SynthwaveParticles 
-      particleCount={500}
-      particleSize={0.07}
-      autoRotate={true}
-      speed={0.3}
-      />
+      {/* Simple elegant shapes - static instead of animated */}
+      <div className="absolute inset-0 overflow-hidden">
+        <div className="absolute left-[-10%] md:left-[-5%] top-[15%] md:top-[20%] w-[600px] h-[140px] rotate-12">
+          <div className="absolute inset-0 rounded-full bg-gradient-to-r from-indigo-500/[0.15] to-transparent backdrop-blur-[2px] border-2 border-white/[0.15] shadow-[0_8px_32px_0_rgba(255,255,255,0.1)]" />
+        </div>
+
+        <div className="absolute right-[-5%] md:right-[0%] top-[70%] md:top-[75%] w-[500px] h-[120px] -rotate-15">
+          <div className="absolute inset-0 rounded-full bg-gradient-to-r from-rose-500/[0.15] to-transparent backdrop-blur-[2px] border-2 border-white/[0.15] shadow-[0_8px_32px_0_rgba(255,255,255,0.1)]" />
+        </div>
+      </div>
+
       {/* Main Content */}
-      <div className="absolute mx-auto top-32 left-0 right-0 flex flex-col items-center justify-center text-center z-10 px-4">
+      <div className="relative z-10 flex flex-col items-center justify-center min-h-screen text-center">
         <motion.h2
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -50,24 +44,21 @@ export default function Home() {
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.4 }}
-          className="text-5xl font-extrabold text-white md:text-7xl"
+          className="text-5xl font-extrabold text-white md:text-7xl bg-clip-text text-transparent bg-gradient-to-r from-indigo-300 via-white/90 to-rose-300"
         >
           Devinda
         </motion.h1>
-      </div>
 
-      {/* Software Engineer */}
-      <div className="absolute mx-auto top-1/2 left-0 right-0 flex flex-col items-center justify-center text-white z-10 mt-44 md:mt-20">
         <motion.p
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.6 }}
-          className="text-xl md:text-3xl"
+          className="text-xl md:text-3xl text-white/60 mt-4"
         >
           Software Engineer Student
         </motion.p>
 
-        {/* Social icons - moved below the text */}
+        {/* Social icons */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -93,12 +84,12 @@ export default function Home() {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.6, delay: 1 }}
-        className="absolute bottom-8 left-0 right-0 flex flex-col items-center text-white animate-bounce"
+        className="absolute bottom-8 left-0 right-0 flex flex-col items-center text-white z-20"
       >
         <p className="mb-2 text-sm">scroll down</p>
         <ChevronDown size={24} />
       </motion.div>
-    </motion.div>
+    </div>
   )
 }
 
