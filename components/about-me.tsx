@@ -3,7 +3,6 @@
 import { useState, useEffect } from "react"
 import Image from "next/image"
 import { motion } from "framer-motion"
-import { BeamsBackground } from "@/components/ui/beams-background"
 
 export default function AboutPage() {
   const [mounted, setMounted] = useState(false)
@@ -15,7 +14,10 @@ export default function AboutPage() {
   if (!mounted) return null
 
   return (
-    <BeamsBackground intensity="strong">
+    <div className="relative min-h-dvh w-full bg-neutral-950 overflow-hidden">
+      {/* Simple static background instead of animated beams */}
+      <div className="absolute inset-0 bg-gradient-to-br from-indigo-500/[0.03] via-transparent to-rose-500/[0.03] blur-3xl" />
+
       {/* Content Container */}
       <div className="relative z-10 min-h-dvh w-full px-4 sm:px-8 py-12 sm:py-16 md:px-16 lg:px-24 flex flex-col">
         {/* Back to Home Link */}
@@ -72,7 +74,7 @@ export default function AboutPage() {
           </motion.div>
         </div>
       </div>
-    </BeamsBackground>
+    </div>
   )
 }
 
