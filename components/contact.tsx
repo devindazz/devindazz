@@ -1,4 +1,4 @@
-import ContactForm from "@/components/ui/contact-form"
+
 import SocialLinks from "@/components/ui/social-links"
 
 export default function ContactPage() {
@@ -26,10 +26,7 @@ export default function ContactPage() {
           <SocialLinks />
         </div>
 
-        {/* Right Column - Form */}
-        <div>
-          <ContactForm />
-        </div>
+       
       </div>
     </main>
   )
