@@ -4,17 +4,28 @@ import { useState, useEffect, useRef } from "react"
 import { Github, Linkedin, ChevronDown } from "lucide-react"
 import Link from "next/link"
 import Image from "next/image"
-import { motion, useInView } from "framer-motion"
+import { motion } from "framer-motion"
 import { ElegantShape } from "@/components/ui/elegant-shape"
 
 export default function Home() {
   const [mounted, setMounted] = useState(false)
   const aboutSectionRef = useRef<HTMLDivElement>(null)
-  const aboutTextRef = useRef<HTMLDivElement>(null)
-  const isAboutTextInView = useInView(aboutTextRef, { once: true, amount: 0.3 })
+  const [isMobile, setIsMobile] = useState(false)
 
   useEffect(() => {
     setMounted(true)
+
+    // Check if mobile on initial load and on resize
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768)
+    }
+
+    checkMobile()
+    window.addEventListener("resize", checkMobile)
+
+    return () => {
+      window.removeEventListener("resize", checkMobile)
+    }
   }, [])
 
   // Function to scroll to the about section
@@ -31,7 +42,9 @@ export default function Home() {
       {/* Hero Section */}
       <div className="relative min-h-screen w-full overflow-hidden">
         {/* Background gradient */}
-        <div className="absolute inset-0 bg-gradient-to-br from-indigo-500/[0.05] via-transparent to-rose-500/[0.05] blur-3xl" />
+        <div
+          className={`absolute inset-0 bg-gradient-to-br from-indigo-500/[0.05] via-transparent to-rose-500/[0.05] ${isMobile ? "" : "blur-3xl"}`}
+        />
 
         {/* Elegant shapes background */}
         <div className="absolute inset-0 overflow-hidden">
@@ -42,43 +55,49 @@ export default function Home() {
             rotate={12}
             gradient="from-indigo-500/[0.15]"
             className="left-[-10%] md:left-[-5%] top-[15%] md:top-[20%]"
+            simplified={isMobile}
           />
 
-          <ElegantShape
-            delay={0.5}
-            width={500}
-            height={120}
-            rotate={-15}
-            gradient="from-rose-500/[0.15]"
-            className="right-[-5%] md:right-[0%] top-[70%] md:top-[75%]"
-          />
+          {/* Only render these shapes on larger screens */}
+          {!isMobile && (
+            <>
+              <ElegantShape
+                delay={0.5}
+                width={500}
+                height={120}
+                rotate={-15}
+                gradient="from-rose-500/[0.15]"
+                className="right-[-5%] md:right-[0%] top-[70%] md:top-[75%]"
+              />
 
-          <ElegantShape
-            delay={0.4}
-            width={300}
-            height={80}
-            rotate={-8}
-            gradient="from-violet-500/[0.15]"
-            className="left-[5%] md:left-[10%] bottom-[5%] md:bottom-[10%]"
-          />
+              <ElegantShape
+                delay={0.4}
+                width={300}
+                height={80}
+                rotate={-8}
+                gradient="from-violet-500/[0.15]"
+                className="left-[5%] md:left-[10%] bottom-[5%] md:bottom-[10%]"
+              />
 
-          <ElegantShape
-            delay={0.6}
-            width={200}
-            height={60}
-            rotate={20}
-            gradient="from-amber-500/[0.15]"
-            className="right-[15%] md:right-[20%] top-[10%] md:top-[15%]"
-          />
+              <ElegantShape
+                delay={0.6}
+                width={200}
+                height={60}
+                rotate={20}
+                gradient="from-amber-500/[0.15]"
+                className="right-[15%] md:right-[20%] top-[10%] md:top-[15%]"
+              />
 
-          <ElegantShape
-            delay={0.7}
-            width={150}
-            height={40}
-            rotate={-25}
-            gradient="from-cyan-500/[0.15]"
-            className="left-[20%] md:left-[25%] top-[5%] md:top-[10%]"
-          />
+              <ElegantShape
+                delay={0.7}
+                width={150}
+                height={40}
+                rotate={-25}
+                gradient="from-cyan-500/[0.15]"
+                className="left-[20%] md:left-[25%] top-[5%] md:top-[10%]"
+              />
+            </>
+          )}
         </div>
 
         {/* Main Content */}
@@ -95,11 +114,9 @@ export default function Home() {
               className="text-xl font-mono text-white/80 md:text-2xl tracking-wider"
             >
               <motion.span
-                animate={{
-                  backgroundPosition: ["0% center", "200% center"],
-                }}
+                animate={isMobile ? { opacity: [0.5, 0.9, 0.5] } : { backgroundPosition: ["0% center", "200% center"] }}
                 transition={{
-                  duration: 6,
+                  duration: isMobile ? 2 : 6,
                   repeat: Number.POSITIVE_INFINITY,
                   ease: "linear",
                 }}
@@ -131,17 +148,21 @@ export default function Home() {
             >
               <motion.span
                 initial={{ display: "inline-block" }}
-                animate={{
-                  y: [0, -10, 0],
-                  rotate: [0, -2, 0, 2, 0],
-                  scale: [1, 1.05, 1],
-                }}
+                animate={
+                  isMobile
+                    ? { scale: [1, 1.03, 1] }
+                    : {
+                        y: [0, -10, 0],
+                        rotate: [0, -2, 0, 2, 0],
+                        scale: [1, 1.05, 1],
+                      }
+                }
                 transition={{
-                  duration: 5,
+                  duration: isMobile ? 3 : 5,
                   repeat: Number.POSITIVE_INFINITY,
                   repeatType: "reverse",
                   ease: "easeInOut",
-                  times: [0, 0.2, 0.4, 0.6, 1],
+                  times: isMobile ? [0, 0.5, 1] : [0, 0.2, 0.4, 0.6, 1],
                 }}
                 className="inline-block"
               >
@@ -174,15 +195,19 @@ export default function Home() {
             />
             <p className="text-xl md:text-3xl text-white/60 relative">
               <motion.span
-                animate={{
-                  textShadow: [
-                    "0 0 8px rgba(255,255,255,0)",
-                    "0 0 16px rgba(255,255,255,0.3)",
-                    "0 0 8px rgba(255,255,255,0)",
-                  ],
-                }}
+                animate={
+                  isMobile
+                    ? { opacity: [0.7, 1, 0.7] }
+                    : {
+                        textShadow: [
+                          "0 0 8px rgba(255,255,255,0)",
+                          "0 0 16px rgba(255,255,255,0.3)",
+                          "0 0 8px rgba(255,255,255,0)",
+                        ],
+                      }
+                }
                 transition={{
-                  duration: 3,
+                  duration: isMobile ? 2 : 3,
                   repeat: Number.POSITIVE_INFINITY,
                   ease: "easeInOut",
                 }}
@@ -231,7 +256,7 @@ export default function Home() {
           <motion.button
             onClick={scrollToAbout} // Scroll to about section
             className="relative group flex flex-col items-center"
-            whileHover="hover"
+            whileHover={isMobile ? undefined : "hover"}
           >
             {/* Animated glow effect */}
             <motion.div
@@ -329,7 +354,6 @@ export default function Home() {
           <div className="flex flex-col md:flex-row justify-between items-center md:items-start mb-16 md:mb-32">
             {/* Left Side - About Me Text */}
             <motion.div
-              ref={aboutTextRef}
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.6, delay: 0.2 }}
@@ -337,36 +361,19 @@ export default function Home() {
             >
               {/* Background container for better visibility */}
               <div className="bg-zinc-950/80 backdrop-blur-sm p-5 sm:p-6 rounded-lg border border-white/20 shadow-lg">
-                <motion.h2
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={isAboutTextInView ? { opacity: 1, y: 0 } : {}}
-                  transition={{ duration: 0.5 }}
-                  className="text-xl text-white mb-4 sm:mb-6 font-medium"
-                >
-                  Something About Me !
-                </motion.h2>
+                <h2 className="text-xl text-white mb-4 sm:mb-6 font-medium">Something About Me !</h2>
 
-                <motion.p
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={isAboutTextInView ? { opacity: 1, y: 0 } : {}}
-                  transition={{ duration: 0.5, delay: 0.2 }}
-                  className="text-white text-base sm:text-lg md:text-xl mb-4 sm:mb-6 leading-relaxed"
-                >
+                <p className="text-white text-base sm:text-lg md:text-xl mb-4 sm:mb-6 leading-relaxed">
                   I'm Devinda Wijesinghe, a second-year Software Engineering student passionate about exploring
                   different technologies and building impactful software, transforming ideas into reality through code
                   while constantly learning and improving.
-                </motion.p>
+                </p>
 
-                <motion.p
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={isAboutTextInView ? { opacity: 1, y: 0 } : {}}
-                  transition={{ duration: 0.5, delay: 0.4 }}
-                  className="text-white text-sm sm:text-base md:text-lg leading-relaxed"
-                >
+                <p className="text-white text-sm sm:text-base md:text-lg leading-relaxed">
                   Outside of tech, I stay active with weightlifting and enjoy unwinding at night with video games,
                   whether competing or exploring new worlds. I'm always pushing my limits whether in development,
                   fitness, or gaming to become better.
-                </motion.p>
+                </p>
               </div>
             </motion.div>
 
