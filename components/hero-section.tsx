@@ -4,12 +4,14 @@ import { useState, useEffect, useRef } from "react"
 import { Github, Linkedin, ChevronDown } from "lucide-react"
 import Link from "next/link"
 import Image from "next/image"
-import { motion } from "framer-motion"
+import { motion, useInView } from "framer-motion"
 import { ElegantShape } from "@/components/ui/elegant-shape"
 
 export default function Home() {
   const [mounted, setMounted] = useState(false)
   const aboutSectionRef = useRef<HTMLDivElement>(null)
+  const aboutTextRef = useRef<HTMLDivElement>(null)
+  const isAboutTextInView = useInView(aboutTextRef, { once: true, amount: 0.3 })
 
   useEffect(() => {
     setMounted(true)
@@ -117,8 +119,6 @@ export default function Home() {
 
           {/* Enhanced Name Animation */}
           <div className="relative overflow-hidden">
-            
-
             <motion.h1
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -329,6 +329,7 @@ export default function Home() {
           <div className="flex flex-col md:flex-row justify-between items-center md:items-start mb-16 md:mb-32">
             {/* Left Side - About Me Text */}
             <motion.div
+              ref={aboutTextRef}
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.6, delay: 0.2 }}
@@ -336,19 +337,36 @@ export default function Home() {
             >
               {/* Background container for better visibility */}
               <div className="bg-zinc-950/80 backdrop-blur-sm p-5 sm:p-6 rounded-lg border border-white/20 shadow-lg">
-                <h2 className="text-xl text-white mb-4 sm:mb-6 font-medium">Something About Me !</h2>
+                <motion.h2
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={isAboutTextInView ? { opacity: 1, y: 0 } : {}}
+                  transition={{ duration: 0.5 }}
+                  className="text-xl text-white mb-4 sm:mb-6 font-medium"
+                >
+                  Something About Me !
+                </motion.h2>
 
-                <p className="text-white text-base sm:text-lg md:text-xl mb-4 sm:mb-6 leading-relaxed">
+                <motion.p
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={isAboutTextInView ? { opacity: 1, y: 0 } : {}}
+                  transition={{ duration: 0.5, delay: 0.2 }}
+                  className="text-white text-base sm:text-lg md:text-xl mb-4 sm:mb-6 leading-relaxed"
+                >
                   I'm Devinda Wijesinghe, a second-year Software Engineering student passionate about exploring
                   different technologies and building impactful software, transforming ideas into reality through code
                   while constantly learning and improving.
-                </p>
+                </motion.p>
 
-                <p className="text-white text-sm sm:text-base md:text-lg leading-relaxed">
+                <motion.p
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={isAboutTextInView ? { opacity: 1, y: 0 } : {}}
+                  transition={{ duration: 0.5, delay: 0.4 }}
+                  className="text-white text-sm sm:text-base md:text-lg leading-relaxed"
+                >
                   Outside of tech, I stay active with weightlifting and enjoy unwinding at night with video games,
                   whether competing or exploring new worlds. I'm always pushing my limits whether in development,
                   fitness, or gaming to become better.
-                </p>
+                </motion.p>
               </div>
             </motion.div>
 
@@ -375,4 +393,3 @@ export default function Home() {
     </main>
   )
 }
-
