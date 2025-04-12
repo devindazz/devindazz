@@ -99,10 +99,10 @@ export default function Home() {
           {/* Enhanced Greeting Animation */}
           <div className="overflow-hidden mb-2">
             <motion.h2
-              initial={{ y: isMobile ? 0 : 40, opacity: 0 }}
-              animate={{ opacity: 1, y: 0 }}
+              initial={{ y: 40, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
               transition={{
-                duration: isMobile ? 0.3 : 0.7,
+                duration: 0.7,
                 ease: [0.22, 1, 0.36, 1],
               }}
               className="text-xl font-mono text-white/80 md:text-2xl tracking-wider"
@@ -134,19 +134,19 @@ export default function Home() {
 
           {/* Enhanced Name Animation */}
           <div className="relative overflow-hidden">
-            {isMobile ? (
-              <h1 className="text-5xl font-extrabold text-white md:text-7xl py-2 px-4">Devinda</h1>
-            ) : (
-              <motion.h1
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{
-                  duration: 0.8,
-                  delay: 0.4,
-                  ease: [0.22, 1, 0.36, 1],
-                }}
-                className="text-5xl font-extrabold text-white md:text-7xl bg-clip-text text-transparent py-2 px-4"
-              >
+            <motion.h1
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{
+                duration: 0.8,
+                delay: 0.4,
+                ease: [0.22, 1, 0.36, 1],
+              }}
+              className="text-5xl font-extrabold text-white md:text-7xl py-2 px-4"
+            >
+              {isMobile ? (
+                "Devinda"
+              ) : (
                 <motion.span
                   initial={{ display: "inline-block" }}
                   animate={{
@@ -165,12 +165,21 @@ export default function Home() {
                 >
                   Devinda
                 </motion.span>
-              </motion.h1>
-            )}
+              )}
+            </motion.h1>
           </div>
 
           {/* Enhanced Role Animation */}
-          <div className="mt-4 relative">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{
+              duration: 0.7,
+              delay: 0.6,
+              ease: [0.22, 1, 0.36, 1],
+            }}
+            className="mt-4 relative"
+          >
             {/* Background glow - only on desktop */}
             {!isMobile && (
               <motion.div
@@ -186,19 +195,10 @@ export default function Home() {
               />
             )}
 
-            {isMobile ? (
-              <p className="text-xl md:text-3xl text-white/60">Software Engineer Student</p>
-            ) : (
-              <motion.p
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{
-                  duration: 0.7,
-                  delay: 0.6,
-                  ease: [0.22, 1, 0.36, 1],
-                }}
-                className="text-xl md:text-3xl text-white/60 relative"
-              >
+            <p className="text-xl md:text-3xl text-white/60 relative">
+              {isMobile ? (
+                <span>Software Engineer Student</span>
+              ) : (
                 <motion.span
                   animate={{
                     textShadow: [
@@ -215,12 +215,17 @@ export default function Home() {
                 >
                   Software Engineer Student
                 </motion.span>
-              </motion.p>
-            )}
-          </div>
+              )}
+            </p>
+          </motion.div>
 
           {/* Social icons with enhanced animation */}
-          <div className="mt-8 flex gap-6">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.8 }}
+            className="mt-8 flex gap-6"
+          >
             {isMobile ? (
               <>
                 <Link href="https://github.com/devindazz" className="relative">
@@ -233,12 +238,7 @@ export default function Home() {
                 </Link>
               </>
             ) : (
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.8 }}
-                className="flex gap-6"
-              >
+              <>
                 <motion.div
                   whileHover={{ scale: 1.2, rotate: 5 }}
                   transition={{ type: "spring", stiffness: 400, damping: 10 }}
@@ -260,9 +260,9 @@ export default function Home() {
                     <span className="sr-only">LinkedIn</span>
                   </Link>
                 </motion.div>
-              </motion.div>
+              </>
             )}
-          </div>
+          </motion.div>
         </div>
 
         {/* Overlay gradient for better text readability */}
@@ -270,17 +270,16 @@ export default function Home() {
 
         {/* Modern Animated Scroll Button */}
         <div className="absolute bottom-10 left-0 right-0 flex justify-center z-20">
-          {isMobile ? (
-            <button onClick={scrollToAbout} className="flex flex-col items-center">
-              <span className="text-sm font-light tracking-wider mb-2 text-white">scroll down</span>
-              <ChevronDown size={24} className="text-white" />
-            </button>
-          ) : (
-            <motion.button
-              onClick={scrollToAbout}
-              className="relative group flex flex-col items-center"
-              whileHover="hover"
-            >
+          <motion.button
+            onClick={scrollToAbout}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 1 }}
+            className="relative group flex flex-col items-center"
+            whileHover={isMobile ? undefined : "hover"}
+          >
+            {/* Animated glow effect - only on desktop */}
+            {!isMobile && (
               <motion.div
                 className="absolute -inset-4 rounded-full opacity-0 bg-gradient-to-r from-indigo-500/20 to-rose-500/20 blur-md group-hover:opacity-100 transition-opacity duration-500"
                 animate={{
@@ -292,64 +291,75 @@ export default function Home() {
                   ease: "easeInOut",
                 }}
               />
+            )}
+
+            {/* Text with gradient animation */}
+            {isMobile ? (
+              <span className="text-sm font-light tracking-wider mb-2 text-white">scroll down</span>
+            ) : (
               <motion.span
-                className="text-sm font-light tracking-wider mb-2 bg-clip-text text-transparent bg-gradient-to-r from-white to-white/80"
+                className="text-sm font-light tracking-wider mb-2 text-white"
                 animate={{
-                  backgroundPosition: ["0% center", "100% center", "0% center"],
+                  opacity: [0.7, 1, 0.7],
                 }}
                 transition={{
                   duration: 3,
                   repeat: Number.POSITIVE_INFINITY,
                   ease: "easeInOut",
                 }}
-                style={{
-                  backgroundSize: "200% 100%",
-                }}
               >
                 scroll down
               </motion.span>
-              <motion.div
-                className="relative"
-                variants={{
-                  hover: {
-                    y: 5,
-                    transition: {
-                      duration: 0.3,
-                      ease: "easeOut",
-                    },
-                  },
-                }}
-              >
-                <motion.div
-                  className="absolute inset-0 flex items-center justify-center"
-                  animate={{
-                    opacity: [0, 1, 0],
-                    y: [0, 10, 20],
-                  }}
-                  transition={{
-                    duration: 1.5,
-                    repeat: Number.POSITIVE_INFINITY,
+            )}
+
+            {/* Animated chevron */}
+            <motion.div
+              className="relative"
+              variants={{
+                hover: {
+                  y: 5,
+                  transition: {
+                    duration: 0.3,
                     ease: "easeOut",
-                    times: [0, 0.5, 1],
-                  }}
-                >
-                  <ChevronDown size={24} className="text-white/30" />
-                </motion.div>
-                <motion.div
-                  animate={{
-                    y: [0, 5, 0],
-                  }}
-                  transition={{
-                    duration: 1.5,
-                    repeat: Number.POSITIVE_INFINITY,
-                    ease: "easeInOut",
-                  }}
-                >
-                  <ChevronDown size={24} className="text-white" />
-                </motion.div>
-              </motion.div>
-            </motion.button>
-          )}
+                  },
+                },
+              }}
+            >
+              {isMobile ? (
+                <ChevronDown size={24} className="text-white" />
+              ) : (
+                <>
+                  <motion.div
+                    className="absolute inset-0 flex items-center justify-center"
+                    animate={{
+                      opacity: [0, 1, 0],
+                      y: [0, 10, 20],
+                    }}
+                    transition={{
+                      duration: 1.5,
+                      repeat: Number.POSITIVE_INFINITY,
+                      ease: "easeOut",
+                      times: [0, 0.5, 1],
+                    }}
+                  >
+                    <ChevronDown size={24} className="text-white/30" />
+                  </motion.div>
+                  <motion.div
+                    animate={{
+                      y: [0, 5, 0],
+                    }}
+                    transition={{
+                      duration: 1.5,
+                      repeat: Number.POSITIVE_INFINITY,
+                      ease: "easeInOut",
+                    }}
+                  >
+                    <ChevronDown size={24} className="text-white" />
+                  </motion.div>
+                </>
+              )}
+            </motion.div>
+          </motion.button>
         </div>
       </div>
 
@@ -365,76 +375,44 @@ export default function Home() {
           {/* Main Content - Positioned Lower */}
           <div className="flex flex-col md:flex-row justify-between items-center md:items-start mb-16 md:mb-32">
             {/* Left Side - About Me Text */}
-            {isMobile ? (
-              <div className="order-2 md:order-1 w-full md:max-w-xl mt-6 md:mt-0">
-                <div className="bg-zinc-950/80 backdrop-blur-sm p-5 sm:p-6 rounded-lg border border-white/20 shadow-lg">
-                  <h2 className="text-xl text-white mb-4 sm:mb-6 font-medium">Something About Me !</h2>
-                  <p className="text-white text-base sm:text-lg md:text-xl mb-4 sm:mb-6 leading-relaxed">
-                    I'm Devinda Wijesinghe, a second-year Software Engineering student passionate about exploring
-                    different technologies and building impactful software, transforming ideas into reality through code
-                    while constantly learning and improving.
-                  </p>
-                  <p className="text-white text-sm sm:text-base md:text-lg leading-relaxed">
-                    Outside of tech, I stay active with weightlifting and enjoy unwinding at night with video games,
-                    whether competing or exploring new worlds. I'm always pushing my limits whether in development,
-                    fitness, or gaming to become better.
-                  </p>
-                </div>
+            <motion.div
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              className="order-2 md:order-1 w-full md:max-w-xl mt-6 md:mt-0"
+            >
+              <div className="bg-zinc-950/80 backdrop-blur-sm p-5 sm:p-6 rounded-lg border border-white/20 shadow-lg">
+                <h2 className="text-xl text-white mb-4 sm:mb-6 font-medium">Something About Me !</h2>
+                <p className="text-white text-base sm:text-lg md:text-xl mb-4 sm:mb-6 leading-relaxed">
+                  I'm Devinda Wijesinghe, a second-year Software Engineering student passionate about exploring
+                  different technologies and building impactful software, transforming ideas into reality through code
+                  while constantly learning and improving.
+                </p>
+                <p className="text-white text-sm sm:text-base md:text-lg leading-relaxed">
+                  Outside of tech, I stay active with weightlifting and enjoy unwinding at night with video games,
+                  whether competing or exploring new worlds. I'm always pushing my limits whether in development,
+                  fitness, or gaming to become better.
+                </p>
               </div>
-            ) : (
-              <motion.div
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.6, delay: 0.2 }}
-                className="order-2 md:order-1 w-full md:max-w-xl mt-6 md:mt-0"
-              >
-                <div className="bg-zinc-950/80 backdrop-blur-sm p-5 sm:p-6 rounded-lg border border-white/20 shadow-lg">
-                  <h2 className="text-xl text-white mb-4 sm:mb-6 font-medium">Something About Me !</h2>
-                  <p className="text-white text-base sm:text-lg md:text-xl mb-4 sm:mb-6 leading-relaxed">
-                    I'm Devinda Wijesinghe, a second-year Software Engineering student passionate about exploring
-                    different technologies and building impactful software, transforming ideas into reality through code
-                    while constantly learning and improving.
-                  </p>
-                  <p className="text-white text-sm sm:text-base md:text-lg leading-relaxed">
-                    Outside of tech, I stay active with weightlifting and enjoy unwinding at night with video games,
-                    whether competing or exploring new worlds. I'm always pushing my limits whether in development,
-                    fitness, or gaming to become better.
-                  </p>
-                </div>
-              </motion.div>
-            )}
+            </motion.div>
 
             {/* Right Side - Profile Photo */}
-            {isMobile ? (
-              <div className="order-1 md:order-2">
-                <div className="w-32 h-32 sm:w-40 sm:h-40 md:w-48 md:h-48 lg:w-56 lg:h-56 bg-gray-200/90 rounded-full overflow-hidden flex items-center justify-center shadow-lg border-2 border-white/20">
-                  <Image
-                    src="/profile.jpg"
-                    alt="Devinda Wijesinghe"
-                    width={224}
-                    height={224}
-                    className="object-cover w-full h-full"
-                  />
-                </div>
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.6, delay: 0.4 }}
+              className="order-1 md:order-2"
+            >
+              <div className="w-32 h-32 sm:w-40 sm:h-40 md:w-48 md:h-48 lg:w-56 lg:h-56 bg-gray-200/90 rounded-full overflow-hidden flex items-center justify-center shadow-lg border-2 border-white/20">
+                <Image
+                  src="/profile.jpg"
+                  alt="Devinda Wijesinghe"
+                  width={224}
+                  height={224}
+                  className="object-cover w-full h-full"
+                />
               </div>
-            ) : (
-              <motion.div
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.6, delay: 0.4 }}
-                className="order-1 md:order-2"
-              >
-                <div className="w-32 h-32 sm:w-40 sm:h-40 md:w-48 md:h-48 lg:w-56 lg:h-56 bg-gray-200/90 rounded-full overflow-hidden flex items-center justify-center shadow-lg border-2 border-white/20">
-                  <Image
-                    src="/profile.jpg"
-                    alt="Devinda Wijesinghe"
-                    width={224}
-                    height={224}
-                    className="object-cover w-full h-full"
-                  />
-                </div>
-              </motion.div>
-            )}
+            </motion.div>
           </div>
         </div>
       </div>
