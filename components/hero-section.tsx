@@ -17,7 +17,8 @@ export default function Home() {
 
     // Check if mobile on initial load and on resize
     const checkMobile = () => {
-      setIsMobile(window.innerWidth < 768)
+      // Increased threshold to 1024px to include more devices that might struggle with animations
+      setIsMobile(window.innerWidth < 1024)
     }
 
     checkMobile()
@@ -48,53 +49,59 @@ export default function Home() {
 
         {/* Elegant shapes background */}
         <div className="absolute inset-0 overflow-hidden">
-          <ElegantShape
-            delay={0.3}
-            width={600}
-            height={140}
-            rotate={12}
-            gradient="from-indigo-500/[0.15]"
-            className="left-[-10%] md:left-[-5%] top-[15%] md:top-[20%]"
-            simplified={isMobile}
-          />
-
-          {/* Only render these shapes on larger screens */}
-          {!isMobile && (
+          {/* Only render one simple shape on mobile */}
+          {isMobile ? (
+            <ElegantShape
+              delay={0.3}
+              width={300}
+              height={80}
+              rotate={12}
+              gradient="from-indigo-500/[0.10]"
+              className="left-[-10%] top-[15%]"
+              simplified={true}
+            />
+          ) : (
             <>
+              <ElegantShape
+                delay={0.3}
+                width={600}
+                height={140}
+                rotate={12}
+                gradient="from-indigo-500/[0.15]"
+                className="left-[-5%] top-[20%]"
+                simplified={false}
+              />
               <ElegantShape
                 delay={0.5}
                 width={500}
                 height={120}
                 rotate={-15}
                 gradient="from-rose-500/[0.15]"
-                className="right-[-5%] md:right-[0%] top-[70%] md:top-[75%]"
+                className="right-[0%] top-[75%]"
               />
-
               <ElegantShape
                 delay={0.4}
                 width={300}
                 height={80}
                 rotate={-8}
                 gradient="from-violet-500/[0.15]"
-                className="left-[5%] md:left-[10%] bottom-[5%] md:bottom-[10%]"
+                className="left-[10%] bottom-[10%]"
               />
-
               <ElegantShape
                 delay={0.6}
                 width={200}
                 height={60}
                 rotate={20}
                 gradient="from-amber-500/[0.15]"
-                className="right-[15%] md:right-[20%] top-[10%] md:top-[15%]"
+                className="right-[20%] top-[15%]"
               />
-
               <ElegantShape
                 delay={0.7}
                 width={150}
                 height={40}
                 rotate={-25}
                 gradient="from-cyan-500/[0.15]"
-                className="left-[20%] md:left-[25%] top-[5%] md:top-[10%]"
+                className="left-[25%] top-[10%]"
               />
             </>
           )}
@@ -114,18 +121,19 @@ export default function Home() {
               className="text-xl font-mono text-white/80 md:text-2xl tracking-wider"
             >
               <motion.span
-                animate={isMobile ? { opacity: [0.5, 0.9, 0.5] } : { backgroundPosition: ["0% center", "200% center"] }}
+                animate={isMobile ? { opacity: 1 } : { backgroundPosition: ["0% center", "200% center"] }}
                 transition={{
-                  duration: isMobile ? 2 : 6,
-                  repeat: Number.POSITIVE_INFINITY,
+                  duration: isMobile ? 0 : 6,
+                  repeat: isMobile ? 0 : Number.POSITIVE_INFINITY,
                   ease: "linear",
                 }}
                 style={{
                   backgroundSize: "200% 100%",
-                  backgroundImage:
-                    "linear-gradient(90deg, rgba(255,255,255,0.5) 0%, rgba(255,255,255,0.9) 50%, rgba(255,255,255,0.5) 100%)",
-                  WebkitBackgroundClip: "text",
-                  WebkitTextFillColor: "transparent",
+                  backgroundImage: isMobile
+                    ? "none"
+                    : "linear-gradient(90deg, rgba(255,255,255,0.5) 0%, rgba(255,255,255,0.9) 50%, rgba(255,255,255,0.5) 100%)",
+                  WebkitBackgroundClip: isMobile ? "none" : "text",
+                  WebkitTextFillColor: isMobile ? "rgba(255,255,255,0.8)" : "transparent",
                   display: "inline-block",
                 }}
               >
@@ -150,7 +158,7 @@ export default function Home() {
                 initial={{ display: "inline-block" }}
                 animate={
                   isMobile
-                    ? { scale: [1, 1.03, 1] }
+                    ? { scale: 1 } // No animation on mobile
                     : {
                         y: [0, -10, 0],
                         rotate: [0, -2, 0, 2, 0],
@@ -159,7 +167,7 @@ export default function Home() {
                 }
                 transition={{
                   duration: isMobile ? 3 : 5,
-                  repeat: Number.POSITIVE_INFINITY,
+                  repeat: isMobile ? 0 : Number.POSITIVE_INFINITY,
                   repeatType: "reverse",
                   ease: "easeInOut",
                   times: isMobile ? [0, 0.5, 1] : [0, 0.2, 0.4, 0.6, 1],
@@ -197,7 +205,7 @@ export default function Home() {
               <motion.span
                 animate={
                   isMobile
-                    ? { opacity: [0.7, 1, 0.7] }
+                    ? { opacity: 1 } // No animation on mobile
                     : {
                         textShadow: [
                           "0 0 8px rgba(255,255,255,0)",
@@ -207,8 +215,8 @@ export default function Home() {
                       }
                 }
                 transition={{
-                  duration: isMobile ? 2 : 3,
-                  repeat: Number.POSITIVE_INFINITY,
+                  duration: isMobile ? 0 : 3,
+                  repeat: isMobile ? 0 : Number.POSITIVE_INFINITY,
                   ease: "easeInOut",
                 }}
               >
