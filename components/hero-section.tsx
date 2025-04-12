@@ -11,6 +11,7 @@ export default function Home() {
   const [mounted, setMounted] = useState(false)
   const aboutSectionRef = useRef<HTMLDivElement>(null)
   const [isMobile, setIsMobile] = useState(false)
+  const [isAboutVisible, setIsAboutVisible] = useState(false)
 
   useEffect(() => {
     setMounted(true)
@@ -24,8 +25,31 @@ export default function Home() {
     checkMobile()
     window.addEventListener("resize", checkMobile)
 
+    // Set up intersection observer for the about section
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setIsAboutVisible(true)
+            // Once we've seen it, no need to keep observing
+            if (aboutSectionRef.current) {
+              observer.unobserve(aboutSectionRef.current)
+            }
+          }
+        })
+      },
+      { threshold: 0.2 }, // Trigger when 20% of the element is visible
+    )
+
+    if (aboutSectionRef.current) {
+      observer.observe(aboutSectionRef.current)
+    }
+
     return () => {
       window.removeEventListener("resize", checkMobile)
+      if (aboutSectionRef.current) {
+        observer.unobserve(aboutSectionRef.current)
+      }
     }
   }, [])
 
@@ -364,55 +388,99 @@ export default function Home() {
       </div>
 
       {/* About Section - Using the provided AboutPage content */}
-      <div ref={aboutSectionRef} className="relative min-h-dvh w-full bg-neutral-950 overflow-hidden">
+      <div ref={aboutSectionRef} className="relative h-screen w-full bg-neutral-950 overflow-hidden">
         {/* Simple static background - only on desktop */}
         {!isMobile && (
           <div className="absolute inset-0 bg-gradient-to-br from-indigo-500/[0.03] via-transparent to-rose-500/[0.03] blur-3xl" />
         )}
 
         {/* Content Container */}
-        <div className="relative z-10 min-h-dvh w-full px-4 sm:px-8 py-12 sm:py-16 md:px-16 lg:px-24 flex flex-col">
-          {/* Main Content - Positioned Lower */}
-          <div className="flex flex-col md:flex-row justify-between items-center md:items-start mb-16 md:mb-32">
-            {/* Left Side - About Me Text */}
-            <motion.div
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-              className="order-2 md:order-1 w-full md:max-w-xl mt-6 md:mt-0"
-            >
-              <div className="bg-zinc-950/80 backdrop-blur-sm p-5 sm:p-6 rounded-lg border border-white/20 shadow-lg">
-                <h2 className="text-xl text-white mb-4 sm:mb-6 font-medium">Something About Me !</h2>
-                <p className="text-white text-base sm:text-lg md:text-xl mb-4 sm:mb-6 leading-relaxed">
-                  I'm Devinda Wijesinghe, a second-year Software Engineering student passionate about exploring
-                  different technologies and building impactful software, transforming ideas into reality through code
-                  while constantly learning and improving.
-                </p>
-                <p className="text-white text-sm sm:text-base md:text-lg leading-relaxed">
-                  Outside of tech, I stay active with weightlifting and enjoy unwinding at night with video games,
-                  whether competing or exploring new worlds. I'm always pushing my limits whether in development,
-                  fitness, or gaming to become better.
-                </p>
-              </div>
-            </motion.div>
-
+        <div className="relative z-10 h-full w-full flex items-center justify-center">
+          {/* Main Content - Centered in the page */}
+          <div className="w-full max-w-7xl px-4 sm:px-8 md:px-16 lg:px-24 py-8 flex flex-col md:flex-row items-center md:items-center justify-center gap-8 md:gap-16 lg:gap-24">
             {/* Right Side - Profile Photo */}
             <motion.div
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.6, delay: 0.4 }}
-              className="order-1 md:order-2"
+              transition={{
+                duration: 0.6,
+                ease: [0.22, 1, 0.36, 1],
+                delay: isAboutVisible ? 0.2 : 0.1,
+              }}
+              className="order-1 md:order-1"
             >
-              <div className="w-32 h-32 sm:w-40 sm:h-40 md:w-48 md:h-48 lg:w-56 lg:h-56 bg-gray-200/90 rounded-full overflow-hidden flex items-center justify-center shadow-lg border-2 border-white/20">
+              <div className="w-40 h-40 sm:w-48 sm:h-48 md:w-56 md:h-56 lg:w-64 lg:h-64 bg-gray-200/90 rounded-full overflow-hidden flex items-center justify-center shadow-lg border-2 border-white/20">
                 <Image
                   src="/profile.jpg"
                   alt="Devinda Wijesinghe"
-                  width={224}
-                  height={224}
+                  width={256}
+                  height={256}
                   className="object-cover w-full h-full"
                 />
               </div>
             </motion.div>
+
+            {/* Left Side - About Me Text */}
+            <div className="order-2 md:order-2 w-full max-w-xl">
+              <div className="bg-zinc-950/80 backdrop-blur-sm p-5 sm:p-6 rounded-lg border border-white/20 shadow-lg">
+                <div className="relative mb-4 sm:mb-6">
+                  <motion.h2
+                    className="text-xl md:text-2xl text-white font-medium"
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{
+                      duration: 0.6,
+                      ease: [0.22, 1, 0.36, 1],
+                      delay: isAboutVisible ? 0 : 0.2,
+                    }}
+                  >
+                    Something About Me !
+                  </motion.h2>
+
+                  {/* Animated line */}
+                  <motion.div
+                    className="absolute -bottom-2 left-0 h-0.5 bg-gradient-to-r from-indigo-500 to-rose-500"
+                    initial={{ width: 0 }}
+                    animate={{ width: isAboutVisible ? "100%" : "0%" }}
+                    transition={{
+                      duration: 1.2,
+                      ease: [0.22, 1, 0.36, 1],
+                      delay: 0.3,
+                    }}
+                  />
+                </div>
+
+                <motion.p
+                  className="text-white text-base sm:text-lg md:text-xl mb-4 sm:mb-6 leading-relaxed"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{
+                    duration: 0.6,
+                    ease: [0.22, 1, 0.36, 1],
+                    delay: isAboutVisible ? 0.4 : 0.3,
+                  }}
+                >
+                  I'm Devinda Wijesinghe, a second-year Software Engineering student passionate about exploring
+                  different technologies and building impactful software, transforming ideas into reality through code
+                  while constantly learning and improving.
+                </motion.p>
+
+                <motion.p
+                  className="text-white text-sm sm:text-base md:text-lg leading-relaxed"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{
+                    duration: 0.6,
+                    ease: [0.22, 1, 0.36, 1],
+                    delay: isAboutVisible ? 0.6 : 0.4,
+                  }}
+                >
+                  Outside of tech, I stay active with weightlifting and enjoy unwinding at night with video games,
+                  whether competing or exploring new worlds. I'm always pushing my limits whether in development,
+                  fitness, or gaming to become better.
+                </motion.p>
+              </div>
+            </div>
           </div>
         </div>
       </div>
