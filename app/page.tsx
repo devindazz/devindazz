@@ -1,3 +1,4 @@
+import Fotter from "@/components/fotter"
 import HeroSection from "@/components/hero-section"
 import ProjectsPage from "@/components/project-page"
 
@@ -6,6 +7,7 @@ export default function Home() {
     <main>
       <HeroSection />
       <ProjectsPage/>
+      <Fotter/>
       
     </main>
   )
