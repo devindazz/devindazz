@@ -332,7 +332,7 @@ export default function Home() {
                   ease: "easeInOut",
                 }}
               >
-                scroll down
+                Scroll Down
               </motion.span>
             )}
 
