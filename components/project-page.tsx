@@ -27,6 +27,17 @@ const projects = [
     liveUrl: "https://zenith-higher-education.vercel.app/",
     status: "ongoing",
   },
+
+  {
+    name: "Weather Reporter",
+    description:
+      "A modern, responsive weather application built with Next.js 15 that provides real-time weather information with an immersive, dynamic user interface that adapts to current weather conditions.",
+    techStacks: ["Next.js", "TypeScript", "Tailwind CSS", "Weather API"],
+    imageUrl: "/weather.png?height=300&width=400",
+    githubUrl: "https://github.com/devindazz/weather-reporter",
+    liveUrl: "https://weather-reporter-nu.vercel.app/",
+    status: "",
+  },
   {
     name: "Coming Soon",
     description: "Another innovative project on the horizon. Stay tuned!",
@@ -237,7 +248,7 @@ function ProjectCard({ project, isMobile }: ProjectCardProps) {
           </p>
 
           {/* Tech Stack - Adjusted spacing */}
-          <div className="mb-3 sm:mb-4">
+          <div className="mb-3 sm:mb-4 mt-5">
             <h3 className="text-white/60 text-[10px] sm:text-xs uppercase tracking-wider mb-1.5 sm:mb-2">
               Technologies
             </h3>

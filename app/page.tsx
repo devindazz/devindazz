@@ -1,4 +1,4 @@
-import Fotter from "@/components/fotter"
+import Fotter from "@/components/footer"
 import HeroSection from "@/components/hero-section"
 import ProjectsPage from "@/components/project-page"
 
