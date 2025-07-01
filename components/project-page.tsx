@@ -248,7 +248,7 @@ function ProjectCard({ project, isMobile }: ProjectCardProps) {
           </p>
 
           {/* Tech Stack - Adjusted spacing */}
-          <div className="mb-3 sm:mb-4">
+          <div className="mb-3 sm:mb-4 mt-5">
             <h3 className="text-white/60 text-[10px] sm:text-xs uppercase tracking-wider mb-1.5 sm:mb-2">
               Technologies
             </h3>
