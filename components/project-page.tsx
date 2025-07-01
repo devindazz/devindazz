@@ -32,11 +32,11 @@ const projects = [
     name: "Weather Reporter",
     description:
       "A marketing website for a Sri Lankan education center offering O/L and A/L classes, designed to promote programs, highlight achievements, and attract students and parents.",
-    techStacks: ["Next.js", "TypeScript", "Tailwind CSS", "Framer Motion", "Weather API"],
+    techStacks: ["Next.js", "TypeScript", "Tailwind CSS", "Weather API"],
     imageUrl: "/zenith.jpg?height=300&width=400",
     githubUrl: "https://github.com/devindazz/weather-reporter",
     liveUrl: "https://weather-reporter-nu.vercel.app/",
-    status: "ongoing",
+    status: "",
   },
   {
     name: "Coming Soon",
