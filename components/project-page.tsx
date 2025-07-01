@@ -31,9 +31,9 @@ const projects = [
   {
     name: "Weather Reporter",
     description:
-      "A marketing website for a Sri Lankan education center offering O/L and A/L classes, designed to promote programs, highlight achievements, and attract students and parents.",
+      "A modern, responsive weather application built with Next.js 15 that provides real-time weather information with an immersive, dynamic user interface that adapts to current weather conditions.",
     techStacks: ["Next.js", "TypeScript", "Tailwind CSS", "Weather API"],
-    imageUrl: "/zenith.jpg?height=300&width=400",
+    imageUrl: "/weather.png?height=300&width=400",
     githubUrl: "https://github.com/devindazz/weather-reporter",
     liveUrl: "https://weather-reporter-nu.vercel.app/",
     status: "",
