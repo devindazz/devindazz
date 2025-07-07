@@ -8,7 +8,7 @@ export default function Education() {
   const [isEducationVisible, setIsEducationVisible] = useState(false)
   const [visibleCards, setVisibleCards] = useState<boolean[]>([false, false, false])
   const educationSectionRef = useRef<HTMLDivElement>(null)
-  const cardRefs = useRef<(HTMLDivElement | null)[]>([])
+  const cardRefs = useRef<Array<HTMLDivElement | null>>([])
 
   useEffect(() => {
     // Set up intersection observer for the main education section
@@ -88,7 +88,7 @@ export default function Education() {
   ]
 
   return (
-    <div ref={educationSectionRef} className="relative min-h-screen w-full bg-black overflow-hidden">
+    <div ref={educationSectionRef} className="relative w-full bg-neutral-950 overflow-hidden py-16">
       {/* Subtle background pattern */}
       <div className="absolute inset-0 opacity-5">
         <div className="absolute inset-0 bg-gradient-to-br from-white/10 via-transparent to-white/5" />
@@ -102,10 +102,10 @@ export default function Education() {
       </div>
 
       {/* Content Container */}
-      <div className="relative z-10 w-full flex items-center justify-center min-h-screen px-4 sm:px-8 md:px-16 lg:px-24 py-20">
+      <div className="relative z-10 w-full flex items-center justify-center px-4 sm:px-8 md:px-16 lg:px-24 py-12">
         <div className="w-full max-w-5xl">
           {/* Section Title */}
-          <div className="text-center mb-16">
+          <div className="text-center mb-10">
             <motion.div
               className="flex items-center justify-center gap-4 mb-6"
               initial={{ opacity: 0, y: 30 }}
@@ -133,10 +133,10 @@ export default function Education() {
                   delay: 0.5,
                 }}
               >
-                <GraduationCap className="h-10 w-10 text-white" />
+                <GraduationCap className="h-8 w-8 text-white" />
               </motion.div>
               <motion.h2
-                className="text-4xl md:text-5xl text-white font-bold tracking-tight"
+                className="text-3xl md:text-4xl text-white font-bold tracking-tight"
                 initial={{ opacity: 0, x: -20 }}
                 animate={{
                   opacity: isEducationVisible ? 1 : 0,
@@ -188,11 +188,11 @@ export default function Education() {
           </div>
 
           {/* Education Timeline */}
-          <div className="space-y-8">
+          <div className="space-y-6">
             {educationData.map((edu, index) => (
               <motion.div
                 key={index}
-                ref={(el) => { cardRefs.current[index] = el }}
+                ref={(el) => { cardRefs.current[index] = el; }}
                 className="relative"
                 initial={{ opacity: 0, y: 50 }}
                 animate={{
@@ -208,9 +208,9 @@ export default function Education() {
                 {/* Timeline connector */}
                 {index < educationData.length - 1 && (
                   <motion.div
-                    className="absolute left-8 top-full w-px h-8 bg-gradient-to-b from-white to-transparent"
+                    className="absolute left-8 top-full w-px h-6 bg-gradient-to-b from-white to-transparent"
                     initial={{ height: 0 }}
-                    animate={{ height: visibleCards[index] ? "32px" : "0px" }}
+                    animate={{ height: visibleCards[index] ? "24px" : "0px" }}
                     transition={{
                       duration: 0.6,
                       ease: [0.22, 1, 0.36, 1],
@@ -222,7 +222,7 @@ export default function Education() {
                 <div className="flex items-start gap-6">
                   {/* Timeline dot */}
                   <motion.div
-                    className="flex-shrink-0 w-4 h-4 bg-white rounded-full mt-8 relative"
+                    className="flex-shrink-0 w-3 h-3 bg-white rounded-full mt-6 relative"
                     initial={{ scale: 0 }}
                     animate={{ scale: visibleCards[index] ? 1 : 0 }}
                     transition={{
@@ -252,7 +252,7 @@ export default function Education() {
 
                   {/* Education Card */}
                   <motion.div
-                    className="flex-1 bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-8 hover:bg-white/10 transition-all duration-500 group"
+                    className="flex-1 bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-6 hover:bg-white/10 transition-all duration-500 group"
                     whileHover={{
                       scale: 1.02,
                       boxShadow: "0 20px 40px rgba(255, 255, 255, 0.1)",
@@ -264,7 +264,7 @@ export default function Education() {
                       <div className="flex-1 mb-6 lg:mb-0">
                         <div className="flex items-center gap-3 mb-3">
                           <motion.h3
-                            className="text-2xl lg:text-3xl font-bold text-white group-hover:text-white/90 transition-colors"
+                            className="text-xl lg:text-2xl font-bold text-white group-hover:text-white/90 transition-colors"
                             initial={{ opacity: 0, x: -20 }}
                             animate={{
                               opacity: visibleCards[index] ? 1 : 0,
@@ -298,7 +298,7 @@ export default function Education() {
                         </div>
 
                         <motion.p
-                          className="text-white/80 text-lg lg:text-xl font-medium mb-4"
+                          className="text-white/80 text-base lg:text-lg font-medium mb-3"
                           initial={{ opacity: 0, x: -20 }}
                           animate={{
                             opacity: visibleCards[index] ? 1 : 0,
