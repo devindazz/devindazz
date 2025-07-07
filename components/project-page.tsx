@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState, useEffect, useRef } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import Image from "next/image"
 import Link from "next/link"
@@ -27,7 +27,6 @@ const projects = [
     liveUrl: "https://zenith-higher-education.vercel.app/",
     status: "ongoing",
   },
-
   {
     name: "Weather Reporter",
     description:
@@ -53,6 +52,8 @@ export default function ProjectsPage() {
   const [mounted, setMounted] = useState(false)
   const [activeProject, setActiveProject] = useState(0)
   const [isMobile, setIsMobile] = useState(false)
+  const [isProjectsVisible, setIsProjectsVisible] = useState(false)
+  const projectsSectionRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     setMounted(true)
@@ -67,8 +68,33 @@ export default function ProjectsPage() {
     // Add resize listener for responsive adjustments
     window.addEventListener("resize", checkMobile)
 
+    // Set up intersection observer for the projects section
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setIsProjectsVisible(true)
+          }
+        })
+      },
+      { threshold: 0.1 }, // Trigger when 10% of the element is visible
+    )
+
+    if (projectsSectionRef.current) {
+      observer.observe(projectsSectionRef.current)
+    }
+
+    // Fallback: Show content after 1 second if intersection observer doesn't work
+    const fallbackTimer = setTimeout(() => {
+      setIsProjectsVisible(true)
+    }, 1000)
+
     return () => {
       window.removeEventListener("resize", checkMobile)
+      if (projectsSectionRef.current) {
+        observer.unobserve(projectsSectionRef.current)
+      }
+      clearTimeout(fallbackTimer)
     }
   }, [])
 
@@ -83,27 +109,33 @@ export default function ProjectsPage() {
   if (!mounted) return null
 
   return (
-    <div className="relative min-h-dvh w-full bg-neutral-950 overflow-hidden">
+    <div ref={projectsSectionRef} className="relative min-h-dvh w-full bg-neutral-950 overflow-hidden">
       {/* Content Container - Centered in the page */}
       <div className="relative z-10 w-full flex flex-col items-center justify-center min-h-dvh px-4 md:px-8 lg:px-16 py-20 md:py-0">
         {/* Title Section - Positioned at top */}
         <motion.div
           className="absolute top-6 sm:top-8 md:top-12 left-0 right-0 flex justify-center"
           initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
+          animate={{
+            opacity: isProjectsVisible ? 1 : 0,
+            y: isProjectsVisible ? 0 : -20,
+          }}
           transition={{ duration: 0.8 }}
         >
           <motion.h1
             className="text-3xl sm:text-4xl md:text-5xl font-bold text-white px-4 sm:px-6 py-2 sm:py-3  
                       bg-black/20 backdrop-blur-sm border border-white/10 shadow-lg"
             initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
+            animate={{ opacity: isProjectsVisible ? 1 : 0 }}
             transition={{ duration: 0.5 }}
           >
             <motion.span
               initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.4, delay: 0.3 }}
+              animate={{
+                opacity: isProjectsVisible ? 1 : 0,
+                y: isProjectsVisible ? 0 : 20,
+              }}
+              transition={{ duration: 0.4, delay: isProjectsVisible ? 0.3 : 0 }}
             >
               Projects
             </motion.span>
@@ -111,9 +143,25 @@ export default function ProjectsPage() {
         </motion.div>
 
         {/* Projects Carousel - Centered in the page */}
-        <div className="w-full max-w-6xl mt-16 sm:mt-20 md:mt-12">
+        <motion.div
+          className="w-full max-w-6xl mt-16 sm:mt-20 md:mt-12"
+          initial={{ opacity: 0, y: 50 }}
+          animate={{
+            opacity: isProjectsVisible ? 1 : 0,
+            y: isProjectsVisible ? 0 : 50,
+          }}
+          transition={{ duration: 0.8, delay: isProjectsVisible ? 0.4 : 0 }}
+        >
           {/* Navigation Controls */}
-          <div className="flex justify-between items-center mb-6 sm:mb-8">
+          <motion.div
+            className="flex justify-between items-center mb-6 sm:mb-8"
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{
+              opacity: isProjectsVisible ? 1 : 0,
+              scale: isProjectsVisible ? 1 : 0.9,
+            }}
+            transition={{ duration: 0.6, delay: isProjectsVisible ? 0.6 : 0 }}
+          >
             <button
               onClick={prevProject}
               className="bg-black/30 hover:bg-black/50 backdrop-blur-sm text-white p-1.5 sm:p-2 rounded-full border border-white/10 shadow-lg transition-all duration-300"
@@ -124,13 +172,19 @@ export default function ProjectsPage() {
 
             <div className="flex gap-1 sm:gap-1.5">
               {projects.map((_, index) => (
-                <button
+                <motion.button
                   key={index}
                   onClick={() => setActiveProject(index)}
                   className={`h-1.5 sm:h-2 rounded-full transition-all duration-300 ${
                     activeProject === index ? "w-6 sm:w-8 bg-cyan-400" : "w-1.5 sm:w-2 bg-white/30"
                   }`}
                   aria-label={`Go to project ${index + 1}`}
+                  initial={{ opacity: 0, scale: 0 }}
+                  animate={{
+                    opacity: isProjectsVisible ? 1 : 0,
+                    scale: isProjectsVisible ? 1 : 0,
+                  }}
+                  transition={{ duration: 0.4, delay: isProjectsVisible ? 0.7 + index * 0.1 : 0 }}
                 />
               ))}
             </div>
@@ -142,10 +196,18 @@ export default function ProjectsPage() {
             >
               <ChevronRight className="h-4 w-4 sm:h-5 sm:w-5" />
             </button>
-          </div>
+          </motion.div>
 
           {/* Project Cards */}
-          <div className="relative h-[550px] sm:h-[520px] md:h-[350px] overflow-hidden">
+          <motion.div
+            className="relative h-[550px] sm:h-[520px] md:h-[350px] overflow-hidden"
+            initial={{ opacity: 0, y: 30 }}
+            animate={{
+              opacity: isProjectsVisible ? 1 : 0,
+              y: isProjectsVisible ? 0 : 30,
+            }}
+            transition={{ duration: 0.8, delay: isProjectsVisible ? 0.8 : 0 }}
+          >
             <AnimatePresence mode="wait">
               {projects.map(
                 (project, index) =>
@@ -158,13 +220,13 @@ export default function ProjectsPage() {
                       exit={{ opacity: 0, x: -100 }}
                       transition={{ duration: 0.5 }}
                     >
-                      <ProjectCard project={project} isMobile={isMobile} />
+                      <ProjectCard project={project} isMobile={isMobile} isVisible={isProjectsVisible} />
                     </motion.div>
                   ),
               )}
             </AnimatePresence>
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
       </div>
     </div>
   )
@@ -181,15 +243,24 @@ interface ProjectCardProps {
     status?: string
   }
   isMobile: boolean
+  isVisible: boolean
 }
 
-function ProjectCard({ project, isMobile }: ProjectCardProps) {
+function ProjectCard({ project, isMobile, isVisible }: ProjectCardProps) {
   const isUpcoming = project.status === "upcoming"
 
   return (
     <div className={`flex flex-col md:grid md:grid-cols-2 gap-4 sm:gap-6 h-full`}>
       {/* Project Image - Adjusted height */}
-      <div className="relative h-[240px] sm:h-[260px] md:h-full rounded-xl sm:rounded-2xl overflow-hidden border border-white/10 shadow-lg">
+      <motion.div
+        className="relative h-[240px] sm:h-[260px] md:h-full rounded-xl sm:rounded-2xl overflow-hidden border border-white/10 shadow-lg"
+        initial={{ opacity: 0, x: -50 }}
+        animate={{
+          opacity: isVisible ? 1 : 0,
+          x: isVisible ? 0 : -50,
+        }}
+        transition={{ duration: 0.8, delay: 0.2 }}
+      >
         <Image
           src={project.imageUrl || "/placeholder.svg"}
           alt={project.name}
@@ -205,7 +276,15 @@ function ProjectCard({ project, isMobile }: ProjectCardProps) {
 
         {/* Status Badge - Only for ongoing project */}
         {project.status === "ongoing" && (
-          <div className="absolute top-2 sm:top-4 right-2 sm:right-4 bg-black/50 backdrop-blur-md rounded-full px-2 sm:px-3 py-1 sm:py-1.5 flex items-center gap-1 sm:gap-2 border border-green-500/30">
+          <motion.div
+            className="absolute top-2 sm:top-4 right-2 sm:right-4 bg-black/50 backdrop-blur-md rounded-full px-2 sm:px-3 py-1 sm:py-1.5 flex items-center gap-1 sm:gap-2 border border-green-500/30"
+            initial={{ opacity: 0, scale: 0 }}
+            animate={{
+              opacity: isVisible ? 1 : 0,
+              scale: isVisible ? 1 : 0,
+            }}
+            transition={{ duration: 0.5, delay: 0.6 }}
+          >
             <motion.div
               animate={{
                 scale: [1, 1.2, 1],
@@ -219,58 +298,122 @@ function ProjectCard({ project, isMobile }: ProjectCardProps) {
               className="w-1.5 sm:w-2 h-1.5 sm:h-2 rounded-full bg-green-400"
             />
             <span className="text-green-100 text-[10px] sm:text-xs font-medium">Ongoing</span>
-          </div>
+          </motion.div>
         )}
 
         {/* Coming Soon Badge - Only for upcoming projects */}
         {isUpcoming && (
-          <div className="absolute top-2 sm:top-4 right-2 sm:right-4 bg-purple-500/20 backdrop-blur-md rounded-full px-2 sm:px-3 py-1 sm:py-1.5 flex items-center gap-1 sm:gap-2 border border-purple-500/30">
+          <motion.div
+            className="absolute top-2 sm:top-4 right-2 sm:right-4 bg-purple-500/20 backdrop-blur-md rounded-full px-2 sm:px-3 py-1 sm:py-1.5 flex items-center gap-1 sm:gap-2 border border-purple-500/30"
+            initial={{ opacity: 0, scale: 0 }}
+            animate={{
+              opacity: isVisible ? 1 : 0,
+              scale: isVisible ? 1 : 0,
+            }}
+            transition={{ duration: 0.5, delay: 0.6 }}
+          >
             <Clock className="h-2.5 w-2.5 sm:h-3 sm:w-3 text-purple-300" />
             <span className="text-purple-100 text-[10px] sm:text-xs font-medium">Coming Soon</span>
-          </div>
+          </motion.div>
         )}
 
         {/* Project Name - Mobile Only */}
-        <div className="absolute bottom-0 left-0 right-0 p-3 sm:p-4 md:hidden">
+        <motion.div
+          className="absolute bottom-0 left-0 right-0 p-3 sm:p-4 md:hidden"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{
+            opacity: isVisible ? 1 : 0,
+            y: isVisible ? 0 : 20,
+          }}
+          transition={{ duration: 0.6, delay: 0.4 }}
+        >
           <h2 className="text-white font-bold text-xl sm:text-2xl">{project.name}</h2>
-        </div>
-      </div>
+        </motion.div>
+      </motion.div>
 
       {/* Project Details - Improved spacing */}
-      <div className="flex flex-col justify-between h-[260px] sm:h-[220px] md:h-full bg-black/30 backdrop-blur-md rounded-xl sm:rounded-2xl border border-white/10 p-3 sm:p-4 md:p-6 overflow-hidden">
+      <motion.div
+        className="flex flex-col justify-between h-[260px] sm:h-[220px] md:h-full bg-black/30 backdrop-blur-md rounded-xl sm:rounded-2xl border border-white/10 p-3 sm:p-4 md:p-6 overflow-hidden"
+        initial={{ opacity: 0, x: 50 }}
+        animate={{
+          opacity: isVisible ? 1 : 0,
+          x: isVisible ? 0 : 50,
+        }}
+        transition={{ duration: 0.8, delay: 0.4 }}
+      >
         {/* Project Name - Desktop Only */}
         <div>
-          <h2 className="hidden md:block text-white font-bold text-2xl mb-3 md:mb-4">{project.name}</h2>
+          <motion.h2
+            className="hidden md:block text-white font-bold text-2xl mb-3 md:mb-4"
+            initial={{ opacity: 0, y: 10 }}
+            animate={{
+              opacity: isVisible ? 1 : 0,
+              y: isVisible ? 0 : 10,
+            }}
+            transition={{ duration: 0.6, delay: 0.5 }}
+          >
+            {project.name}
+          </motion.h2>
 
           {/* Description - Reduced line clamp for mobile */}
-          <p className="text-white/80 text-xs sm:text-sm mb-3 sm:mb-4 md:mb-auto line-clamp-2 sm:line-clamp-3 md:line-clamp-none">
+          <motion.p
+            className="text-white/80 text-xs sm:text-sm mb-3 sm:mb-4 md:mb-auto line-clamp-2 sm:line-clamp-3 md:line-clamp-none"
+            initial={{ opacity: 0, y: 10 }}
+            animate={{
+              opacity: isVisible ? 1 : 0,
+              y: isVisible ? 0 : 10,
+            }}
+            transition={{ duration: 0.6, delay: 0.6 }}
+          >
             {project.description}
-          </p>
+          </motion.p>
 
           {/* Tech Stack - Adjusted spacing */}
-          <div className="mb-3 sm:mb-4 mt-5">
+          <motion.div
+            className="mb-3 sm:mb-4 mt-5"
+            initial={{ opacity: 0, y: 10 }}
+            animate={{
+              opacity: isVisible ? 1 : 0,
+              y: isVisible ? 0 : 10,
+            }}
+            transition={{ duration: 0.6, delay: 0.7 }}
+          >
             <h3 className="text-white/60 text-[10px] sm:text-xs uppercase tracking-wider mb-1.5 sm:mb-2">
               Technologies
             </h3>
             <div className="flex flex-wrap gap-1.5 sm:gap-2">
               {project.techStacks.map((tech, i) => (
-                <span
+                <motion.span
                   key={i}
                   className={`text-[10px] sm:text-xs px-2 sm:px-3 py-0.5 sm:py-1 rounded-full border ${
                     isUpcoming
                       ? "bg-purple-900/10 text-purple-100 border-purple-500/20"
                       : "bg-white/10 text-white/90 border-white/10"
                   }`}
+                  initial={{ opacity: 0, scale: 0 }}
+                  animate={{
+                    opacity: isVisible ? 1 : 0,
+                    scale: isVisible ? 1 : 0,
+                  }}
+                  transition={{ duration: 0.4, delay: 0.8 + i * 0.1 }}
                 >
                   {tech}
-                </span>
+                </motion.span>
               ))}
             </div>
-          </div>
+          </motion.div>
         </div>
 
         {/* Links - Fixed positioning */}
-        <div className="flex gap-2 sm:gap-4">
+        <motion.div
+          className="flex gap-2 sm:gap-4"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{
+            opacity: isVisible ? 1 : 0,
+            y: isVisible ? 0 : 20,
+          }}
+          transition={{ duration: 0.6, delay: 0.9 }}
+        >
           {!isUpcoming ? (
             <>
               <Link
@@ -312,9 +455,8 @@ function ProjectCard({ project, isMobile }: ProjectCardProps) {
               </motion.div>
             </div>
           )}
-        </div>
-      </div>
+        </motion.div>
+      </motion.div>
     </div>
   )
 }
-
