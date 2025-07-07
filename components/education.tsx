@@ -107,3 +107,57 @@ export default function Education() {
               }}
             />
           </div>
+           {/* Education Timeline */}
+          <div className="space-y-6">
+            {educationData.map((edu, index) => (
+              <motion.div
+                key={index}
+                className="bg-zinc-950/80 backdrop-blur-sm p-6 rounded-xl border border-white/10 shadow-lg"
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{
+                  duration: 0.6,
+                  ease: [0.22, 1, 0.36, 1],
+                  delay: isEducationVisible ? 0.2 + index * 0.1 : 0.4 + index * 0.1,
+                }}
+              >
+                <div className="flex flex-col md:flex-row md:items-center md:justify-between">
+                  {/* Left side - Institution and Degree */}
+                  <div className="flex-1 mb-4 md:mb-0">
+                    <h3 className="text-xl md:text-2xl font-semibold text-white mb-2">{edu.institution}</h3>
+                    <p className="text-blue-300 text-lg font-medium mb-2">{edu.degree}</p>
+                    <div className="flex items-center gap-4 text-white/60 text-sm">
+                      <div className="flex items-center gap-1">
+                        <Calendar className="h-4 w-4" />
+                        <span>{edu.period}</span>
+                      </div>
+                      <div className="flex items-center gap-1">
+                        <MapPin className="h-4 w-4" />
+                        <span>{edu.location}</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Right side - Type badge */}
+                  <div className="flex-shrink-0">
+                    <span
+                      className={`px-3 py-1 rounded-full text-xs font-medium ${
+                        edu.type === "University"
+                          ? "bg-blue-500/20 text-blue-300 border border-blue-500/30"
+                          : edu.type === "Institute"
+                            ? "bg-purple-500/20 text-purple-300 border border-purple-500/30"
+                            : "bg-green-500/20 text-green-300 border border-green-500/30"
+                      }`}
+                    >
+                      {edu.type}
+                    </span>
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+}
