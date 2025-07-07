@@ -2,37 +2,61 @@
 
 import { useState, useEffect, useRef } from "react"
 import { motion } from "framer-motion"
-import { GraduationCap, Calendar, MapPin } from "lucide-react"
+import { GraduationCap, Calendar, MapPin, Award } from "lucide-react"
 
 export default function Education() {
   const [isEducationVisible, setIsEducationVisible] = useState(false)
+  const [visibleCards, setVisibleCards] = useState<boolean[]>([false, false, false])
   const educationSectionRef = useRef<HTMLDivElement>(null)
+  const cardRefs = useRef<(HTMLDivElement | null)[]>([])
 
   useEffect(() => {
-    // Set up intersection observer for the education section
-    const observer = new IntersectionObserver(
+    // Set up intersection observer for the main education section
+    const mainObserver = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
             setIsEducationVisible(true)
-            // Once we've seen it, no need to keep observing
-            if (educationSectionRef.current) {
-              observer.unobserve(educationSectionRef.current)
+          }
+        })
+      },
+      { threshold: 0.1 },
+    )
+
+    // Set up intersection observer for individual cards
+    const cardObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const index = cardRefs.current.indexOf(entry.target as HTMLDivElement)
+            if (index !== -1) {
+              setVisibleCards((prev) => {
+                const newState = [...prev]
+                newState[index] = true
+                return newState
+              })
             }
           }
         })
       },
-      { threshold: 0.2 }, // Trigger when 20% of the element is visible
+      { threshold: 0.3 },
     )
 
     if (educationSectionRef.current) {
-      observer.observe(educationSectionRef.current)
+      mainObserver.observe(educationSectionRef.current)
     }
+
+    cardRefs.current.forEach((card) => {
+      if (card) cardObserver.observe(card)
+    })
 
     return () => {
       if (educationSectionRef.current) {
-        observer.unobserve(educationSectionRef.current)
+        mainObserver.unobserve(educationSectionRef.current)
       }
+      cardRefs.current.forEach((card) => {
+        if (card) cardObserver.unobserve(card)
+      })
     }
   }, [])
 
@@ -43,6 +67,7 @@ export default function Education() {
       period: "Sep 2023 – 2027",
       location: "London, UK",
       type: "University",
+      status: "Current",
     },
     {
       institution: "Informatics Institute of Technology",
@@ -50,6 +75,7 @@ export default function Education() {
       period: "Jan 2023 – Sep 2023",
       location: "Colombo, Sri Lanka",
       type: "Institute",
+      status: "Completed",
     },
     {
       institution: "Kurunegala Maliyadeva College",
@@ -57,101 +83,281 @@ export default function Education() {
       period: "2023",
       location: "Kurunegala, Sri Lanka",
       type: "School",
+      status: "Completed",
     },
   ]
 
   return (
-    <div ref={educationSectionRef} className="relative min-h-screen w-full bg-neutral-900 overflow-hidden">
-      {/* Simple background gradient */}
-      <div className="absolute inset-0 bg-gradient-to-br from-blue-500/[0.03] via-transparent to-purple-500/[0.03] blur-3xl" />
+    <div ref={educationSectionRef} className="relative min-h-screen w-full bg-black overflow-hidden">
+      {/* Subtle background pattern */}
+      <div className="absolute inset-0 opacity-5">
+        <div className="absolute inset-0 bg-gradient-to-br from-white/10 via-transparent to-white/5" />
+        <div
+          className="absolute inset-0"
+          style={{
+            backgroundImage: `radial-gradient(circle at 25% 25%, white 1px, transparent 1px)`,
+            backgroundSize: "50px 50px",
+          }}
+        />
+      </div>
 
       {/* Content Container */}
-      <div className="relative z-10 w-full flex items-center justify-center min-h-screen px-4 sm:px-8 md:px-16 lg:px-24 py-16">
-        <div className="w-full max-w-4xl">
+      <div className="relative z-10 w-full flex items-center justify-center min-h-screen px-4 sm:px-8 md:px-16 lg:px-24 py-20">
+        <div className="w-full max-w-5xl">
           {/* Section Title */}
-          <div className="text-center mb-12">
+          <div className="text-center mb-16">
             <motion.div
-              className="flex items-center justify-center gap-3 mb-4"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
+              className="flex items-center justify-center gap-4 mb-6"
+              initial={{ opacity: 0, y: 30 }}
+              animate={{
+                opacity: isEducationVisible ? 1 : 0,
+                y: isEducationVisible ? 0 : 30,
+              }}
               transition={{
-                duration: 0.6,
+                duration: 0.8,
                 ease: [0.22, 1, 0.36, 1],
-                delay: isEducationVisible ? 0 : 0.2,
               }}
             >
-              <GraduationCap className="h-8 w-8 text-blue-400" />
-              <motion.h2
-                className="text-3xl md:text-4xl text-white font-bold"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
+              <motion.div
+                animate={
+                  isEducationVisible
+                    ? {
+                        rotate: [0, 10, -10, 0],
+                        scale: [1, 1.1, 1],
+                      }
+                    : {}
+                }
                 transition={{
-                  duration: 0.6,
+                  duration: 2,
+                  ease: "easeInOut",
+                  delay: 0.5,
+                }}
+              >
+                <GraduationCap className="h-10 w-10 text-white" />
+              </motion.div>
+              <motion.h2
+                className="text-4xl md:text-5xl text-white font-bold tracking-tight"
+                initial={{ opacity: 0, x: -20 }}
+                animate={{
+                  opacity: isEducationVisible ? 1 : 0,
+                  x: isEducationVisible ? 0 : -20,
+                }}
+                transition={{
+                  duration: 0.8,
                   ease: [0.22, 1, 0.36, 1],
-                  delay: isEducationVisible ? 0.1 : 0.3,
+                  delay: 0.2,
                 }}
               >
                 Education
               </motion.h2>
             </motion.div>
 
-            {/* Animated line */}
-            <motion.div
-              className="mx-auto h-0.5 bg-gradient-to-r from-blue-500 to-purple-500"
-              initial={{ width: 0 }}
-              animate={{ width: isEducationVisible ? "100px" : "0px" }}
-              transition={{
-                duration: 1.2,
-                ease: [0.22, 1, 0.36, 1],
-                delay: 0.4,
-              }}
-            />
+            {/* Animated line with dots */}
+            <div className="flex items-center justify-center gap-2">
+              <motion.div
+                className="h-px bg-white"
+                initial={{ width: 0 }}
+                animate={{ width: isEducationVisible ? "60px" : "0px" }}
+                transition={{
+                  duration: 1,
+                  ease: [0.22, 1, 0.36, 1],
+                  delay: 0.6,
+                }}
+              />
+              <motion.div
+                className="w-2 h-2 bg-white rounded-full"
+                initial={{ scale: 0 }}
+                animate={{ scale: isEducationVisible ? 1 : 0 }}
+                transition={{
+                  duration: 0.5,
+                  ease: [0.22, 1, 0.36, 1],
+                  delay: 1,
+                }}
+              />
+              <motion.div
+                className="h-px bg-white"
+                initial={{ width: 0 }}
+                animate={{ width: isEducationVisible ? "60px" : "0px" }}
+                transition={{
+                  duration: 1,
+                  ease: [0.22, 1, 0.36, 1],
+                  delay: 0.6,
+                }}
+              />
+            </div>
           </div>
-           {/* Education Timeline */}
-          <div className="space-y-6">
+
+          {/* Education Timeline */}
+          <div className="space-y-8">
             {educationData.map((edu, index) => (
               <motion.div
                 key={index}
-                className="bg-zinc-950/80 backdrop-blur-sm p-6 rounded-xl border border-white/10 shadow-lg"
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
+                ref={(el) => { cardRefs.current[index] = el }}
+                className="relative"
+                initial={{ opacity: 0, y: 50 }}
+                animate={{
+                  opacity: visibleCards[index] ? 1 : 0,
+                  y: visibleCards[index] ? 0 : 50,
+                }}
                 transition={{
-                  duration: 0.6,
+                  duration: 0.8,
                   ease: [0.22, 1, 0.36, 1],
-                  delay: isEducationVisible ? 0.2 + index * 0.1 : 0.4 + index * 0.1,
+                  delay: 0.1,
                 }}
               >
-                <div className="flex flex-col md:flex-row md:items-center md:justify-between">
-                  {/* Left side - Institution and Degree */}
-                  <div className="flex-1 mb-4 md:mb-0">
-                    <h3 className="text-xl md:text-2xl font-semibold text-white mb-2">{edu.institution}</h3>
-                    <p className="text-blue-300 text-lg font-medium mb-2">{edu.degree}</p>
-                    <div className="flex items-center gap-4 text-white/60 text-sm">
-                      <div className="flex items-center gap-1">
-                        <Calendar className="h-4 w-4" />
-                        <span>{edu.period}</span>
-                      </div>
-                      <div className="flex items-center gap-1">
-                        <MapPin className="h-4 w-4" />
-                        <span>{edu.location}</span>
-                      </div>
-                    </div>
-                  </div>
+                {/* Timeline connector */}
+                {index < educationData.length - 1 && (
+                  <motion.div
+                    className="absolute left-8 top-full w-px h-8 bg-gradient-to-b from-white to-transparent"
+                    initial={{ height: 0 }}
+                    animate={{ height: visibleCards[index] ? "32px" : "0px" }}
+                    transition={{
+                      duration: 0.6,
+                      ease: [0.22, 1, 0.36, 1],
+                      delay: 0.5,
+                    }}
+                  />
+                )}
 
-                  {/* Right side - Type badge */}
-                  <div className="flex-shrink-0">
-                    <span
-                      className={`px-3 py-1 rounded-full text-xs font-medium ${
-                        edu.type === "University"
-                          ? "bg-blue-500/20 text-blue-300 border border-blue-500/30"
-                          : edu.type === "Institute"
-                            ? "bg-purple-500/20 text-purple-300 border border-purple-500/30"
-                            : "bg-green-500/20 text-green-300 border border-green-500/30"
-                      }`}
-                    >
-                      {edu.type}
-                    </span>
-                  </div>
+                <div className="flex items-start gap-6">
+                  {/* Timeline dot */}
+                  <motion.div
+                    className="flex-shrink-0 w-4 h-4 bg-white rounded-full mt-8 relative"
+                    initial={{ scale: 0 }}
+                    animate={{ scale: visibleCards[index] ? 1 : 0 }}
+                    transition={{
+                      duration: 0.5,
+                      ease: [0.22, 1, 0.36, 1],
+                      delay: 0.3,
+                    }}
+                  >
+                    <motion.div
+                      className="absolute inset-0 bg-white rounded-full"
+                      animate={
+                        visibleCards[index]
+                          ? {
+                              scale: [1, 1.5, 1],
+                              opacity: [1, 0.5, 1],
+                            }
+                          : {}
+                      }
+                      transition={{
+                        duration: 2,
+                        repeat: Number.POSITIVE_INFINITY,
+                        ease: "easeInOut",
+                        delay: 1,
+                      }}
+                    />
+                  </motion.div>
+
+                  {/* Education Card */}
+                  <motion.div
+                    className="flex-1 bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-8 hover:bg-white/10 transition-all duration-500 group"
+                    whileHover={{
+                      scale: 1.02,
+                      boxShadow: "0 20px 40px rgba(255, 255, 255, 0.1)",
+                    }}
+                    transition={{ type: "spring", stiffness: 300, damping: 30 }}
+                  >
+                    <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between">
+                      {/* Left side - Institution and Degree */}
+                      <div className="flex-1 mb-6 lg:mb-0">
+                        <div className="flex items-center gap-3 mb-3">
+                          <motion.h3
+                            className="text-2xl lg:text-3xl font-bold text-white group-hover:text-white/90 transition-colors"
+                            initial={{ opacity: 0, x: -20 }}
+                            animate={{
+                              opacity: visibleCards[index] ? 1 : 0,
+                              x: visibleCards[index] ? 0 : -20,
+                            }}
+                            transition={{
+                              duration: 0.6,
+                              ease: [0.22, 1, 0.36, 1],
+                              delay: 0.4,
+                            }}
+                          >
+                            {edu.institution}
+                          </motion.h3>
+                          {edu.status === "Current" && (
+                            <motion.div
+                              className="px-3 py-1 bg-white text-black text-xs font-semibold rounded-full"
+                              initial={{ opacity: 0, scale: 0 }}
+                              animate={{
+                                opacity: visibleCards[index] ? 1 : 0,
+                                scale: visibleCards[index] ? 1 : 0,
+                              }}
+                              transition={{
+                                duration: 0.5,
+                                ease: [0.22, 1, 0.36, 1],
+                                delay: 0.8,
+                              }}
+                            >
+                              CURRENT
+                            </motion.div>
+                          )}
+                        </div>
+
+                        <motion.p
+                          className="text-white/80 text-lg lg:text-xl font-medium mb-4"
+                          initial={{ opacity: 0, x: -20 }}
+                          animate={{
+                            opacity: visibleCards[index] ? 1 : 0,
+                            x: visibleCards[index] ? 0 : -20,
+                          }}
+                          transition={{
+                            duration: 0.6,
+                            ease: [0.22, 1, 0.36, 1],
+                            delay: 0.5,
+                          }}
+                        >
+                          {edu.degree}
+                        </motion.p>
+
+                        <motion.div
+                          className="flex flex-col sm:flex-row sm:items-center gap-4 text-white/60 text-sm"
+                          initial={{ opacity: 0, y: 10 }}
+                          animate={{
+                            opacity: visibleCards[index] ? 1 : 0,
+                            y: visibleCards[index] ? 0 : 10,
+                          }}
+                          transition={{
+                            duration: 0.6,
+                            ease: [0.22, 1, 0.36, 1],
+                            delay: 0.6,
+                          }}
+                        >
+                          <div className="flex items-center gap-2">
+                            <Calendar className="h-4 w-4" />
+                            <span className="font-medium">{edu.period}</span>
+                          </div>
+                          <div className="flex items-center gap-2">
+                            <MapPin className="h-4 w-4" />
+                            <span className="font-medium">{edu.location}</span>
+                          </div>
+                        </motion.div>
+                      </div>
+
+                      {/* Right side - Type badge */}
+                      <motion.div
+                        className="flex-shrink-0"
+                        initial={{ opacity: 0, scale: 0 }}
+                        animate={{
+                          opacity: visibleCards[index] ? 1 : 0,
+                          scale: visibleCards[index] ? 1 : 0,
+                        }}
+                        transition={{
+                          duration: 0.5,
+                          ease: [0.22, 1, 0.36, 1],
+                          delay: 0.7,
+                        }}
+                      >
+                        <div className="flex items-center gap-2 px-4 py-2 border border-white/20 rounded-full">
+                          <Award className="h-4 w-4 text-white/80" />
+                          <span className="text-white/80 text-sm font-medium uppercase tracking-wider">{edu.type}</span>
+                        </div>
+                      </motion.div>
+                    </div>
+                  </motion.div>
                 </div>
               </motion.div>
             ))}
