@@ -4,14 +4,32 @@ import { useState, useEffect, useRef } from "react"
 import { Github, Linkedin, ChevronDown } from "lucide-react"
 import Link from "next/link"
 import Image from "next/image"
-import { motion } from "framer-motion"
+import { motion, useReducedMotion } from "framer-motion"
 import { ElegantShape } from "@/components/ui/elegant-shape"
+
+const aboutHeading = "Something About Me !"
 
 export default function Home() {
   const [mounted, setMounted] = useState(false)
   const aboutSectionRef = useRef<HTMLDivElement>(null)
   const [isMobile, setIsMobile] = useState(false)
   const [isAboutVisible, setIsAboutVisible] = useState(false)
+  const [isHeadingVisible, setIsHeadingVisible] = useState(false)
+  const [typedCharacters, setTypedCharacters] = useState(0)
+  const prefersReducedMotion = useReducedMotion()
+
+  useEffect(() => {
+    if (!isHeadingVisible || prefersReducedMotion) return
+
+    let characters = 0
+    const timer = window.setInterval(() => {
+      characters += 1
+      setTypedCharacters(characters)
+      if (characters >= aboutHeading.length) window.clearInterval(timer)
+    }, 75)
+
+    return () => window.clearInterval(timer)
+  }, [isHeadingVisible, prefersReducedMotion])
 
   useEffect(() => {
     setMounted(true)
@@ -411,7 +429,7 @@ export default function Home() {
             >
               <div className="w-40 h-40 sm:w-48 sm:h-48 md:w-56 md:h-56 lg:w-64 lg:h-64 bg-gray-200/90 rounded-full overflow-hidden flex items-center justify-center shadow-lg border-2 border-white/20">
                 <Image
-                  src="/profile.jpg"
+                  src="/profile.jpeg"
                   alt="Devinda Wijesinghe"
                   width={256}
                   height={256}
@@ -426,15 +444,19 @@ export default function Home() {
                 <div className="relative mb-4 sm:mb-6">
                   <motion.h2
                     className="text-xl md:text-2xl text-white font-medium"
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{
-                      duration: 0.6,
-                      ease: [0.22, 1, 0.36, 1],
-                      delay: isAboutVisible ? 0 : 0.2,
-                    }}
+                    onViewportEnter={() => setIsHeadingVisible(true)}
+                    viewport={{ once: true, amount: 1 }}
                   >
-                    Something About Me !
+                    <span className="sr-only">{aboutHeading}</span>
+                    <span aria-hidden="true" className="inline-grid">
+                      <span className="invisible col-start-1 row-start-1">{aboutHeading}</span>
+                      <span className="col-start-1 row-start-1">
+                        {prefersReducedMotion ? aboutHeading : aboutHeading.slice(0, typedCharacters)}
+                        {isHeadingVisible && !prefersReducedMotion && typedCharacters < aboutHeading.length && (
+                          <span className="ml-0.5 inline-block h-[1em] w-px translate-y-0.5 bg-white" />
+                        )}
+                      </span>
+                    </span>
                   </motion.h2>
 
                   {/* Animated line */}
@@ -460,7 +482,7 @@ export default function Home() {
                     delay: isAboutVisible ? 0.4 : 0.3,
                   }}
                 >
-                  I'm Devinda Wijesinghe, a second-year Software Engineering student passionate about exploring
+                  I'm Devinda Wijesinghe, a final-year Software Engineering student passionate about exploring
                   different technologies and building impactful software, transforming ideas into reality through code
                   while constantly learning and improving.
                 </motion.p>

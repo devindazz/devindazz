@@ -80,7 +80,7 @@ export default function Education() {
     {
       institution: "Kurunegala Maliyadeva College",
       degree: "The GCE Ordinary Level (O/L)",
-      period: "2023",
+      period: "2022",
       location: "Kurunegala, Sri Lanka",
       type: "School",
       status: "Completed",
